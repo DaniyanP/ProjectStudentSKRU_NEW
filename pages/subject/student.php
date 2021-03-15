@@ -158,7 +158,7 @@ $id_section_room =$_REQUEST["ID"];
                         <div class="col-lg-6 col-md-6">
                             <form action="student_add.php" method="post">
                                 <label for="student_id">เพิ่มนักศึกษา</label>
-                                <input type="text" name="projec_id" id="student_id" placeholder="กรอกรหัสนักศึกษา"
+                                <input type="text" name="student_id" id="student_id" placeholder="กรอกรหัสนักศึกษา"
                                     required>
                                 <input type="text" name="id_class" id="id_class" value="<?php echo $id_section_room ?>"
                                     hidden>
@@ -169,7 +169,8 @@ $id_section_room =$_REQUEST["ID"];
                         <div class="col-lg-6 col-md-6">
                             <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
                                 role="button">เพิ่มด้วย Excel</a>
-
+                                <a class="btn btn-info btn-sm " href="student_add_frm.php?act=show&ID=<?php echo $id_section_room ?>"
+                                role="button">เพิ่มนักศึกษา</a>
                         </div>
                     </div>
                 </div>

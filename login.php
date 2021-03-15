@@ -86,12 +86,12 @@
                                 <span class="font-weight-normal">or login with</span>
                             </div> -->
                            
-                            <div class="d-flex justify-content-center align-items-center mt-4">
+                            <!-- <div class="d-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
                                     ยังไม่ได้เป็นสมาชิก?
                                     <a href="sign-up.php" class="font-weight-bold">สมัครสมาชิก</a>
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

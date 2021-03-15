@@ -273,12 +273,12 @@ if (!$_SESSION["UserID"]){
                             <div class="mb-2">
                                 <label for="date_start">วันที่และเวลาที่เข้าพบ (เริ่มต้น)</label>
                                 <input type="datetime-local" class="form-control" id="date_start" name="date_start"
-                                    aria-describedby="date_start-describ" required>
+                                    aria-describedby="date_start-describ" min="<?php echo date('Y-m-d\TH:i',strtotime('+ 3 day',strtotime(date('Y-m-d\TH:i')))) ?>"  max="<?php echo date('Y-m-d\TH:i',strtotime('+ 11 day',strtotime(date('Y-m-d\TH:i')))) ?>"  value="<?php echo date('Y-m-d\TH:i')?>" required>
                                 <small id="date_start-describ"
                                     class="form-text text-muted">เลือกวันที่และเวลาที่ต้องการเข้าพบ (เริ่มต้น)</small>
                             </div>
                             <div class="mb-2">
-                                <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที</label>
+                                <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที  </label>
                                 <input type="number" min="1" max="59" class="form-control" id="date_end" name="date_end" placeholder="จำนวนนาที"
                                     aria-describedby="date_end-describ" required>
                                 <small id="date_end-describ"

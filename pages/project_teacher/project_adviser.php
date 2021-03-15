@@ -842,10 +842,7 @@ appoint.appoint_date_start
 
                             <div role="tabpanel" class="tab-pane fade" id="Section3">
                            
-                            <div class="btn-group mr-2 mb-2">
-<a class="btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModalCenter"><span class="fas fa-plus mr-2"> เพิ่มเอกสาร</a>
-</div>
-
+                        
 
 
 <!-- ฟอร์มเพิ่มไฟล์ เริ่ม -->
@@ -928,7 +925,7 @@ appoint.appoint_date_start
 <!-- ฟอร์มเพิ่มไฟล์ สิ้นสุด -->
 
 
-                            <?php
+<?php
            include '../../conn.php';
            $id_ptojrct =$_REQUEST["ID"];
                
@@ -952,15 +949,7 @@ appoint.appoint_date_start
 						while($row = $result->fetch_assoc()) {
                             echo '<div class="btn-group mr-2 mb-2"> 
                             <a href="' . $row["file_link"].'" type="button" class="btn btn-primary"><span class="' . $row["file_type_icon"].' mr-2"></span> ' . $row["file_type_name"].'</a>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fas fa-angle-down dropdown-arrow"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="file_edit.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>แก้ไขไฟล์</a>
-                                <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
-                               
-                            </div>
+                            
                         </div>';       
                         }
                         }

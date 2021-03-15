@@ -6,7 +6,7 @@
 
 
 
-$student_id  = $_POST['projec_id'];
+$student_id  = $_POST['student_id'];
 $id_class  = $_POST['id_class'];
 
 

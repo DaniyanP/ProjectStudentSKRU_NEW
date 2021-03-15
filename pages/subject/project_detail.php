@@ -853,9 +853,12 @@ appoint.appoint_date_start
 <!-- Button trigger modal -->
 
 
+<div class="btn-group mr-2 mb-2">
+<a class="btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModalCenter"><span class="fas fa-plus mr-2"> เพิ่มเอกสาร</a>
+</div>
 
 
-                            <?php
+<?php
            include '../../conn.php';
            $id_ptojrct =$_REQUEST["ID"];
                
@@ -879,12 +882,20 @@ appoint.appoint_date_start
 						while($row = $result->fetch_assoc()) {
                             echo '<div class="btn-group mr-2 mb-2"> 
                             <a href="' . $row["file_link"].'" type="button" class="btn btn-primary"><span class="' . $row["file_type_icon"].' mr-2"></span> ' . $row["file_type_name"].'</a>
-                            
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-angle-down dropdown-arrow"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="file_edit.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>แก้ไขไฟล์</a>
+                                <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
+                               
+                            </div>
                         </div>';       
                         }
                         }
                         $con->close();
-                        ?>     
+                        ?> 
 
 <div class="btn-group mr-2 mb-2"> 
                             <a href="../../pdf.php?act=show&ID=<?php echo $id_ptojrct ?>" type="button" class="btn btn-danger"><span class="fas fa-file-pdf mr-2"></span>รายงานประวัติการเข้าพบ</a>
@@ -898,6 +909,80 @@ appoint.appoint_date_start
             </div>
         </div>
         <!--  nav end -->
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">เพิ่มไฟล์เอกสารที่เกียวข้อง</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+<!-- frm_add str -->
+<form action="file_add_ac.php" method="post">
+
+
+    <div class="row">
+
+        <div class="form-group">
+            <label for="filee">ประเภทไฟล์</label>
+            <select class="form-select" id="filee" name="filee">
+                <option selected>เลือกประเภทไฟล์</option>
+
+                <?php
+                 include '../../conn.php';
+					$sql = "SELECT
+                    file_type.file_type_id,
+                    file_type.file_type_name
+                    
+                    FROM
+                    file_type
+                    ORDER BY
+                    file_type.file_type_id ASC";
+					$result = $con->query($sql);
+					if ($result->num_rows > 0) {
+
+						while($row = $result->fetch_assoc()) {
+                            echo '<option value="'. $row["file_type_id"].'">'. $row["file_type_name"].'</option>';
+                            
+                          
+							 
+						}
+					}
+					$con->close();
+					?>
+
+            </select>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="form-group">
+            <label for="filee_url">URL ไฟล์เอกสาร</label>
+            <input class="form-control" id="filee_url" name="filee_url" type="url" placeholder="กรอกลิงค์เอกสาร"
+                required>
+        </div>
+        <input type="text" name="project_id" id="project_id" value="<?php echo  $id_ptojrct; ?>" hidden>
+
+    </div>
+
+<!-- frm_add end -->
+      
+      </div>
+      <div class="modal-footer">
+        
+        <button type="submit" class="btn btn-primary">บันทึก</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+      </div>
+                </form>
+    </div>
+  </div>
+</div>
+<!-- ฟอร์มเพิ่มไฟล์ สิ้นสุด -->
 
 
 

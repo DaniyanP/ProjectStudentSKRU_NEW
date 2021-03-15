@@ -9,16 +9,16 @@
 $filee  = $_POST['filee'];
 $filee_url  = $_POST['filee_url'];
 $project_id  = $_POST['project_id'];
-
+$file_apporve  = 2;
 
 
 $sql ="INSERT INTO filee
 
-  ( `project_id`, `file_type`, `file_link`)
+  ( `project_id`, `file_type`, `file_link`, `file_apporve`)
 
     VALUES 
 
-    ('$project_id','$filee','$filee_url')";
+    ('$project_id','$filee','$filee_url','$file_apporve')";
     
     $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
     mysqli_close($con);

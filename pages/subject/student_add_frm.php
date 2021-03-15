@@ -4,7 +4,8 @@
 
 if ($_SESSION["Teacherlevel"]=="2"){?>
 
-<?php include '../../conn.php';?>
+<?php include '../../conn.php';
+$class_id1 = $_REQUEST["ID"];  ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,9 +57,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
                             <li class="breadcrumb-item"><a href="../subject"><span class="fas fa-home"></span></a></li>
-                                <li class="breadcrumb-item"><a href="index.php">ข้อมูลโครงงาน</a></li>
+                                <li class="breadcrumb-item"><a href="index.php">ข้อมูลนักศึกษา</a></li>
                                 
-                                    <li class="breadcrumb-item active" aria-current="page">เพิ่มข้อมูลโครงงาน</li>
+                                    <li class="breadcrumb-item active" aria-current="page">เพิ่มข้อมูลนักศึกษา</li>
                             </ol>
                         </nav>
                     </div>
@@ -72,7 +73,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
             <div class="d-flex justify-content-between w-100 flex-wrap">
                 <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">เพิ่มข้อมูลรายวิชาที่สอน</h1>
+                    <h1 class="h4">เพิ่มข้อมูลนักศึกษา</h1>
 
                 </div>
 
@@ -82,24 +83,24 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="project_add_ac.php" method="post">
+                <form action="student_add_one.php" method="post">
 
 
                     <div class="row">
 
                         <div class="col-md-3 mb-3">
                             <div class="form-group">
-                                <label for="project_id">รหัสโครงงาน</label>
-                                <input class="form-control" id="project_id" name="project_id" type="number"
-                                    placeholder="กรอกรหัสโครงงาน" required autofocus>
+                                <label for="student_id">รหัสนักศึกษา</label>
+                                <input class="form-control" id="student_id" name="student_id" type="number"
+                                    placeholder="กรอกรหัสนักศึกษา" required autofocus>
                             </div>
                         </div>
 
                         <div class="col-md-9 mb-3">
                             <div class="form-group">
-                                <label for="project_name">ชื่อโครงงาน</label>
-                                <input class="form-control" id="project_name" name="project_name" type="text"
-                                    placeholder="กรอกชื่อโครงงาน" required>
+                                <label for="student_name">ชื่อ - นามสกุล</label>
+                                <input class="form-control" id="student_name" name="student_name" type="text"
+                                    placeholder="กรอกชื่อ - นามสกุล" required>
                             </div>
                         </div>
 
@@ -108,43 +109,50 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
                     <div class="row">
 
-                        <div class="col-md-3 mb-3">
-                            <div class="form-group">
-                                <label for="project_type">ประเภทโครงงาน</label>
-                                <?php 
-                                    $query = "SELECT
-                                    project_type.project_type_id as p_id,
-                                    project_type.project_type_name as p_type
-                                    FROM
-                                    project_type
-                                    ORDER BY
-                                    project_type.project_type_id ASC";
-                                    $result = mysqli_query($con, $query);
-
-                                    ?>
-
-                                    <select class="form-select" id="project_type" name="project_type" aria-label="Default select example">
-                                                 <option selected>เลือกประเภทโครงงาน</option>
                        
-                                                    <?php foreach($result as $results){?>
-                                <option value="<?php echo $results["p_id"];?>">
-                                  <?php echo $results["p_type"]; ?>
-                                  </option>
-                                <?php } ?>
+
+
+
+                        <?php 
+$query2 = "SELECT
+major.student_major_id as m_id,
+major.student_major_name as m_name
+FROM
+major
+ORDER BY
+major.student_major_id ASC";
+$result2 = mysqli_query($con, $query2);
+
+?>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="student_major">สาขาวิชา</label>
+                                <select class="form-select" id="student_major" name="student_major" aria-label="Default select example">
+                        <option selected>---เลือกสาขาวิชา---</option>
+                        <?php foreach($result2 as $results2){?>
+    <option value="<?php echo $results2["m_id"];?>">
+      <?php echo $results2["m_name"]; ?>
+      </option>
+    <?php } ?>
                     </select>
                             </div>
                         </div>
+                       
 
-                        
+                       
 
 
                     </div>
-
-                   
+                    
+                    <input type="text" class="form-control" id="class_key" name="class_key"
+                                    aria-describedby="date_end-describ"  value="<?php echo  $class_id1 ?>" hidden>
+                    
+                    <div class="row">
                     <div class="mt-3">
             <button type="submit" class="btn btn-primary">บันทึก</button>
+            <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
         </div>
-
+        </div>
 
 
 

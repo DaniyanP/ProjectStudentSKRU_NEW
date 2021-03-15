@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2021 at 04:58 PM
+-- Generation Time: Mar 15, 2021 at 07:55 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -39,6 +39,18 @@ CREATE TABLE `appoint` (
   `recorder` int(15) NOT NULL,
   `appoint_recorder` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `appoint`
+--
+
+INSERT INTO `appoint` (`appoint_id`, `project_id`, `appoint_date_start`, `appoint_date_end`, `apooint_minute`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`, `appoint_recorder`) VALUES
+(4, 5511, '2021-03-26 16:54:00', '2021-03-26 17:24:00', 30, 'eeeeee', 99001, 4, 594235001, '2021-03-12 23:50:04'),
+(5, 5512, '2021-03-16 00:29:00', '2021-03-16 00:59:00', 30, 'ss', 99001, 4, 594235001, '2021-03-13 00:24:11'),
+(6, 5512, '2021-03-31 21:27:00', '2021-03-31 21:30:00', 3, '4411', 99001, 2, 594235002, '2021-03-14 21:27:50'),
+(7, 5512, '2021-03-16 00:29:00', '2021-03-16 00:59:00', 30, 'ss', 99001, 4, 594235003, '2021-03-13 00:24:11'),
+(8, 7878, '2021-03-03 01:23:00', '2021-03-03 01:43:00', 20, 'fgf', 99003, 1, 574235001, '2021-03-15 22:23:39'),
+(9, 7878, '2021-03-25 22:48:00', '2021-03-25 23:13:00', 25, 'ssfsf', 99001, 1, 574235001, '2021-03-15 22:48:53');
 
 -- --------------------------------------------------------
 
@@ -83,6 +95,51 @@ CREATE TABLE `com05` (
   `teacher_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `com05`
+--
+
+INSERT INTO `com05` (`com05_id`, `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`) VALUES
+(1, 4, 5512, 'aaa', 'sss', 2, 1, 99001),
+(2, 5, 5512, 'sxaaa', 'asaaqqq', 1, 1, 99001);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `CustomerID` varchar(4) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `CountryCode` varchar(2) NOT NULL,
+  `Budget` double NOT NULL,
+  `Used` double NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`CustomerID`, `Name`, `Email`, `CountryCode`, `Budget`, `Used`) VALUES
+('C001', 'Win Weerachai', 'win.weerachai@thaicreate.com', 'TH', 1000000, 600000),
+('C002', 'John  Smith', 'john.smith@thaicreate.com', 'UK', 2000000, 800000),
+('C003', 'Jame Born', 'jame.born@thaicreate.com', 'US', 3000000, 600000),
+('C004', 'Chalee Angel', 'chalee.angel@thaicreate.com', 'US', 4000000, 100000),
+('5942', 'ทดสอบ1', 'daniyan4129@gmail.com', '99', 100, 2),
+('7421', 'ทดสอบ2', 'daniyan4129@gmail.com', '88', 42, 45),
+('7422', 'ทดสอบ3', 'daniyan4129@gmail.com', '88', 42, 75),
+('7423', 'ทดสอบ4', 'daniyan4129@gmail.com', '54', 45, 75),
+('7424', 'ทดสอ5', 'daniyan4129@gmail.com', '24', 4, 75),
+('7425', 'ทดสอบ6', 'daniyan4129@gmail.com', '42', 0, 75),
+('0001', 'ss', 'efe', '41', 44, 4),
+('0002', 'dsdsd', 'efef', '41', 11, 4),
+('0003', 'sdsd', 'fe', '41', 11, 4),
+('0004', 'sdsd', 'efe', '41', 11, 1),
+('41', '1', '4jk', '41', 0, 0),
+('85', '1', '5511', '58', 44, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -97,24 +154,15 @@ CREATE TABLE `filee` (
   `file_apporve` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `file_apporve`
+-- Dumping data for table `filee`
 --
 
-CREATE TABLE `file_apporve` (
-  `apporve_id` int(2) NOT NULL,
-  `apporve_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `file_apporve`
---
-
-INSERT INTO `file_apporve` (`apporve_id`, `apporve_name`) VALUES
-(1, 'รอยืนยัน'),
-(2, 'ยืนยันแล้ว');
+INSERT INTO `filee` (`file_id`, `project_id`, `file_type`, `file_link`, `file_apporve`) VALUES
+(3, 5512, 1, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
+(4, 5512, 3, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
+(5, 7878, 3, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
+(6, 7878, 1, 'https://getbootstrap.com/docs/5.0/content/tables/', 2);
 
 -- --------------------------------------------------------
 
@@ -201,6 +249,18 @@ CREATE TABLE `project` (
   `project_status` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `project`
+--
+
+INSERT INTO `project` (`project_id`, `project_name`, `project_type`, `project_status`) VALUES
+(5511, 'ระบบนัดแพทย์โรงบาลศรีเมือง', 1, 1),
+(5512, 'ระบบขายหวยออนไลน์', 1, 1),
+(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 1),
+(7878, 'ระบบพนันออนไลน์', 1, 1),
+(8899, 'ระบบถ่ายทอดสดฟุตบอล', 4, 1),
+(84784, 'อดดอ', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -214,6 +274,20 @@ CREATE TABLE `project_has_adviser` (
   `pha_type` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `project_has_adviser`
+--
+
+INSERT INTO `project_has_adviser` (`pha_key`, `pha_project_id`, `pha_teacher_id`, `pha_type`) VALUES
+(26, 5512, 99001, 1),
+(27, 5512, 99002, 1),
+(28, 5512, 99003, 2),
+(29, 5511, 99001, 1),
+(30, 5511, 99002, 2),
+(31, 7878, 99003, 1),
+(32, 7878, 99002, 2),
+(33, 7878, 99001, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -225,6 +299,17 @@ CREATE TABLE `project_has_student` (
   `phs_project_id` int(15) NOT NULL,
   `phs_student_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `project_has_student`
+--
+
+INSERT INTO `project_has_student` (`phs_key`, `phs_project_id`, `phs_student_id`) VALUES
+(3, 5511, 594235001),
+(4, 5512, 594235001),
+(5, 5512, 594235002),
+(7, 5511, 574235007),
+(8, 7878, 574235001);
 
 -- --------------------------------------------------------
 
@@ -308,6 +393,26 @@ CREATE TABLE `student` (
   `student_type` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `student_name`, `student_major`, `student_phone`, `student_email`, `student_password`, `student_photo`, `student_type`) VALUES
+(3, '3', 1, '0000000000', '3@parichat.skru.ac.th', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235001, 'นายสมพร สุวรรณมณี', 1, '0000000000', '574235001@parichat.skru.ac.th', '1ee1c9b2ba5aa6960ec85aed77bae1d5', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235002, 'นายแดง ชัยศรี', 1, '0000000000', '574235002@parichat.skru.ac.th', 'cbcd536ec5742ce3c7e35bb7153438e2', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235003, 'นางสาวกิตติยา ทองมณี', 1, '0000000000', '574235003@parichat.skru.ac.th', '5b862d22b22489b132b362e406f401b6', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235004, 'นางสาววิภาวัลย์ ทองดี', 2, '0000000000', '574235004@parichat.skru.ac.th', '2b5d646dd5c3cead9b057948aee8f692', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235005, 'นายสมศักดิ์ นบดินบดี', 2, '0000000000', '574235005@parichat.skru.ac.th', 'a2f30c39b40205308756fd95a10cdd22', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235006, 'นายวราชิต บางลาง', 2, '0000000000', '574235006@parichat.skru.ac.th', 'd06dce656e2fd9dc1b0b0d1249795438', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235007, 'นายกิตติศักดิ์ กมลา', 2, '0000000000', '574235007@parichat.skru.ac.th', '430d3aa9b23700417ea9b78e2a62e5fa', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235008, 'นางสาวพรภิมล พฤษภา', 1, '0000000000', '574235008@parichat.skru.ac.th', '0e3a9a806f2100a14197841c813c535c', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(594235001, 'นางสาวกิตติกร ชัยเนศ', 2, '0000000000', '594235001@parichat.skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(594235002, 'นางสาวภาวิดา ไชยภัคดี', 1, '0000000000', '594235002@parichat.skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(594235003, 'นางสาวกิตติhhกร ชัยเนศhhhh', 2, '0000000000', '594235001@parichat.skru.ac.th', 'a042f04d4cf3a7db5ff70ae203d35c57', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(594235005, 'นายสไว', 1, '0000000000', '594235005@parichat.skru.ac.th', 'e435b2dc40ab776e5d6b9d27725081a7', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(594235008, 'นายดานิยาน พร้อมมูล', 1, '0000000000', '594235008@parichat.skru.ac.th', '1b141834cd8071a8ed9b1682a60b8a33', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -361,6 +466,16 @@ CREATE TABLE `subject_hash_project` (
   `sp_project_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `subject_hash_project`
+--
+
+INSERT INTO `subject_hash_project` (`sp_id`, `sp_subject_id`, `sp_project_id`) VALUES
+(3, 'knTNnb', 5512),
+(4, 'knTNnb', 5511),
+(5, 'knTNnb', 7878),
+(7, 'knTNnb', 84784);
+
 -- --------------------------------------------------------
 
 --
@@ -372,6 +487,24 @@ CREATE TABLE `subject_hash_student` (
   `ss_subject_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `ss_student_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `subject_hash_student`
+--
+
+INSERT INTO `subject_hash_student` (`ss_id`, `ss_subject_id`, `ss_student_id`) VALUES
+(46, 'knTNnb', 594235003),
+(47, 'knTNnb', 574235001),
+(48, 'knTNnb', 574235002),
+(49, 'knTNnb', 574235003),
+(50, 'knTNnb', 574235004),
+(51, 'knTNnb', 574235005),
+(52, 'knTNnb', 574235006),
+(53, 'knTNnb', 574235007),
+(54, 'knTNnb', 574235008),
+(60, 'knTNnb', 594235005),
+(61, 'knTNnb', 594235008),
+(64, 'knTNnb', 3);
 
 -- --------------------------------------------------------
 
@@ -393,6 +526,13 @@ CREATE TABLE `subject_project` (
   `subject_time_start` time NOT NULL,
   `subject_time_end` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `subject_project`
+--
+
+INSERT INTO `subject_project` (`subject_id`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_record`, `subject_time_start`, `subject_time_end`) VALUES
+('knTNnb', '33232', 'fgfgfgfg', 'weewewew', '1', 2566, '05', 1, 99001, '2021-03-13 00:47:18', '01:48:00', '02:50:00');
 
 -- --------------------------------------------------------
 
@@ -470,6 +610,12 @@ ALTER TABLE `com05`
   ADD KEY `meet_check` (`meet_check`);
 
 --
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`CustomerID`);
+
+--
 -- Indexes for table `filee`
 --
 ALTER TABLE `filee`
@@ -477,12 +623,6 @@ ALTER TABLE `filee`
   ADD KEY `file_type` (`file_type`),
   ADD KEY `project_id` (`project_id`),
   ADD KEY `file_apporve` (`file_apporve`);
-
---
--- Indexes for table `file_apporve`
---
-ALTER TABLE `file_apporve`
-  ADD PRIMARY KEY (`apporve_id`);
 
 --
 -- Indexes for table `file_type`
@@ -616,19 +756,19 @@ ALTER TABLE `teacher_type`
 -- AUTO_INCREMENT for table `appoint`
 --
 ALTER TABLE `appoint`
-  MODIFY `appoint_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `appoint_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `com05`
 --
 ALTER TABLE `com05`
-  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `filee`
 --
 ALTER TABLE `filee`
-  MODIFY `file_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `file_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pr`
@@ -640,25 +780,25 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT for table `project_has_adviser`
 --
 ALTER TABLE `project_has_adviser`
-  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `project_has_student`
 --
 ALTER TABLE `project_has_student`
-  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_project`
 --
 ALTER TABLE `subject_hash_project`
-  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_student`
 --
 ALTER TABLE `subject_hash_student`
-  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Constraints for dumped tables
@@ -688,8 +828,7 @@ ALTER TABLE `com05`
 --
 ALTER TABLE `filee`
   ADD CONSTRAINT `filee_ibfk_1` FOREIGN KEY (`file_type`) REFERENCES `file_type` (`file_type_id`),
-  ADD CONSTRAINT `filee_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`),
-  ADD CONSTRAINT `filee_ibfk_3` FOREIGN KEY (`file_apporve`) REFERENCES `file_apporve` (`apporve_id`);
+  ADD CONSTRAINT `filee_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`);
 
 --
 -- Constraints for table `pr`

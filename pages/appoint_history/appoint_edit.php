@@ -138,71 +138,51 @@ extract($row);?>
                     </div>
                     <div class="mb-2">
                         <label class="my-1 mr-2" for="teacher">อาจารย์ที่ปรึกษา</label>
-                        <select class="form-select" id="teacher" name="teacher" aria-label="Default select example">
-                            <option value="<?php echo $teacher_id; ?>"><?php echo $teacher_name; ?></option>
-                            <?php include '../../conn.php';?>
-                            <?php
-                            $id_ptojrct =$_SESSION["ProjectID"];
-$sql = "SELECT
-project.project_id,
-project.project_name,
-project.project_adviser1,
-teacher.teacher_name
-FROM
-project
-INNER JOIN teacher ON  project.project_adviser1 = teacher.teacher_id
-WHERE
-project.project_id = '$id_ptojrct' ";
-$result = $con->query($sql);
-if ($result->num_rows > 0) {
 
-while($row = $result->fetch_assoc()) {
-echo '<option value="'. $row["project_adviser1"].'">'. $row["teacher_name"].'</option>';
+
+                        <?php 
+                                    
+                                    $id_ptojrct =$_SESSION["ProjectID"];
+                                    $query13 = "SELECT
+                                    project_has_adviser.pha_project_id, 
+                                    project_has_adviser.pha_teacher_id as techerID, 
+                                    teacher.teacher_name as techerNAME, 
+                                    project_has_adviser.pha_type
+                                FROM
+                                    project_has_adviser
+                                    INNER JOIN
+                                    teacher
+                                    ON 
+                                        project_has_adviser.pha_teacher_id = teacher.teacher_id
+                                WHERE
+                                    project_has_adviser.pha_project_id = '$id_ptojrct'
+                                ORDER BY
+                                    project_has_adviser.pha_type ASC";
+                                $result13 = mysqli_query($con, $query13);
+                                    ?>
+                                    
+                        <select class="form-select" id="teacher" name="teacher" aria-label="Default select example">
+                        <option selected>เลือกอาจารย์ที่ปรึกษาโครงงาน</option>
+                                                 
+                                                 <<?php foreach($result13 as $results3){
+                                            if( $results3["techerID"] == $teacher_id ){
+                                               echo' <option value="'.$results3["techerID"].'" selected="true">'.$results3["techerNAME"].'</option>';
+                                            }else{
+                                                echo' <option value="'.$results3["techerID"].'" >'.$results3["techerNAME"].'</option>';
+                                            }
+                                        }
+                                        ?>
+                    </select>
+                           
 
 
  
-}
-}
-$con->close();
-?>
- <?php include '../../conn.php';?>
- <?php
-                                     $id_ptojrct =$_SESSION["ProjectID"];
-					$sql = "SELECT
-                    project.project_id,
-                    project.project_name,
-                    project.project_adviser2,
-                    teacher.teacher_name
-                    FROM
-                    project
-                    INNER JOIN teacher ON  project.project_adviser2 = teacher.teacher_id
-                    WHERE
-                    project.project_id = '$id_ptojrct'";
-					$result = $con->query($sql);
-					if ($result->num_rows > 0) {
-
-						while($row = $result->fetch_assoc()) {
-                            $t = $row["project_adviser2"];
-
-                                if ($t == 3) {
-                            echo '';
-                        }  else {
-                            echo '<option value="'. $row["project_adviser2"].'">'. $row["teacher_name"].'</option>';
-                        }
-                            
-                          
-							 
-						}
-					}
-					$con->close();
-					?>
-                        </select>
                     </div>
                     <?php $newDate = date('Y-m-d\TH:i', strtotime($appoint_date_start)); ?>
                     <div class="mb-2">
                         <label for="date_start">วันที่และเวลาที่เข้าพบ (เริ่มต้น)</label>
                         <input type="datetime-local" class="form-control" id="date_start" name="date_start"
-                            aria-describedby="date_start-describ" value="<?php echo $newDate; ?>">
+                            aria-describedby="date_start-describ" value="<?php echo $newDate; ?>" min="<?php echo date('Y-m-d\TH:i',strtotime('+ 3 day',strtotime(date('Y-m-d\TH:i')))) ?>"  max="<?php echo date('Y-m-d\TH:i',strtotime('+ 11 day',strtotime(date('Y-m-d\TH:i')))) ?>">
                         <small id="date_start-describ" class="form-text text-muted">เลือกวันที่และเวลาที่ต้องการเข้าพบ
                             (เริ่มต้น)</small>
                     </div>

@@ -158,7 +158,7 @@ $id_section_room =$_REQUEST["ID"];
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-5 col-md-5">
                             <form action="project_add.php" method="post">
                                 <label for="projec_id">เพิ่มโครงงาน</label>
                                 <input type="text" name="projec_id" id="projec_id" placeholder="กรอกรหัสโครงงาน"
@@ -167,12 +167,15 @@ $id_section_room =$_REQUEST["ID"];
                                     hidden>
                                 <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
                             </form>
+                            
                         </div>
 
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-7 col-md-7">
                             <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
                                 role="button">เพิ่มด้วย Excel</a>
-
+                                <a class="btn btn-info btn-sm " href="subject_has_project_frm.php?act=show&ID=<?php echo $id_section_room ?>"
+                                role="button">เพิ่มโครงงานใหม่</a>
+                                <a type="button" class="btn btn-success btn-sm " href="project_has_adviser_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกอาจารย์ที่ปรึกษา</a>
                         </div>
                     </div>
                 </div>

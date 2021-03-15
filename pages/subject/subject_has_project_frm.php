@@ -4,7 +4,8 @@
 
 if ($_SESSION["Teacherlevel"]=="2"){?>
 
-<?php include '../../conn.php';?>
+<?php include '../../conn.php';
+$class_id1 = $_REQUEST["ID"];?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,7 +83,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="project_add_ac.php" method="post">
+                <form action="subject_has_project_add.php" method="post">
 
 
                     <div class="row">
@@ -139,10 +140,13 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
 
                     </div>
-
+                    <input type="text" class="form-control" id="class_key" name="class_key"
+                                    aria-describedby="date_end-describ"  value="<?php echo  $class_id1 ?>" hidden>
+                    
                    
                     <div class="mt-3">
             <button type="submit" class="btn btn-primary">บันทึก</button>
+            <a type="buttoon" class="btn btn-info" href="project.php?act=show&ID=<?php echo  $class_id1 ?>">กลับ</a>
         </div>
 
 

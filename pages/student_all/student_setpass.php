@@ -23,7 +23,7 @@ mysqli_close($con);
   if($result){
   echo "<script type='text/javascript'>";
   echo "alert('รีเซ็ตรหัสผ่านนักศึกษาเรียบร้อยแล้ว');";
-  echo "window.location = 'student.php'; ";
+  echo "window.location = 'index.php'; ";
   echo "</script>";
   }
   else{
