@@ -20,27 +20,33 @@ if (!$_SESSION["TeacherID"]){
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
+
+	
+
 	$sql = "SELECT
-	appoint.appoint_id, 
-	appoint.project_id, 
+	com05.com05_id, 
+	com05.appoint_id, 
 	appoint.appoint_date_start, 
 	appoint.appoint_date_end, 
-	teacher.teacher_name, 
-	appoint_status.appoint_status_name
+	com05.project_id, 
+	com05.score, 
+	appoint.teacher_id, 
+	teacher.teacher_name
 FROM
+	com05
+	INNER JOIN
 	appoint
+	ON 
+		com05.appoint_id = appoint.appoint_id
 	INNER JOIN
 	teacher
 	ON 
-		appoint.teacher_id = teacher.teacher_id
-	INNER JOIN
-	appoint_status
-	ON 
-		appoint.appoint_status = appoint_status.appoint_status_id
+		
+		com05.teacher_id = teacher.teacher_id
 WHERE
-	appoint.project_id = '$project_id'
+	com05.project_id = '$project_id'
 ORDER BY
-	appoint.appoint_id ASC";
+	com05.com05_id ASC";
 	
 	$result = mysqli_query($con, $sql);
 	$content = "";
@@ -56,38 +62,141 @@ ORDER BY
 				<td style="border-right:1px solid #000;padding:3px;"  >'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['teacher_name'].'</td>
               
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['appoint_status_name'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['score'].'</td>
 			</tr>';
 			$i++;
 		}
 	}
+
+
+
+
+
+	$sql3 = "SELECT
+	project_has_student.*, 
+	project_has_student.phs_student_id, 
+	student.*
+    FROM
+	project_has_student
+	INNER JOIN
+	student
+	ON 
+		project_has_student.phs_student_id = student.student_id
+	WHERE
+	project_has_student.phs_project_id = '$project_id'
+	";
 	
+	$result3 = mysqli_query($con, $sql3);
+	$namestudent = "";
+	if (mysqli_num_rows($result3) > 0) {
+		$i = 1;
+		while($row3 = mysqli_fetch_assoc($result3)) {
+			
+			$namestudent .= ' '.$row3['student_name'].' ,';
+			$i++;
+		}
+	}
+
+
+	$sql4 = "SELECT
+	project_has_adviser.pha_project_id, 
+	project_has_adviser.pha_teacher_id, 
+	teacher.teacher_name, 
+	project_has_adviser.pha_type
+FROM
+	project_has_adviser
+	INNER JOIN
+	teacher
+	ON 
+		project_has_adviser.pha_teacher_id = teacher.teacher_id
+WHERE
+	project_has_adviser.pha_project_id = '$project_id'
+ORDER BY
+	project_has_adviser.pha_type ASC
+	";
+	
+	$result4 = mysqli_query($con, $sql4);
+	$nameteacher = "";
+	if (mysqli_num_rows($result4) > 0) {
+		$i = 1;
+		while($row4 = mysqli_fetch_assoc($result4)) {
+			
+			$nameteacher .= ' '.$row4['teacher_name'].' ,';
+			$i++;
+		}
+	}
+
 	mysqli_close($con);
+
+
+	
+
 	
     $mpdf = new \Mpdf\Mpdf();
 
 
-$head = '
+
+	include("conn.php");
+
+
+
+$sql2 = "SELECT
+project.project_id, 
+project.project_name, 
+project.project_type, 
+project_type.project_type_name
+FROM
+project
+INNER JOIN
+project_has_student
+ON 
+	project.project_id = project_has_student.phs_project_id
+INNER JOIN
+project_type
+ON 
+	project.project_type = project_type.project_type_id
+WHERE
+project.project_id = '$project_id'
+GROUP BY
+project.project_id";
+$result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
+$row2 = mysqli_fetch_array($result2);
+extract($row2);
+
+$echoproject = "$project_id   $project_name  ( $project_type_name )"; 
+
+$head1 = '
 <style>
 	body{
 		font-family: "Garuda";//เรียกใช้font Garuda สำหรับแสดงผล ภาษาไทย
 	}
 </style>
 
-<h3 style="text-align:center">ประวัติการนัดพบอาจารย์ที่ปรึกษาโครงงาน</h3>
+<h3 style="text-align:center">ประวัติการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h3>
 
 <table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
     <tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"   width="10%">โครงงาน</td>       
-    <td  style="border-right:0px solid #000;padding:4px;" width="90%">kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk </td>
+	<td  style="border-right:0px solid #000;padding:4px;"   width="10%"> โครงงาน </td><td  style="border-right:0px solid #000;padding:4px;" width="90%">';
+	
+	
+	$head2 = '</td>
 	</tr>
 
 	<tr style="border:0px solid #000;padding:4px;">
 	<td  style="border-right:0px solid #000;padding:4px;"   width="20%">ผู้จัดทำโครงงาน</td>       
-    <td  style="border-right:0px solid #000;padding:4px;" width="80%">
-</td>
+    <td  style="border-right:0px solid #000;padding:4px;" width="80%">';
+	
+	
+	$head3 = '</td>
 	</tr>
 
+	<tr style="border:0px solid #000;padding:4px;">
+	<td  style="border-right:0px solid #000;padding:4px;"   width="20%">อาจารย์ที่ปรึกษา</td>       
+    <td  style="border-right:0px solid #000;padding:4px;" width="80%">';
+	
+	
+	$head4 = '</td>
+	</tr>
 	</table>
 	
 <table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
@@ -97,7 +206,7 @@ $head = '
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;" width="20%">วันที่ </td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;" width="15%">เวลา </td>
         <td  width="25%" style="border-right:1px solid #000;padding:4px;text-align:center;">&nbsp;อาจารย์</td>
-        <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="15%">สถานะ</td>
+        <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="15%">คะแนน</td>
        
     </tr>
 
@@ -107,11 +216,21 @@ $head = '
 $end = "</tbody>
 </table>";
 
-$mpdf->WriteHTML($head);
+$mpdf->WriteHTML($head1);
+$mpdf->WriteHTML($echoproject);
 
+$mpdf->WriteHTML($head2);
+$mpdf->WriteHTML($namestudent);
+
+$mpdf->WriteHTML($head3);
+
+$mpdf->WriteHTML($nameteacher);
+$mpdf->WriteHTML($head4);
 $mpdf->WriteHTML($content);
 
 $mpdf->WriteHTML($end);
+
+
 
 $mpdf->Output();
 

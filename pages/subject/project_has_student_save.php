@@ -16,10 +16,9 @@
 		{
 			if( 
 					$_POST["txtProjectID$i"] != "" &&
-					$_POST["txtTeacherID$i"] != "" &&
-					$_POST["txtAdviserStatus$i"] != "" )
+					$_POST["txtstuID$i"] != ""  )
 			{
-				$check = "select * from project_has_adviser  where pha_project_id = '".$_POST["txtProjectID$i"]."' and pha_teacher_id = '".$_POST["txtTeacherID$i"]."' ";
+				$check = "select * from project_has_student where phs_project_id = '".$_POST["txtProjectID$i"]."' and phs_student_id = '".$_POST["txtstuID$i"]."' ";
             $result1 = mysqli_query($con, $check)  or die(mysql_error());
               
               if($result1->num_rows > 0)   		
@@ -30,8 +29,8 @@
               }else{
           
       
-                $sql = "INSERT INTO project_has_adviser (pha_project_id, pha_teacher_id, pha_type) 
-                VALUES ('".$_POST["txtProjectID$i"]."','".$_POST["txtTeacherID$i"]."','".$_POST["txtAdviserStatus$i"]."')";
+                $sql = "INSERT INTO project_has_student (phs_project_id, phs_student_id) 
+                VALUES ('".$_POST["txtProjectID$i"]."','".$_POST["txtstuID$i"]."')";
             $query = mysqli_query($con,$sql);
        
        

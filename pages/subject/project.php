@@ -176,6 +176,7 @@ $id_section_room =$_REQUEST["ID"];
                                 <a class="btn btn-info btn-sm " href="subject_has_project_frm.php?act=show&ID=<?php echo $id_section_room ?>"
                                 role="button">เพิ่มโครงงานใหม่</a>
                                 <a type="button" class="btn btn-success btn-sm " href="project_has_adviser_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกอาจารย์ที่ปรึกษา</a>
+                                <a type="button" class="btn btn-success btn-sm " href="project_has_student_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกกลุ่มโครงงาน</a>
                         </div>
                     </div>
                 </div>

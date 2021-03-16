@@ -240,7 +240,7 @@ $id_section_room =$_REQUEST["ID"];
                             <th>รหัสนักศึกษา</th>
                             <th>ชื่อ - สกุล</th>
                             <th>สาขา</th>
-                            <th>อีเมลล์</th>
+                            <th>เบอร์ติดต่อ</th>
                             <th>สถานะ</th>
                             <th>เพิ่มเติม</th>
 
@@ -259,7 +259,7 @@ $id_section_room =$_REQUEST["ID"];
                     subject_hash_student.ss_student_id, 
                     student.student_name, 
                     major.student_major_name, 
-                    student.student_email, 
+                    student.student_phone, 
 	                student.student_type
                 FROM
                     subject_hash_student
@@ -285,7 +285,7 @@ $id_section_room =$_REQUEST["ID"];
                                 <td>'. $row["ss_student_id"].'</td>
                                 <td>'. $row["student_name"].'</td>
                                 <td>'. $row["student_major_name"].'</td>
-                                <td>'. $row["student_email"].'</td>
+                                <td>'. $row["student_phone"].'</td>
                                 
                                 <td>';
                                 

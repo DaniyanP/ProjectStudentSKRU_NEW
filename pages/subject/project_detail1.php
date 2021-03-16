@@ -932,7 +932,7 @@ appoint.appoint_date_start
         </div>
         <!--  nav end -->
 
-
+     
 
         <?php include '../footer.php';?>
 
@@ -980,6 +980,7 @@ appoint.appoint_date_start
 </body>
 
 </html>
+<?php   session_unregister("$_SESSION[ProjectID]"); ?>
 <?php }else{
 
 Header("Location: ../404/404.php");

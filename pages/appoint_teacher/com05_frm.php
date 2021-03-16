@@ -126,7 +126,7 @@ $result = mysqli_query($con, $query);
                        
                         <?php foreach($result as $results){?>
     <option value="<?php echo $results["s_id"];?>">
-      <?php echo '[[ '.$results["s_s"].' คะแนน ]] '.$results["s_detail"].'' ?>
+      <?php echo ' '.$results["s_s"].' คะแนน  '.$results["s_detail"].'' ?>
       </option>
     <?php } ?>
                     </select>

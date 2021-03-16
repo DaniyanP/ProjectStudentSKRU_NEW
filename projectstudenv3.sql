@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2021 at 07:55 PM
+-- Generation Time: Mar 16, 2021 at 04:56 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -50,7 +50,7 @@ INSERT INTO `appoint` (`appoint_id`, `project_id`, `appoint_date_start`, `appoin
 (6, 5512, '2021-03-31 21:27:00', '2021-03-31 21:30:00', 3, '4411', 99001, 2, 594235002, '2021-03-14 21:27:50'),
 (7, 5512, '2021-03-16 00:29:00', '2021-03-16 00:59:00', 30, 'ss', 99001, 4, 594235003, '2021-03-13 00:24:11'),
 (8, 7878, '2021-03-03 01:23:00', '2021-03-03 01:43:00', 20, 'fgf', 99003, 1, 574235001, '2021-03-15 22:23:39'),
-(9, 7878, '2021-03-25 22:48:00', '2021-03-25 23:13:00', 25, 'ssfsf', 99001, 1, 574235001, '2021-03-15 22:48:53');
+(9, 7878, '2021-03-25 22:48:00', '2021-03-25 23:13:00', 25, 'ssfsf', 99001, 4, 574235001, '2021-03-15 22:48:53');
 
 -- --------------------------------------------------------
 
@@ -101,7 +101,8 @@ CREATE TABLE `com05` (
 
 INSERT INTO `com05` (`com05_id`, `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`) VALUES
 (1, 4, 5512, 'aaa', 'sss', 2, 1, 99001),
-(2, 5, 5512, 'sxaaa', 'asaaqqq', 1, 1, 99001);
+(2, 5, 5512, 'sxaaa', 'asaaqqq', 1, 1, 99001),
+(43, 5, 7878, 'sxaaa', 'asaaqqq', 1, 1, 99001);
 
 -- --------------------------------------------------------
 
@@ -256,10 +257,8 @@ CREATE TABLE `project` (
 INSERT INTO `project` (`project_id`, `project_name`, `project_type`, `project_status`) VALUES
 (5511, 'ระบบนัดแพทย์โรงบาลศรีเมือง', 1, 1),
 (5512, 'ระบบขายหวยออนไลน์', 1, 1),
-(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 1),
-(7878, 'ระบบพนันออนไลน์', 1, 1),
-(8899, 'ระบบถ่ายทอดสดฟุตบอล', 4, 1),
-(84784, 'อดดอ', 1, 1);
+(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 2),
+(7878, 'ระบบพนันออนไลน์', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -309,7 +308,9 @@ INSERT INTO `project_has_student` (`phs_key`, `phs_project_id`, `phs_student_id`
 (4, 5512, 594235001),
 (5, 5512, 594235002),
 (7, 5511, 574235007),
-(8, 7878, 574235001);
+(8, 7878, 574235001),
+(9, 7878, 594235003),
+(11, 7878, 594235008);
 
 -- --------------------------------------------------------
 
@@ -474,7 +475,8 @@ INSERT INTO `subject_hash_project` (`sp_id`, `sp_subject_id`, `sp_project_id`) V
 (3, 'knTNnb', 5512),
 (4, 'knTNnb', 5511),
 (5, 'knTNnb', 7878),
-(7, 'knTNnb', 84784);
+(10, 'v0HXW5', 7878),
+(12, 'v0HXW5', 5588);
 
 -- --------------------------------------------------------
 
@@ -504,7 +506,11 @@ INSERT INTO `subject_hash_student` (`ss_id`, `ss_subject_id`, `ss_student_id`) V
 (54, 'knTNnb', 574235008),
 (60, 'knTNnb', 594235005),
 (61, 'knTNnb', 594235008),
-(64, 'knTNnb', 3);
+(64, 'knTNnb', 3),
+(65, 'v0HXW5', 594235008),
+(66, 'v0HXW5', 594235001),
+(67, 'v0HXW5', 594235002),
+(68, 'v0HXW5', 594235003);
 
 -- --------------------------------------------------------
 
@@ -513,7 +519,7 @@ INSERT INTO `subject_hash_student` (`ss_id`, `ss_subject_id`, `ss_student_id`) V
 --
 
 CREATE TABLE `subject_project` (
-  `subject_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `subject_key` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `subject_id2` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `subject_classroom` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `subject_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -531,8 +537,9 @@ CREATE TABLE `subject_project` (
 -- Dumping data for table `subject_project`
 --
 
-INSERT INTO `subject_project` (`subject_id`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_record`, `subject_time_start`, `subject_time_end`) VALUES
-('knTNnb', '33232', 'fgfgfgfg', 'weewewew', '1', 2566, '05', 1, 99001, '2021-03-13 00:47:18', '01:48:00', '02:50:00');
+INSERT INTO `subject_project` (`subject_key`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_record`, `subject_time_start`, `subject_time_end`) VALUES
+('knTNnb', '33232', 'fgfgfgfg', 'weewewew', '1', 2566, '05', 1, 99001, '2021-03-13 00:47:18', '01:48:00', '02:50:00'),
+('v0HXW5', '22', '22', '22', '22', 22, '22', 1, 99001, '2021-03-16 12:18:01', '12:22:00', '12:22:00');
 
 -- --------------------------------------------------------
 
@@ -731,7 +738,7 @@ ALTER TABLE `subject_hash_student`
 -- Indexes for table `subject_project`
 --
 ALTER TABLE `subject_project`
-  ADD PRIMARY KEY (`subject_id`),
+  ADD PRIMARY KEY (`subject_key`),
   ADD KEY `subject_teacher` (`subject_teacher`),
   ADD KEY `subject_day` (`subject_day`);
 
@@ -762,7 +769,7 @@ ALTER TABLE `appoint`
 -- AUTO_INCREMENT for table `com05`
 --
 ALTER TABLE `com05`
-  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `filee`
@@ -780,25 +787,25 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT for table `project_has_adviser`
 --
 ALTER TABLE `project_has_adviser`
-  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `project_has_student`
 --
 ALTER TABLE `project_has_student`
-  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_project`
 --
 ALTER TABLE `subject_hash_project`
-  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_student`
 --
 ALTER TABLE `subject_hash_student`
-  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- Constraints for dumped tables
@@ -869,13 +876,13 @@ ALTER TABLE `student`
 --
 ALTER TABLE `subject_hash_project`
   ADD CONSTRAINT `subject_hash_project_ibfk_1` FOREIGN KEY (`sp_project_id`) REFERENCES `project` (`project_id`),
-  ADD CONSTRAINT `subject_hash_project_ibfk_2` FOREIGN KEY (`sp_subject_id`) REFERENCES `subject_project` (`subject_id`);
+  ADD CONSTRAINT `subject_hash_project_ibfk_2` FOREIGN KEY (`sp_subject_id`) REFERENCES `subject_project` (`subject_key`);
 
 --
 -- Constraints for table `subject_hash_student`
 --
 ALTER TABLE `subject_hash_student`
-  ADD CONSTRAINT `subject_hash_student_ibfk_1` FOREIGN KEY (`ss_subject_id`) REFERENCES `subject_project` (`subject_id`),
+  ADD CONSTRAINT `subject_hash_student_ibfk_1` FOREIGN KEY (`ss_subject_id`) REFERENCES `subject_project` (`subject_key`),
   ADD CONSTRAINT `subject_hash_student_ibfk_2` FOREIGN KEY (`ss_student_id`) REFERENCES `student` (`student_id`);
 
 --
