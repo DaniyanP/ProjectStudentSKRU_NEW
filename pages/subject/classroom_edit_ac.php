@@ -31,7 +31,7 @@ subject_time_end='$subject_time_end'
 
 
 
-      WHERE subject_id='$subject_id' 
+      WHERE subject_key='$subject_id' 
       ";
 
 

@@ -41,13 +41,13 @@ $id_class  = $_POST['id_class'];
     if($result){
       echo "<script>";
    
-      echo "window.location = history.back(1); ";
+      echo "window.location = 'student.php?act=show&ID=$id_class' ";
       echo "</script>";
     } else {
       
       echo "<script>";
       echo "alert('ไม่พบรหัสนักศึกษานี้ในระบบ');";
-      echo "window.location = history.back(1); ";
+      echo "window.location = 'student.php?act=show&ID=$id_class' ";
       echo "</script>";
     }
 ?>

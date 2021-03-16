@@ -120,7 +120,7 @@ $id_section_room =$_REQUEST["ID"];
                        
                         
                        $sql01 = "SELECT
-                       subject_project.subject_id,
+                       subject_project.subject_key,
                        subject_project.subject_name,
                        subject_project.subject_semester,
                        subject_project.subject_year,
@@ -129,7 +129,7 @@ $id_section_room =$_REQUEST["ID"];
                        FROM
                        subject_project
                        WHERE
-                       subject_project.subject_id = '$id_section_room'
+                       subject_project.subject_key = '$id_section_room'
                        ";
                        $result01 = $con->query($sql01);
                        if ($result01->num_rows > 0) {

@@ -334,7 +334,7 @@ $result=$con->query($sql);
       <div class="mb-2">
           <label for="date_start">วันที่และเวลาที่เข้าพบ (เริ่มต้น)</label>
           <input type="datetime-local" class="form-control" id="date_start" name="date_start"
-              aria-describedby="date_start-describ" value="'.$newDate.'">
+              aria-describedby="date_start-describ" value="'.$newDate.'" min="'.date('Y-m-d\TH:i',strtotime('+ 0 day',strtotime(date('Y-m-d\TH:i')))).'">
           <small id="date_start-describ" class="form-text text-muted">เลือกวันที่และเวลาที่ต้องการเข้าพบ
               (เริ่มต้น)</small>
       </div>

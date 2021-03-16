@@ -127,7 +127,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
            $teacher_id =$_SESSION["TeacherID"];
                
 					$sql = "SELECT
-                    subject_project.subject_id,
+                    subject_project.subject_key,
                     subject_project.subject_id2,
                     subject_project.subject_classroom,
                     subject_project.subject_name,
@@ -162,7 +162,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         </td>
                                         <td>';
                                         
-                                        $row_id = $row["subject_id"];
+                                        $row_id = $row["subject_key"];
                                         $query01 = "SELECT
                                         Count(subject_hash_student.ss_id) as student_total,
                                         subject_hash_student.ss_subject_id,
@@ -186,7 +186,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         echo '</td>
                                         <td>';
                                         
-                                        $row_id = $row["subject_id"];
+                                        $row_id = $row["subject_key"];
                                         $query02 = "SELECT
                                         subject_hash_project.sp_subject_id, 
                                         subject_hash_project.sp_project_id, 
@@ -212,7 +212,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         <td>';
                                         
                                         
-                                        $row_id = $row["subject_id"];
+                                        $row_id = $row["subject_key"];
                                         $query033 = "SELECT
                                         subject_hash_project.sp_subject_id, 
                                         subject_hash_project.sp_project_id, 
@@ -237,7 +237,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         <td>';
                                         
                                         
-                                        $row_id = $row["subject_id"];
+                                        $row_id = $row["subject_key"];
                                         $query033 = "SELECT
                                         subject_hash_project.sp_subject_id, 
                                         subject_hash_project.sp_project_id, 
@@ -262,7 +262,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         <td>';
                                         
                                         
-                                        $row_id = $row["subject_id"];
+                                        $row_id = $row["subject_key"];
                                         $query033 = "SELECT
                                         subject_hash_project.sp_subject_id, 
                                         subject_hash_project.sp_project_id, 
@@ -299,9 +299,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                          
 
                                             <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="student.php?act=show&ID='. $row["subject_id"].'"><span
+                                            <a class="dropdown-item" href="student.php?act=show&ID='. $row["subject_key"].'"><span
                                             class="fas fa-eye mr-2"></span>รายชื่อนักศึกษา</a>
-                                            <a class="dropdown-item" href="project.php?act=show&ID='. $row["subject_id"].'"><span
+                                            <a class="dropdown-item" href="project.php?act=show&ID='. $row["subject_key"].'"><span
                                                         class="fas fa-eye mr-2"></span>โครงงาน</a>
                                                        
 
@@ -311,9 +311,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                                         
 
 
-                                                <a class="dropdown-item" href="classroom_edit.php?act=edit&ID=' . $row["subject_id"].'"><span
+                                                <a class="dropdown-item" href="classroom_edit.php?act=edit&ID=' . $row["subject_key"].'"><span
                                                         class="fas fa-edit mr-2"></span>แก้ไข</a>'; ?>
-                                                <a class="dropdown-item text-danger" href="classroom_del.php?ID=<?php echo $row["subject_id"]; ?>" onclick="return confirm('คุณต้องการลบรายวิชานี้ออกใช่ไหม')"><span
+                                                <a class="dropdown-item text-danger" href="classroom_del.php?ID=<?php echo $row["subject_key"]; ?>" onclick="return confirm('คุณต้องการลบรายวิชานี้ออกใช่ไหม')"><span
                                                         class="fas fa-trash-alt mr-2"></span>ลบ</a>
                                        <?php     echo'</div>                                       
                                         </div>                                 

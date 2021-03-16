@@ -88,7 +88,7 @@ $classroom_id = $_REQUEST["ID"];
 
 
 $sql = "SELECT
-subject_project.subject_id,
+subject_project.subject_key,
 subject_project.subject_id2,
 subject_project.subject_classroom,
 subject_project.subject_name,
@@ -103,7 +103,7 @@ subject_project.subject_time_start
 FROM
 subject_project
 WHERE
-subject_project.subject_id = '$classroom_id'";
+subject_project.subject_key = '$classroom_id'";
 $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 $row = mysqli_fetch_array($result);
 extract($row);
@@ -231,7 +231,7 @@ extract($row);
                         <input type="text" name="subject_teacher" id="subject_teacher"
                             value="<?php echo  $_SESSION["TeacherID"]; ?>" hidden>
 
-                        <input type="text" name="subject_id" id="subject_id" value="<?php echo  $subject_id ?>" hidden>
+                        <input type="text" name="subject_id" id="subject_id" value="<?php echo  $subject_key ?>" hidden>
 
 
 

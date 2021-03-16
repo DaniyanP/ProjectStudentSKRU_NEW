@@ -14,7 +14,7 @@ $sql3 = "DELETE FROM subject_hash_student  WHERE ss_subject_id='$subject_id' ";
 $result3 = mysqli_query($con, $sql3);
 
   
-  $sql = "DELETE FROM subject_project  WHERE subject_id='$subject_id' ";
+  $sql = "DELETE FROM subject_project  WHERE subject_key='$subject_id' ";
 $result = mysqli_query($con, $sql);
 
 

@@ -40,7 +40,7 @@ $subject_time_end  = $_POST['subject_time_end'];
 
 $sql ="INSERT INTO subject_project
 
-  ( `subject_id`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_time_start`, `subject_time_end`)
+  ( `subject_key`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_time_start`, `subject_time_end`)
 
     VALUES 
 
