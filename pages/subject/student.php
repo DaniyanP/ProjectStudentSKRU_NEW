@@ -365,6 +365,7 @@ $id_section_room =$_REQUEST["ID"];
                 </table>
 
             </div>
+            <a href="../../pdf_student.php?act=show&ID=<?php echo $id_section_room ?>" type="button" class="btn btn-danger"><span class="fas fa-file-pdf mr-2"></span>รายงานนักศึกษา</a>
         </div>
         </div>
 

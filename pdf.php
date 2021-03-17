@@ -132,9 +132,9 @@ ORDER BY
 	
 
 	
-    $mpdf = new \Mpdf\Mpdf();
+  /*   $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']); */
 
-
+	$mpdf = new \Mpdf\Mpdf();
 
 	include("conn.php");
 

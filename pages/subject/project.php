@@ -175,8 +175,8 @@ $id_section_room =$_REQUEST["ID"];
                                 role="button">เพิ่มด้วย Excel</a>
                                 <a class="btn btn-info btn-sm " href="subject_has_project_frm.php?act=show&ID=<?php echo $id_section_room ?>"
                                 role="button">เพิ่มโครงงานใหม่</a>
-                                <a type="button" class="btn btn-success btn-sm " href="project_has_adviser_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกอาจารย์ที่ปรึกษา</a>
-                                <a type="button" class="btn btn-success btn-sm " href="project_has_student_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกกลุ่มโครงงาน</a>
+                                <a  class="btn btn-success btn-sm " href="project_has_adviser_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกอาจารย์ที่ปรึกษา</a>
+                                <a  class="btn btn-success btn-sm " href="project_has_student_frm.php?&ID=<?php echo $id_section_room ?>" >บันทึกกลุ่มโครงงาน</a>
                         </div>
                     </div>
                 </div>
@@ -276,8 +276,9 @@ $id_section_room =$_REQUEST["ID"];
                         project.project_status = project_status.project_status_id
                 WHERE
                 subject_hash_project.sp_subject_id = '$id_section_room'
+                ORDER BY
+                    subject_hash_project.sp_project_id ASC
                 
-                   
                     ";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
@@ -354,6 +355,7 @@ $id_section_room =$_REQUEST["ID"];
                 </table>
 
             </div>
+            <a href="../../pdf_project.php?act=show&ID=<?php echo $id_section_room ?>" type="button" class="btn btn-danger"><span class="fas fa-file-pdf mr-2"></span>รายงานโครงงาน</a>
         </div>
         </div>
 
