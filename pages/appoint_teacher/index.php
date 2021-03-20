@@ -132,7 +132,7 @@ if (!$_SESSION["TeacherID"]){
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="example" class="table table-striped table-bordered" width="100%" data-order="[[ 0, &quot;desc&quot; ]]" id="tableId">
+                    <table id="example" class="table table-striped table-bordered " width="100%" data-order="[[ 0, &quot;desc&quot; ]]" id="tableId">
                         <col style="width:5%">
                         <col style="width:7%">
                         <col style="width:7%">
@@ -140,7 +140,7 @@ if (!$_SESSION["TeacherID"]){
                         <col style="width:5%">
                         <col style="width:5%">
 
-                        <thead>
+                        <thead class="thead-dark">
                         <tr>
                                 <th>#ID</th>
                                 <th>วันที่เข้าพบ</th>

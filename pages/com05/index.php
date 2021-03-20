@@ -140,7 +140,7 @@ if (!$_SESSION["TeacherID"]){
                         <col style="width:5%">
                         <col style="width:5%">
 
-                        <thead>
+                        <thead class="thead-dark">
                         <tr>
                                 <th>#ID</th>
                                 <th>รหัสโครงงาน</th>

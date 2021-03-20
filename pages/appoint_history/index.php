@@ -59,7 +59,7 @@ if (!$_SESSION["UserID"]){  //check session
                 "oLanguage": {
 
                     "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
-                    "sZeroRecords": "ไม่พลประวัติการนัดพบอาจารย์ที่ปรึกษา",
+                    "sZeroRecords": "ไม่พบประวัติการนัดพบอาจารย์ที่ปรึกษา",
                     "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
                     "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
                     "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",

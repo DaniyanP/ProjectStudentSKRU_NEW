@@ -203,7 +203,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                     <col style="width:5%">
                     <col style="width:5%">
 
-                    <thead>
+                    <thead class="thead-dark">
                     <tr>
                             <th>รหัสโครงงาน</th>
                             <th>ชื่อโครงงาน</th>

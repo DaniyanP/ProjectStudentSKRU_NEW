@@ -238,7 +238,7 @@ $id_section_room =$_REQUEST["ID"];
                     <col style="width:5%">
                     <col style="width:5%">
 
-                    <thead>
+                    <thead class="thead-dark">
                     <tr>
                             <th>รหัสนักศึกษา</th>
                             <th>ชื่อ - สกุล</th>
