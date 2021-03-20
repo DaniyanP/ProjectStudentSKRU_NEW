@@ -74,7 +74,8 @@ if (!$_SESSION["TeacherID"]){
             });
         });
     </script>
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <?php include '../dateth.php';?>
 </head>
 
@@ -210,9 +211,9 @@ if (!$_SESSION["TeacherID"]){
                                                     class="fas fa-eye mr-2"></span>ดูรายละเอียด</a>
                                             <a class="dropdown-item" data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span
                                                     class="fas fa-edit mr-2"></span>แก้ไข</a>
-                                            <a class="dropdown-item text-success" href="appoint_approve.php?act=show&ID=' . $row["appoint_id"].'"><span
+                                            <a class="dropdown-item text-success" href="index.php?CFR3=req&ID=' . $row["appoint_id"].'"><span
                                                     class="fas fa-check mr-2"></span>ยืนยัน</a>
-                                                    <a class="dropdown-item text-danger" href="appoint_cancel.php?act=show&ID=' . $row["appoint_id"].'"><span
+                                                    <a class="dropdown-item text-danger" href="index.php?deleteR=req&ID=' . $row["appoint_id"].'"><span
                                                     class="fas fa-ban mr-2"></span>ยกเลิก</a>
                                         </div>
 
@@ -241,7 +242,7 @@ if (!$_SESSION["TeacherID"]){
                                             <div class="modal-body">
 
                                             
-                                              <form role="form" action="appoint_edit_ac.php" method="post">
+                                              <form role="form" action="" method="post">
 
                                               <input type="text" class="form-control" id="appoint_id" name="appoint_id"
                                               aria-describedby="date_end-describ" value="'. $row["appoint_id"].'" hidden>
@@ -262,7 +263,7 @@ if (!$_SESSION["TeacherID"]){
                                             }
                                            
                                               echo'<div class="modal-footer">  
-                                              <button type="submit" class="btn btn-success">ยืนยัน</button>
+                                              <button type="submit" class="btn btn-success" name="SubmitEditAppoint">ยืนยัน</button>
                                               <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                             </div>';
                                          
@@ -292,7 +293,7 @@ if (!$_SESSION["TeacherID"]){
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="com05_frm.php?act=show&ID='. $row["appoint_id"].'"><span
                                                     class="fas fa-comment mr-2"></span>บันทึก COM-05</a>
-                                                    <a class="dropdown-item text-danger" href="appoint_reject.php?act=show&ID='. $row["appoint_id"].'"><span
+                                                    <a class="dropdown-item text-danger" href="index.php?RejectAppoint=req&ID='. $row["appoint_id"].'"><span
                                                     class="fas fa-ban mr-2"></span>ผิดนัด</a>
                                         
                                         </div>
@@ -356,7 +357,216 @@ if (!$_SESSION["TeacherID"]){
             </div>
         </div>
 
+<?php
+include '../../conn.php';
+    if (isset($_GET["deleteR"] )) {
+        echo
+            "<script> 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยกเลิกการนัดพบ?',
+                    text: 'ท่านเเน่ใจว่า ยกเลิกการนัดพบ!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location = 'index.php?deleteR2=req&ID={$_GET["ID"]}'
+                    }else{
+                        location = 'index.php'
+                    }
+                }); 
+        </script>";
+}
 
+
+if (isset($_GET["deleteR2"])) {
+   
+
+  
+    $sql288 = "UPDATE appoint SET
+
+    appoint_status = 3
+    
+    
+    
+          WHERE appoint_id={$_GET["ID"]}";
+
+    if (mysqli_query($con, $sql288)) {
+        echo
+            "<script> 
+                Swal.fire(
+                    'ยกเลิกการนัดพบสำเร็จ!',
+                    'ท่านได้ยกเลิกเรียบร้อย',
+                    'success'
+                ).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+
+if (isset($_GET["CFR3"])) {
+   
+
+   
+    $sql288 = "UPDATE appoint SET
+
+    appoint_status = 2
+    
+    
+    
+          WHERE appoint_id={$_GET["ID"]}";
+
+    if (mysqli_query($con, $sql288)) {
+        echo
+            "<script> 
+                Swal.fire(
+                    'ยืนยันการนัดพบสำเร็จ!',
+                    'ท่านได้ยืนยันเรียบร้อยแล้ว',
+                    'success'
+                ).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ยืนยันการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+if (isset($_GET["RejectAppoint"] )) {
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'บันทึกการผิดนัด ?',
+                text: 'หากบันทึกการผิดนัดแล้ว ไม่สามารถกรอกแบบฟอร์มบันทึกการเข้าพบได้ ( COM-05 )!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location = 'index.php?RejectAppoint01=req&ID={$_GET["ID"]}'
+                }else{
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+}
+
+
+if (isset($_GET["RejectAppoint01"])) {
+
+
+    
+    
+    
+    
+      
+      $sqlreject = "UPDATE appoint SET
+    
+    appoint_status =6
+    
+    
+    
+    
+          WHERE appoint_id={$_GET["ID"]}";
+
+if (mysqli_query($con, $sqlreject)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'บันทึกการผิดนัดสำเร็จ!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'บันทึกการผิดนัดไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+
+if (isset($_POST["SubmitEditAppoint"])) {
+    include '../../conn.php';
+
+   
+    $appoint_id = $_POST['appoint_id'];
+    $date_start  = $_POST['date_start'];
+    $date_end  = $_POST['date_end'];
+    $set_status = 5;
+    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+    
+      
+      $sqlappointedit = "UPDATE appoint SET
+    
+    appoint_status ='$set_status',
+    appoint_date_start ='$date_start',
+    appoint_date_end ='$appoint_end'
+    
+    
+    
+          WHERE appoint_id='$appoint_id' 
+          ";
+
+    if (mysqli_query($con, $sqlappointedit)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'เปลี่ยนแปลงการนัดหมายเรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+mysqli_close($con);
+?>
 
         <?php include '../footer.php';?>
 

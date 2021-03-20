@@ -122,7 +122,7 @@ extract($row);
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="phone">เบอร์โทร</label>
-                                        <input class="form-control" id="phone" name="phone" type="text" placeholder="0123456789" value="<?php echo $student_phone ?>" required>
+                                        <input class="form-control" id="phone" name="phone"   type="text" placeholder="0123456789" value="<?php echo $student_phone ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">

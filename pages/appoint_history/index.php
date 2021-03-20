@@ -74,7 +74,8 @@ if (!$_SESSION["UserID"]){  //check session
             });
         });
     </script>
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <?php include '../dateth.php';?>
 </head>
 
@@ -210,7 +211,7 @@ if (!$_SESSION["UserID"]){  //check session
                                                     class="fas fa-eye mr-2"></span>ดูรายละเอียด</a>
                                             <a class="dropdown-item" href="appoint_edit.php?act=edit&ID=' . $row["appoint_id"].'"><span
                                                     class="fas fa-edit mr-2"></span>แก้ไข</a>
-                                            <a class="dropdown-item text-danger" href="cencel_ac.php?act=show&ID=' . $row["appoint_id"].'"><span
+                                            <a class="dropdown-item text-danger" href="index.php?CCR3=req&ID=' . $row["appoint_id"].'"><span
                                                     class="fas fa-ban mr-2"></span>ยกเลิก</a>
                                         </div>
 
@@ -230,9 +231,9 @@ if (!$_SESSION["UserID"]){  //check session
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <div class="dropdown-menu">
-                                        <a class="dropdown-item text-success" href="appoint_approve.php?act=show&ID=' . $row["appoint_id"].'"><span
+                                        <a class="dropdown-item text-success" href="index.php?CFR3=req&ID=' . $row["appoint_id"].'"><span
                                                     class="fas fa-check mr-2"></span>ยืนยัน</a>
-                                        <a class="dropdown-item text-danger" href="cencel_ac.php?act=show&ID=' . $row["appoint_id"].'"><span
+                                        <a class="dropdown-item text-danger" href="index.php?CCR3=req&ID=' . $row["appoint_id"].'"><span
                                         class="fas fa-ban mr-2"></span>ยกเลิก</a>
                                            
                                         </div>
@@ -289,6 +290,100 @@ if (!$_SESSION["UserID"]){  //check session
                             </tr>
                         </tfoot> -->
                     </table>
+
+
+                    <?php
+                    if (isset($_GET["CFR3"])) {
+                        include '../../conn.php';
+
+                        // คำสั่ง sql ในการลบข้อมูล ตาราง tbl_products โดยจะลบข้อมูลสินค้า p_id ที่ส่งมา
+                        $sql288 = "UPDATE appoint SET
+                    
+                        appoint_status = 2
+                        
+                        
+                        
+                              WHERE appoint_id={$_GET["ID"]}";
+                    
+                        if (mysqli_query($con, $sql288)) {
+                            echo
+                                "<script> 
+                                    Swal.fire(
+                                        'ยืนยันการนัดพบสำเร็จ!',
+                                        'ท่านได้ยืนยันเรียบร้อยแล้ว',
+                                        'success'
+                                    ).then(()=> location = 'index.php')
+                                </script>";
+                            //header('Location: index.php');
+                        } else {
+                            echo
+                                "<script> 
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'ยืนยันการนัดพบไม่สำเร็จ', 
+                                }).then(()=> location = 'index.php')
+                            </script>";
+                        }
+                      
+                       
+                    }
+
+                    if (isset($_GET["CCR3"] )) {
+                        echo
+                            "<script> 
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'ยกเลิกการนัดพบ?',
+                                    text: 'ท่านเเน่ใจว่า ยกเลิกการนัดพบ!',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'ใช่',
+                                    cancelButtonText: 'ไม่!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location = 'index.php?CCR4=req&ID={$_GET["ID"]}'
+                                    }else{
+                                        location = 'index.php'
+                                    }
+                                }); 
+                        </script>";
+                }
+                    if (isset($_GET["CCR4"])) {
+                        include '../../conn.php';
+
+                        // คำสั่ง sql ในการลบข้อมูล ตาราง tbl_products โดยจะลบข้อมูลสินค้า p_id ที่ส่งมา
+                        $sql288 = "UPDATE appoint SET
+                    
+                        appoint_status = 3
+                        
+                        
+                        
+                              WHERE appoint_id={$_GET["ID"]}";
+                    
+                        if (mysqli_query($con, $sql288)) {
+                            echo
+                                "<script> 
+                                    Swal.fire(
+                                        'ยกเลิกการนัดพบสำเร็จ!',
+                                        'ท่านได้ยกเลิกเรียบร้อยแล้ว',
+                                        'success'
+                                    ).then(()=> location = 'index.php')
+                                </script>";
+                            //header('Location: index.php');
+                        } else {
+                            echo
+                                "<script> 
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
+                                }).then(()=> location = 'index.php')
+                            </script>";
+                        }
+                      
+                       
+                    }
+                    ?>
 
                 </div>
             </div>

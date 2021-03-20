@@ -43,7 +43,8 @@ if (!$_SESSION["UserID"]){
     <link type="text/css" href="../../css/volt.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -100,7 +101,7 @@ if (!$_SESSION["UserID"]){
 
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
-                <form action="file_add_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -147,13 +148,63 @@ if (!$_SESSION["UserID"]){
                             value="<?php echo  $_SESSION["ProjectID"]; ?>" hidden>
                     </div>
                     <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <button type="submit" class="btn btn-primary" name="SubmitInsertFile">บันทึก</button>
                             </div>
                 </form>
             </div>
         </div>
 
+        <?php
 
+
+if (isset($_POST["SubmitInsertFile"])) {
+    //นำเข้าไฟล์ การเชื่อมต่อฐานข้อมูล
+    include '../../conn.php';
+
+    $filee  = $_POST['filee'];
+$filee_url  = $_POST['filee_url'];
+$project_id  = $_POST['project_id'];
+
+
+
+$sqladdfile ="INSERT INTO filee
+
+  ( `project_id`, `file_type`, `file_link`)
+
+    VALUES 
+
+    ('$project_id','$filee','$filee_url')";
+
+
+
+
+
+
+    if (mysqli_query($con, $sqladdfile)) {
+        echo
+            "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มไฟล์เรียบร้อยแล้ว',
+                text: 'โปรดรออาจารย์ประจำวิชาทำการยืนยันไฟล์!',
+                
+            }).then(()=> location = 'index.php')
+        </script>";
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'บันทึกไฟล์ไม่สำเร็จ', 
+                text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
+            }) 
+        </script>";
+    }
+    mysqli_close($con);
+    }
+    
+    ?>
 
         <?php include '../footer.php';?>
 

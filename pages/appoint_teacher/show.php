@@ -113,7 +113,7 @@ if (!$_SESSION["TeacherID"]){
                     INNER JOIN project ON appoint.project_id = project.project_id
                     INNER JOIN teacher ON appoint.teacher_id = teacher.teacher_id
                     INNER JOIN appoint_status ON appoint.appoint_status = appoint_status.appoint_status_id
-                    INNER JOIN student ON student.student_project = project.project_id AND appoint.recorder = student.student_id
+                    INNER JOIN student ON appoint.recorder = student.student_id
                     WHERE
                     appoint.appoint_id ='$appoint_id'";
 					$result = $con->query($sql);

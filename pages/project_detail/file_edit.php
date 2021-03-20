@@ -43,7 +43,8 @@ if (!$_SESSION["UserID"]){
     <link type="text/css" href="../../css/volt.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -103,25 +104,34 @@ if (!$_SESSION["UserID"]){
             <?php
 
 $file_idd = $_REQUEST["ID"];
+$p_id =$_SESSION["ProjectID"];
 
 
-
-$sql = "SELECT
+$sqlq11 = "SELECT
 filee.file_id,
 filee.project_id,
 filee.file_type,
 file_type.file_type_name,
-filee.file_link
+filee.file_link,
+filee.file_apporve
 FROM
 filee
 INNER JOIN file_type ON filee.file_type = file_type.file_type_id
 WHERE
-filee.file_id = '$file_idd'";
-$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
+filee.file_id = '$file_idd' AND filee.project_id = '$p_id' AND filee.file_apporve = 1 ";
+
+$result = mysqli_query($con, $sqlq11);
+
+
+if ($result->num_rows > 0) {  ?>
+   
+
+<?php
+
 $row = mysqli_fetch_array($result);
 extract($row);
 ?>
-                <form action="file_edit_ac.php" method="post">
+                <form action="" method="post">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
@@ -169,13 +179,80 @@ extract($row);
                             value="<?php echo  $file_id; ?>" hidden>
                     </div>
                     <div class="mt-3">
-                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                <button type="submit" class="btn btn-primary" name="SubmitEditFile">บันทึก</button>
                             </div>
                 </form>
             </div>
         </div>
+        <?php } if($result->num_rows == 0) {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ไม่มีสิทธิ์แก้ไขไฟล์ผู้อื่น', 
+            text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
+            showConfirmButton: false,
+            timer: 1500
+                    }).then(()=> location = 'index.php')
+      
+    </script>";
+} ?>
+        <?php
 
 
+if (isset($_POST["SubmitEditFile"])) {
+    //นำเข้าไฟล์ การเชื่อมต่อฐานข้อมูล
+    include '../../conn.php';
+
+    
+$file_id = $_POST['file_id'];
+$filee  = $_POST['filee'];
+$filee_url  = $_POST['filee_url'];
+$project_id  = $_POST['project_id'];
+
+
+  
+  $sqleditfile = "UPDATE filee SET
+
+project_id ='$project_id',
+file_type='$filee',
+file_link='$filee_url'
+
+
+
+      WHERE file_id='$file_id' 
+      ";
+
+
+
+
+
+
+    if (mysqli_query($con, $sqleditfile)) {
+        echo
+            "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'แก้ไขไฟล์เรียบร้อยแล้ว',
+                text: 'โปรดรออาจารย์ประจำวิชาทำการยืนยันไฟล์!',
+                
+            }).then(()=> location = 'index.php')
+        </script>";
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'บันทึกไฟล์ไม่สำเร็จ', 
+                text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
+            }) 
+        </script>";
+    }
+    mysqli_close($con);
+    }
+    
+    ?>
 
         <?php include '../footer.php';?>
 

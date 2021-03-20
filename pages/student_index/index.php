@@ -156,6 +156,10 @@ if (!$_SESSION["UserID"]){
             padding: 0 5px;
         }
     </style>
+
+
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -219,7 +223,7 @@ if (!$_SESSION["UserID"]){
 
 
                     <div class="col-lg-4 col-sm-12">
-                        <form action="appoint_ac.php" method="post">
+                        <form action="" method="POST">
 
                             <div class="mb-2">
                                 <h6>แบบฟอร์มนัดพบอาจารย์ที่ปรึกษาโครงงาน</h6>
@@ -291,7 +295,7 @@ if (!$_SESSION["UserID"]){
                             <input type="text" class="form-control" id="record" name="record"
                                     aria-describedby="date_end-describ"  value="<?php echo  $_SESSION["UserID"]; ?>" hidden>
 
-                            <button class="btn btn-block btn-success" type="submit">บันทึก</button>
+                            <button class="btn btn-block btn-success" type="submit" name="SubmitInsert">บันทึก</button>
 
 
 
@@ -307,7 +311,57 @@ if (!$_SESSION["UserID"]){
             </div>
         </div>
 
+        <?php
 
+
+if (isset($_POST["SubmitInsert"])) {
+    //นำเข้าไฟล์ การเชื่อมต่อฐานข้อมูล
+    include '../../conn.php';
+
+    //คำสั่ง SQL บันทึกข้อมูลลงฐานข้อมูล
+
+    $present  = $_POST['present'];
+    $teacher  = $_POST['teacher'];
+    $date_start  = $_POST['date_start'];
+    $date_end  = $_POST['date_end'];
+    
+    $id_project = $_POST['id_project'];
+    $record = $_POST['record'];
+    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+    
+    $sql444 ="INSERT INTO appoint
+    
+      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `apooint_minute`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
+    
+        VALUES 
+    
+        ('$id_project','$date_start','$appoint_end','$date_end','$present','$teacher','1','$record')";
+
+if (mysqli_query($con, $sql444)) {
+    echo
+        "<script> 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'นัดพบอาจารย์เรียบร้อยแล้ว',
+            text: 'โปรดรออาจารย์ทำการยืนยันเข้าพบเท่านั้น จึงสามารถเข้าพบได้!',
+            
+        }).then(()=> location = 'index.php')
+    </script>";
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'บันทึกข้อมูลไม่สำเร็จ', 
+            text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
+        }) 
+    </script>";
+}
+mysqli_close($con);
+}
+
+?>
 
         <?php include '../footer.php';?>
 

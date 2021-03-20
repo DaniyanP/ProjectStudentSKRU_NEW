@@ -33,6 +33,8 @@ $appoint_id = $_REQUEST["ID"];
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -89,7 +91,7 @@ $appoint_id = $_REQUEST["ID"];
         <div class="row">
                 <div class="col-12 col-xl-6">
                     <div class="card card-body bg-white border-light shadow-sm mb-4">
-                    <form action="com05_add_ac.php" method="post">
+                    <form action="" method="post">
                 <!-- Form -->
                 <div class="mb-2">
                     <label for="comment_teacher">ความคิดเห็นอาจารย์ที่ปรึกษาโครงงาน</label>
@@ -122,7 +124,7 @@ $result = mysqli_query($con, $query);
                 <div class="mb-2">
                     <label class="my-1 mr-2" for="score">คะแนน</label>
                     <select class="form-select" id="score" name="score" aria-label="Default select example">
-                        <option selected>เลือกคะแนน</option>
+                   
                        
                         <?php foreach($result as $results){?>
     <option value="<?php echo $results["s_id"];?>">
@@ -147,7 +149,7 @@ $result2 = mysqli_query($con, $query2);
                 <div class="mb-2">
                     <label class="my-1 mr-2" for="meet_check">การตรงต่อเวลา</label>
                     <select class="form-select" id="meet_check" name="meet_check" aria-label="Default select example">
-                        <option selected>---เลือก---</option>
+                      
                         <?php foreach($result2 as $results2){?>
     <option value="<?php echo $results2["m_id"];?>">
       <?php echo $results2["m_name"]; ?>
@@ -180,7 +182,7 @@ extract($row);
 
                
 
-                <button class="btn btn-block btn-success" type="submit">บันทึก</button>
+                <button class="btn btn-block btn-success" type="submit" name="ADDCOM05">บันทึก</button>
             </form>
                     
 
@@ -254,7 +256,72 @@ $con->close();
                 </div>
             </div>
         
+<?php
+include '../../conn.php';
 
+
+
+
+if (isset($_POST["ADDCOM05"])) {
+
+
+    $appoint_id  = $_POST['appoint_id'];
+    $project_id  = $_POST['project_id'];
+    $comment_teacher  = $_POST['comment_teacher'];
+    $comment_assign  = $_POST['comment_assign'];
+    
+    $score  = $_POST['score'];
+    $meet_check  = $_POST['meet_check'];
+    $teacher_id  = $_POST['teacher_id'];
+    $set_status = 4;
+    
+    
+    $sqlADDCOM1 ="INSERT INTO com05
+    
+      ( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`)
+    
+        VALUES 
+    
+        ('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id')";
+
+$result1 = mysqli_query($con, $sqlADDCOM1);
+
+
+
+
+if ($result1) {
+    $sql2 ="UPDATE appoint SET
+
+    appoint_status ='$set_status' WHERE appoint_id='$appoint_id'";
+    
+    $result2 = mysqli_query($con, $sql2);
+
+    echo
+        "<script> 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'บันทึกการเข้าพบเรียบร้อยแล้ว!',
+            showConfirmButton: false,
+            timer: 2000
+        }).then(()=> location = 'index.php')
+    </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: บันทึกการเข้าพบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+mysqli_close($con);
+?>
 
         <?php include '../footer.php';?>
         

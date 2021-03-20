@@ -34,12 +34,13 @@ appoint.appoint_date_start,
 appoint.appoint_comment,
 appoint.teacher_id,
 teacher.teacher_name,
-appoint.apooint_minute
+appoint.apooint_minute,
+appoint.appoint_status
 FROM
 appoint
 INNER JOIN teacher ON appoint.teacher_id = teacher.teacher_id
 WHERE
-appoint.appoint_id = '$appoint_idd' and appoint.project_id = '$get_project_id' ";
+appoint.appoint_id = '$appoint_idd' and appoint.project_id = '$get_project_id' and appoint.appoint_status = 1";
 $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 if ($result->num_rows > 0) {
 $row = mysqli_fetch_array($result);
@@ -64,7 +65,8 @@ extract($row);?>
     <link type="text/css" href="../../css/volt.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -121,7 +123,7 @@ extract($row);?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
 
-                <form action="edit_ac.php" method="post">
+                <form action="" method="post">
 
                     <div class="mb-2">
                         
@@ -155,7 +157,7 @@ extract($row);?>
                                     ON 
                                         project_has_adviser.pha_teacher_id = teacher.teacher_id
                                 WHERE
-                                    project_has_adviser.pha_project_id = '$id_ptojrct'
+                                    project_has_adviser.pha_project_id = '$id_ptojrct'  
                                 ORDER BY
                                     project_has_adviser.pha_type ASC";
                                 $result13 = mysqli_query($con, $query13);
@@ -199,7 +201,7 @@ extract($row);?>
                     <input type="text" class="form-control" id="record" name="record"
                         aria-describedby="date_end-describ" value="<?php echo  $_SESSION["UserID"]; ?>" hidden>
 
-                    <button class="btn btn-block btn-success" type="submit">บันทึก</button>
+                    <button class="btn btn-block btn-success" type="submit" name="SubmitEdit">บันทึก</button>
 
 
 
@@ -211,10 +213,66 @@ extract($row);?>
 
             </div>
         </div>
+        <?php
+         if (isset($_POST["SubmitEdit"])) {
+                        include '../../conn.php';
+
+                        // คำสั่ง sql ในการลบข้อมูล ตาราง tbl_products โดยจะลบข้อมูลสินค้า p_id ที่ส่งมา
+                        $idd = $_POST['id'];
+$present  = $_POST['present'];
+$teacher  = $_POST['teacher'];
+$date_start  = $_POST['date_start'];
+$date_end  = $_POST['date_end'];
+
+$id_project = $_POST['id_project'];
+$record = $_POST['record'];
+$appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+
+
+  
+$sql288 = "UPDATE appoint SET
+
+appoint_date_start ='$date_start',
+appoint_date_end='$appoint_end',
+apooint_minute='$date_end',
+appoint_comment='$present',
+teacher_id='$teacher'
+
+
+
+      WHERE appoint_id='$idd' 
+      ";
+                    
+                        if (mysqli_query($con, $sql288)) {
+                            echo
+                                "<script> 
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'แก้ไขข้อมูลการนัดพบสำเร็จ!',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(()=> location = 'index.php')
+                                </script>";
+                            //header('Location: index.php');
+                        } else {
+                            echo
+                                "<script> 
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'แก้ไขการนัดพบไม่สำเร็จ', 
+                                }).then(()=> location = 'index.php')
+                            </script>";
+                        }
+                      
+                       
+                    }
+                    ?>
+
 
 <?php }else{
     echo "<script type='text/javascript'>";
-    echo "alert('นักศึกษาไม่มีสิทธิ์การเข้าถึงการดูข้อมูลของผู้อื่น');";
+    echo "alert('นักศึกษาไม่มีสิทธิ์ในการแก้ไขข้อมูล');";
     echo "window.location = history.back(1); ";
     echo "</script>";
 } ?>

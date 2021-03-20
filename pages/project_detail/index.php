@@ -43,7 +43,8 @@ if (!$_SESSION["UserID"]){
     <link type="text/css" href="../../css/volt.css" rel="stylesheet">
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -237,7 +238,7 @@ if ($row["file_apporve"]==1) {
     </button>
     <div class="dropdown-menu">
         <a class="dropdown-item" href="file_edit.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>แก้ไขไฟล์</a>
-        <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
+        <a class="dropdown-item text-danger" href="index.php?deleteFile=req&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
        
     </div>
 </div>'; 
@@ -266,7 +267,59 @@ if ($row["file_apporve"]==1) {
         </div>
         
 
+<?php
+if (isset($_GET["deleteFile"] )) {
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ยืนยันการลบไฟล์ที่เกี่ยวข้อง?',
+                text: 'ท่านเเน่ใจว่ายืนยันการลบไฟล์!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location = 'index.php?deleteR2=req&ID={$_GET["ID"]}'
+                }else{
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+}
 
+
+if (isset($_GET["deleteR2"])) {
+//นำเข้าไฟล์ การเชื่อมต่อฐานข้อมูล
+include '../../conn.php';
+
+$sql2881 = "DELETE FROM filee  WHERE file_id ={$_GET["ID"]}";
+
+if (mysqli_query($con, $sql2881)) {
+    echo
+        "<script> 
+            Swal.fire(
+                'ลบไฟล์สำเร็จ!',
+                'ท่านได้ลบไฟล์เอกสารที่เกี่ยวข้องเรียบร้อย',
+                'success'
+            ).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบไฟล์เอกสารที่เกี่ยวข้องไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+mysqli_close($con);
+}
+?>
         <?php include '../footer.php';?>
         
     </main>

@@ -168,7 +168,8 @@ if (!$_SESSION["TeacherID"]){
                           }
                       </style><?php include '../dateth.php';?>
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -295,8 +296,8 @@ $result=$con->query($sql);
             echo'<li class="list-group-item list-group-item-action"><b>[[ #'. $row["appoint_id"].' ]] </b> '. mb_substr($row["project_name"], 0, 70, 'UTF-8').' 
 <br>'.DateThai($strDate).' เวลา '. HourMinute($strDatetoHourMinute).'- '. HourMinute1($strDatetoHourMinute1).' น. 
 </br><p>
-<a class="btn btn-success btn-sm "type="button" href="confirm.php?act=show&ID='.$row["appoint_id"].'"><span class="fas fa-check mr-2"></span>ยืนยัน</a>
-<a class="btn btn-danger btn-sm" type="button" href="appoint_cencel.php?act=show&ID='.$row["appoint_id"].'"><span class="fas fa-ban mr-2" ></span>ยกเลิก</a>
+<a class="btn btn-success btn-sm "type="button" href="index.php?CFR3=req&ID='.$row["appoint_id"].'"><span class="fas fa-check mr-2"></span>ยืนยัน</a>
+<a class="btn btn-danger btn-sm" type="button" href="index.php?deleteR=req&ID='.$row["appoint_id"].'"><span class="fas fa-ban mr-2" ></span>ยกเลิก</a>
 <a class="btn btn-warning btn-sm" type="button" data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span class="fas fa-random mr-2"></span>เลื่อน</a></p></li>
 
 <div class="modal fade" id="myModal'. $row["appoint_id"].'" role="dialog">
@@ -326,7 +327,7 @@ $result=$con->query($sql);
     <div class="modal-body">
 
     
-      <form role="form" action="appoint_edit_ac.php" method="post">
+      <form role="form" action="" method="post">
 
       <input type="text" class="form-control" id="appoint_id" name="appoint_id"
       aria-describedby="date_end-describ" value="'. $row["appoint_id"].'" hidden>
@@ -347,7 +348,7 @@ $result=$con->query($sql);
     }
    
       echo'<div class="modal-footer">  
-      <button type="submit" class="btn btn-success">ยืนยัน</button>
+      <button type="submit" class="btn btn-success" name="SubmitEditAppoint">ยืนยัน</button>
       <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     </div>';
  
@@ -358,15 +359,151 @@ $result=$con->query($sql);
 </div>
 </div>';
 
-
+ 
 
         }
-    }
+    } 
 
-    else {
-        echo "ไม่มีรายการรอยืนยัน";
-    }
+    if (isset($_GET["deleteR"] )) {
+        echo
+            "<script> 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยกเลิกการนัดพบ?',
+                    text: 'ท่านเเน่ใจว่า ยกเลิกการนัดพบ!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location = 'index.php?deleteR2=req&ID={$_GET["ID"]}'
+                    }else{
+                        location = 'index.php'
+                    }
+                }); 
+        </script>";
+}
 
+
+if (isset($_GET["deleteR2"])) {
+   
+
+  
+    $sql288 = "UPDATE appoint SET
+
+    appoint_status = 3
+    
+    
+    
+          WHERE appoint_id={$_GET["ID"]}";
+
+    if (mysqli_query($con, $sql288)) {
+        echo
+            "<script> 
+                Swal.fire(
+                    'ยกเลิกการนัดพบสำเร็จ!',
+                    'ท่านได้ยกเลิกเรียบร้อย',
+                    'success'
+                ).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+
+if (isset($_GET["CFR3"])) {
+   
+
+   
+    $sql288 = "UPDATE appoint SET
+
+    appoint_status = 2
+    
+    
+    
+          WHERE appoint_id={$_GET["ID"]}";
+
+    if (mysqli_query($con, $sql288)) {
+        echo
+            "<script> 
+                Swal.fire(
+                    'ยืนยันการนัดพบสำเร็จ!',
+                    'ท่านได้ยืนยันเรียบร้อยแล้ว',
+                    'success'
+                ).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ยืนยันการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+    
+if (isset($_POST["SubmitEditAppoint"])) {
+    include '../../conn.php';
+
+   
+    $appoint_id = $_POST['appoint_id'];
+    $date_start  = $_POST['date_start'];
+    $date_end  = $_POST['date_end'];
+    $set_status = 5;
+    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+    
+      
+      $sqlappointedit = "UPDATE appoint SET
+    
+    appoint_status ='$set_status',
+    appoint_date_start ='$date_start',
+    appoint_date_end ='$appoint_end'
+    
+    
+    
+          WHERE appoint_id='$appoint_id' 
+          ";
+
+    if (mysqli_query($con, $sqlappointedit)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'เปลี่ยนแปลงการนัดหมายเรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขการนัดพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
     ?></div>
     
                         </div>
@@ -379,7 +516,11 @@ $result=$con->query($sql);
 }
 
 </style>
-                        <?php $sql2="SELECT
+                        <?php 
+                        
+                        
+                        
+                        $sql2="SELECT
 appoint.appoint_id,
     appoint.project_id,
     project.project_name,
