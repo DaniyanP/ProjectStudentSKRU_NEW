@@ -171,6 +171,9 @@ $id_section_room =$_REQUEST["ID"];
                                 role="button">เพิ่มด้วย Excel</a>
                                 <a class="btn btn-info btn-sm " href="student_add_frm.php?act=show&ID=<?php echo $id_section_room ?>"
                                 role="button">เพิ่มนักศึกษา</a>
+                                <a class="btn btn-danger btn-sm " href="../../pdf_student.php?act=show&ID=<?php echo $id_section_room ?>"
+                                role="button"><span class="fas fa-file-pdf mr-2"></span>รายงานนักศึกษา</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -365,7 +368,7 @@ $id_section_room =$_REQUEST["ID"];
                 </table>
 
             </div>
-            <a href="../../pdf_student.php?act=show&ID=<?php echo $id_section_room ?>" type="button" class="btn btn-danger"><span class="fas fa-file-pdf mr-2"></span>รายงานนักศึกษา</a>
+           
         </div>
         </div>
 

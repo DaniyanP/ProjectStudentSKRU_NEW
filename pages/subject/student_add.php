@@ -21,7 +21,7 @@ $id_class  = $_POST['id_class'];
 //ถ้ามี โครงงาน นี้อยู่ในระบบแล้วให้แจ้งเตือน
              echo "<script>";
 			 echo "alert('ไม่สามารถบันทึกได้ เนื่องจากนักศึกษาคนนี้อยู่ในกลุ่มเรียนนี้แล้ว');";
-			 echo "window.location= history.back(1);";
+			 echo "window.location = 'student.php?act=show&ID=$id_class' ";
           	 echo "</script>";
  
 		}else{

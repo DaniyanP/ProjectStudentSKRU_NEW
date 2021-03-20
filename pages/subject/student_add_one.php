@@ -30,14 +30,31 @@ $student_password = md5($set_password);
               
               if($result2->num_rows > 0)   		
               {
+                echo "<script>";
+                echo "alert('บันทึกไม่สำเร็จ เนื่องจากนักศึกษาอยู่ในกลุ่มเรียนนี้แล้ว');";
+                 echo "window.location = 'student.php?act=show&ID=$id_class' ";
+                 echo "</script>";
 
-} else {
+        } else {
     $sql22 = "INSERT INTO subject_hash_student
     (ss_subject_id, ss_student_id)
     
      VALUES
     ('$id_class', '$student_id') "; 
     $result = mysqli_query($con, $sql22);
+
+    if($result){
+      echo "<script>";
+   
+      echo "window.location = 'student.php?act=show&ID=$id_class' ";
+      echo "</script>";
+    } else {
+      
+      echo "<script>";
+      echo "alert('บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ');";
+      echo "window.location = history.back(1); ";
+      echo "</script>";
+    }
 }
 
 
@@ -66,21 +83,21 @@ $student_password = md5($set_password);
  		VALUES
 		('$id_class', '$student_id') "; 
 	$result = mysqli_query($con, $sql4);
+  mysqli_close($con);
+    
+  if($result){
+    echo "<script>";
  
+    echo "window.location = 'student.php?act=show&ID=$id_class' ";
+    echo "</script>";
+  } else {
+    
+    echo "<script>";
+    echo "alert('บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ');";
+    echo "window.location = history.back(1); ";
+    echo "</script>";
+  }
  
 }
-    mysqli_close($con);
-    
-    if($result){
-      echo "<script>";
-   
-      echo "window.location = 'student.php?act=show&ID=$id_class' ";
-      echo "</script>";
-    } else {
-      
-      echo "<script>";
-      echo "alert('บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ');";
-      echo "window.location = history.back(1); ";
-      echo "</script>";
-    }
+mysqli_close($con);
 ?>

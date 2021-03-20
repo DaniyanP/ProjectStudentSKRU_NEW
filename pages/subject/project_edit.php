@@ -27,6 +27,22 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <script type="text/javascript">
+        function delete_student(student_id) {
+            if (confirm('ต้องการลบนักศึกษาออกจากโครงงานนี้ใช่ไหม')) {
+                window.location.href = 'project_student_del.php?&ID=' + student_id;
+            }
+        }
+    </script>
+
+<script type="text/javascript">
+        function delete_adviser(adviser_id) {
+            if (confirm('ต้องการลบอาจารย์ออกจากที่ปรึกษาโครงงานนี้ใช่ไหม')) {
+                window.location.href = 'project_adviser_del.php?&ID=' + adviser_id;
+            }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -227,7 +243,250 @@ extract($row);
         </div>
 
 
+        <div class="row">
 
+<!-- ส่วนล่าง -->
+<div class="col-12 col-xl-6">
+    <div class="card border-light shadow-sm mb-4">
+        <div class="card-body">
+            
+            <b>อาจารย์ที่ปรึกษาโครงงาน</b>   
+            <div class="table-responsive">
+            <table class="table">
+  <thead class="table-dark">
+    <tr>
+    <td>ชื่ออาจารย์</td>
+    <td>สถานะ</td>
+    <td>จัดการ</td>
+    </tr>
+  </thead>
+  <tbody>
+
+  <?php
+           include '../../conn.php';
+           
+               
+					$sql_project_has_adviser = "SELECT
+                    project_has_adviser.pha_key, 
+                    project_has_adviser.pha_project_id, 
+                    project_has_adviser.pha_teacher_id, 
+                    teacher.teacher_name, 
+                    project_has_adviser.pha_type
+                FROM
+                    project_has_adviser
+                    INNER JOIN
+                    teacher
+                    ON 
+                        project_has_adviser.pha_teacher_id = teacher.teacher_id
+                WHERE
+                    project_has_adviser.pha_project_id = '$project_idd'
+                ORDER BY
+                    project_has_adviser.pha_type ASC, 
+                    project_has_adviser.pha_teacher_id ASC";
+					$result = $con->query($sql_project_has_adviser );
+					if ($result->num_rows > 0) {
+
+						while($row = $result->fetch_assoc()) {
+                            echo '<tr>
+    <td>' . $row["teacher_name"].'</td>
+    <td>';
+
+    if ($row["pha_type"] == 1 ) {
+        echo "ที่ปรึกษาหลัก";
+    }if ($row["pha_type"] == 2 ) {
+        echo "ที่ปรึกษาร่วม";
+    }
+    echo'</td>
+    <td><a type="button" data-toggle="modal" data-target="#myModal'. $row["pha_key"].'" class="btn btn-warning btn-sm">
+    <span class="icon icon-sm"><span class="fas fa-edit icon-dark"></span>
+    </span></a>
+    <a type="button" href="javascript: delete_adviser(' . $row["pha_key"].')" class="btn btn-danger btn-sm">
+    <span class="icon icon-sm"><span class="fas fa-trash-alt icon-dark"></span>
+    </span></a></td>
+    </tr>';     
+
+    echo'<div class="modal fade" id="myModal'. $row["pha_key"].'" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">';
+    
+    $id = $row["pha_key"]; 
+    $query_edit = mysqli_query($con, "SELECT
+	project_has_adviser.pha_key, 
+	project_has_adviser.pha_project_id, 
+	project_has_adviser.pha_teacher_id, 
+	project_has_adviser.pha_type, 
+	teacher.teacher_name
+FROM
+	project_has_adviser
+	INNER JOIN
+	teacher
+	ON 
+		project_has_adviser.pha_teacher_id = teacher.teacher_id
+WHERE
+	project_has_adviser.pha_key = '$id'");
+    while ($row = mysqli_fetch_array($query_edit)) { 
+        
+      
+   
+      echo'<h4 class="modal-title">แก้ไขอาจารย์ที่ปรึกษาโครงงาน '. $row["pha_key"].'</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+
+    
+      <form role="form" action="adviser_edit_ac.php" method="post">
+
+      <input type="text" class="form-control" id="pha_key" name="pha_key"
+      aria-describedby="date_end-describ" value="'. $row["pha_key"].'" hidden>
+      <input type="text" class="form-control" id="pha_project_id" name="pha_project_id"
+      aria-describedby="date_end-describ" value="'. $row["pha_project_id"].'" hidden>
+      
+      <input type="text" class="form-control" id="class_idd" name="class_idd"
+      aria-describedby="date_end-describ" value="'. $class_idd.'" hidden>
+      <div class="mb-2">
+          <label for="pha_teacher_id">ชื่ออาจารย์</label>';
+          
+          
+                                    
+                                    $id_teacher_adviser = $row["pha_teacher_id"];
+                                    $query_adviser = "SELECT
+                                    teacher.teacher_id as t_id, 
+                                    teacher.teacher_name as t_name
+                                FROM
+                                    teacher
+                                ORDER BY
+                                    teacher.teacher_id ASC";
+                                $result_adviser = mysqli_query($con, $query_adviser);
+                                    
+                                    
+                       echo' <select class="form-select" id="pha_teacher_id" name="pha_teacher_id" aria-label="Default select example">
+                        <option selected>เลือกอาจารย์ที่ปรึกษาโครงงาน</option>';
+                                                 
+                                                 foreach( $result_adviser as $results33){
+                                            if( $results33["t_id"] == $id_teacher_adviser ){
+                                               echo' <option value="'.$results33["t_id"].'" selected="true">'.$results33["t_name"].'</option>';
+                                            }else{
+                                                echo' <option value="'.$results33["t_id"].'" >'.$results33["t_name"].'</option>';
+                                            }
+                                        }
+                                        
+                                        echo'</select>
+          
+     </div>
+      <div class="mb-2">
+          <label for="pha_type">สถานะอาจารย์ที่ปรึกษา</label>
+          <select class="form-select" id="pha_type" name="pha_type" aria-label="Default select example">
+                      ';
+                        
+                        
+                if ($row["pha_type"] == 1) {
+                    echo'<option value="1" selected="true">อาจารย์ที่ปรึกษาหลัก</option>
+                    <option value="2" >อาจารย์ที่ปรึกษาร่วม</option>';
+                }if ($row["pha_type"] == 2) {
+                    echo'<option value="2" selected="true">อาจารย์ที่ปรึกษาร่วม</option>
+                    <option value="1" >อาจารย์ที่ปรึกษาหลัก</option>';
+                }
+
+
+
+             echo'</select>
+                        
+             </div>';
+    }
+   
+      echo'<div class="modal-footer">  
+      <button type="submit" class="btn btn-success">ยืนยัน</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+    </div>';
+ 
+
+        echo'</form>
+    </div>
+  </div>
+</div>
+</div>';  
+}
+}if ($result->num_rows == 0){
+    echo "ไม่พบรายชื่ออาจารย์ที่ปรึกษาโครงงาน";
+}
+$con->close();
+?> 
+    
+    
+    
+
+
+  </tbody>
+</table>
+</div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-12 col-xl-6">
+    <div class="card border-light shadow-sm mb-4">
+        <div class="card-body">
+          <b>ผู้จัดทำโครงงาน</b>   
+            <div class="table-responsive">
+            <table class="table">
+  <thead class="table-dark">
+    <tr>
+    <td>รหัสนักศึกษา</td>
+    <td>ชื่อ  นามสกุล </td>
+    <td>จัดการ</td>
+    </tr>
+  </thead>
+  <tbody>
+
+  <?php
+           include '../../conn.php';
+           
+               
+					$sql_project_has_student = "SELECT
+                    project_has_student.phs_key, 
+                    project_has_student.phs_project_id, 
+                    project_has_student.phs_student_id, 
+                    student.student_name
+                FROM
+                    project_has_student
+                    INNER JOIN
+                    student
+                    ON 
+                        project_has_student.phs_student_id = student.student_id
+                WHERE
+                    project_has_student.phs_project_id   = '$project_idd'
+                ORDER BY
+                    project_has_student.phs_project_id ASC";
+					$result = $con->query($sql_project_has_student );
+					if ($result->num_rows > 0) {
+
+						while($row = $result->fetch_assoc()) {
+                            echo '<tr>
+    <td>' . $row["phs_student_id"].'</td>
+    <td>' . $row["student_name"].'</td>
+    <td><a type="button" href="javascript: delete_student(' . $row["phs_key"].')" class="btn btn-danger btn-sm">
+    <span class="icon icon-sm"><span class="fas fa-trash-alt icon-dark"></span>
+    </span></a></td>                             
+    </tr>';       
+}
+}if ($result->num_rows == 0){
+    echo "ไม่พบรายชื่อนักศึกษาจัดทำโครงงานนี้";
+}
+$con->close();
+?> 
+    
+  </tbody>
+</table>
+</div>
+        </div>
+    </div>
+</div>
+
+</div>
         <?php include '../footer.php';?>
 
     </main>

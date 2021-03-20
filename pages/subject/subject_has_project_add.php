@@ -30,6 +30,11 @@ $project_type  = $_POST['project_type'];
               if($result2->num_rows > 0)   		
               {
 
+                echo "<script>";
+                echo "alert('บันทึกไม่สำเร็จ เนื่องจากโครงงานนี้อยู่ในกลุ่มเรียนนี้แล้ว');";
+                echo "window.location = 'project.php?act=show&ID=$id_class' ";
+                echo "</script>";
+
 } else {
     $sql22 = "INSERT INTO subject_hash_project
     (sp_subject_id, sp_project_id)
@@ -66,9 +71,7 @@ $project_type  = $_POST['project_type'];
 		('$id_class', '$project_id') "; 
 	$result = mysqli_query($con, $sql4);
  
- 
-}
-    mysqli_close($con);
+  mysqli_close($con);
     
     if($result){
       echo "<script>";
@@ -78,8 +81,10 @@ $project_type  = $_POST['project_type'];
     } else {
       
       echo "<script>";
-      echo "alert('บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ');";
+      echo "alert('บันทึกไม่สำเร็จ เนื่องจากโครงงานนี้อยู่ในกลุ่มเรียนนี้แล้ว');";
       echo "window.location = history.back(1); ";
       echo "</script>";
     }
+}
+mysqli_close($con);
 ?>

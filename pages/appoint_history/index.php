@@ -141,7 +141,7 @@ if (!$_SESSION["UserID"]){  //check session
                         <col style="width:5%">
                         <col style="width:5%">
 
-                        <thead>
+                        <thead class="thead-dark">
                         <tr>
                                 <th>#ID</th>
                                 <th>วันที่เข้าพบ</th>

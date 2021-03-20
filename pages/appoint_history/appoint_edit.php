@@ -164,7 +164,7 @@ extract($row);?>
                         <select class="form-select" id="teacher" name="teacher" aria-label="Default select example">
                         <option selected>เลือกอาจารย์ที่ปรึกษาโครงงาน</option>
                                                  
-                                                 <<?php foreach($result13 as $results3){
+                                                 <?php foreach($result13 as $results3){
                                             if( $results3["techerID"] == $teacher_id ){
                                                echo' <option value="'.$results3["techerID"].'" selected="true">'.$results3["techerNAME"].'</option>';
                                             }else{
