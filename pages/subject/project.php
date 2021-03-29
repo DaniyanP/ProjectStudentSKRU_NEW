@@ -60,14 +60,9 @@ $id_section_room =$_REQUEST["ID"];
     </script>
 
 
-    <script type="text/javascript">
-        function delete_project(project_id) {
-            if (confirm('ต้องการลบโครงงานนี้ออกจากกลุ่มนี้ใช่ไหม')) {
-                window.location.href = 'project_del.php?&ID=' + project_id;
-            }
-        }
-    </script>
-
+  
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <?php include '../dateth.php';?>
 </head>
 
@@ -159,13 +154,13 @@ $id_section_room =$_REQUEST["ID"];
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5 col-md-5">
-                            <form action="project_add.php" method="post">
+                            <form action="" method="post">
                                 <label for="projec_id">เพิ่มโครงงาน</label>
                                 <input type="text" name="projec_id" id="projec_id" placeholder="กรอกรหัสโครงงาน"
                                     required>
                                 <input type="text" name="id_class" id="id_class" value="<?php echo $id_section_room ?>"
                                     hidden>
-                                <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                                <button type="submit" class="btn btn-primary btn-sm" name="ProjectAdder">บันทึก</button>
                             </form>
                             
                         </div>
@@ -311,7 +306,7 @@ $id_section_room =$_REQUEST["ID"];
                                         
                                     </a>
 
-                                    <a type="button" href="javascript: delete_project(' . $row["sp_id"].')"
+                                    <a type="button" href="project.php?DelProjectG=req&ID=' . $row["sp_id"].'&IDR=' . $id_section_room.'"
                                     class="btn btn-danger btn-xs"
                                    >
                                     <span class="icon icon-sm">
@@ -360,7 +355,145 @@ $id_section_room =$_REQUEST["ID"];
         </div>
 
 
+        <?php
+ include '../../conn.php';
+            if (isset($_POST["ProjectAdder"])) {
+   
 
+                $projec_id  = $_POST['projec_id'];
+                $id_class  = $_POST['id_class'];
+                
+                
+                
+                
+                // เช็คว่ามีข้อมูลนี้อยู่หรือไม่
+                    $check = "select * from subject_hash_project  where sp_subject_id = '$id_class' and sp_project_id = '$projec_id' ";
+                      $result101 = mysqli_query($con, $check)  or die(mysql_error());
+                        
+                        if($result101->num_rows > 0)   		
+                        {
+                //ถ้ามี project นี้อยู่ในระบบแล้วให้แจ้งเตือน
+                echo "<script> 
+                Swal.fire(
+                    'ไม่สามารถบันทึกได้!  ',
+                    'เนื่องจากโครงงานนี้อยู่ในกลุ่มเรียนนี้แล้ว โปรดตรวจสอบรหัสโครงงานอีกครั้ง',
+                    'warning'
+                ).then(()=> location = 'project.php?act=show&ID=$id_class')
+            </script>";
+        }else{
+                    
+                //ถ้าไม่มีก็บันทึกลงฐานข้อมูล
+                 $sqladdproject = "INSERT INTO subject_hash_project
+                        (sp_subject_id, sp_project_id)
+                        
+                         VALUES
+                        ('$id_class', '$projec_id') "; 
+                    
+                 
+                 
+                
+                    
+
+                    if(mysqli_query($con,$sqladdproject)){
+
+
+
+                        echo
+                        "<script> 
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'เพิ่มโครงงานเข้ากลุ่มเรียนเรียบร้อยแล้ว!',
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(()=> location = 'project.php?act=show&ID=$id_class')
+                        </script>";
+
+                        
+                      } else {
+                          echo "<script> 
+                        Swal.fire(
+                            'ไม่พบรหัสโครงงานในระบบ!  ',
+                            'โปรดตรวจสอบรหัสโครงงานอีกครั้ง เพื่อความถูกต้อง',
+                            'error'
+                        ).then(()=> location = 'project.php?act=show&ID=$id_class')
+                    </script>";
+                      }
+
+                    }
+  
+   
+}
+
+
+
+
+
+if (isset($_GET["DelProjectG"] )) {
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ลบโครงงานออกจากกลุ่มเรียน?',
+                text: 'ท่านเเน่ใจว่าลบโครงงาน!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location = 'project.php?DelProjectGID=req&ID={$_GET["ID"]}&IDR={$_GET["IDR"]}'
+                }else{
+                    location = history.back(1);
+                }
+            }); 
+    </script>";
+}
+
+
+if (isset($_GET["DelProjectGID"])) {
+
+
+
+    $sqldelpg = "DELETE FROM subject_hash_project  WHERE sp_id={$_GET["ID"]} ";
+
+
+
+if (mysqli_query($con, $sqldelpg)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบโครงงานออกจากกลุ่มเรียนเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'project.php?act=show&ID={$_GET["IDR"]}')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบโครงงานออกจากกลุ่มเรียนไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+
+
+
+
+
+
+mysqli_close($con);
+    ?>
         <?php include '../footer.php';?>
 
     </main>

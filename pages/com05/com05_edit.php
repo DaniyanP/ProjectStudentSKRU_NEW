@@ -35,6 +35,7 @@ $com_id = $_REQUEST["ID"];
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -114,7 +115,7 @@ extract($row);
         <div class="row">
                 <div class="col-12 col-xl-6">
                     <div class="card card-body bg-white border-light shadow-sm mb-4">
-                    <form action="com05_edit_ac.php" method="post">
+                    <form action="" method="post">
                 <!-- Form -->
                 <div class="mb-2">
                     <label for="comment_teacher">ความคิดเห็นอาจารย์ที่ปรึกษาโครงงาน</label>
@@ -151,9 +152,9 @@ $result = mysqli_query($con, $query);
 
                        <?php foreach($result as $results){
                                             if( $results["s_id"] == $score ){
-                                               echo' <option value="'.$results["s_s"].'" selected="true">[[ '.$results["s_s"].' คะแนน ]] '.$results["s_detail"].'</option>';
+                                               echo' <option value="'.$results["s_s"].'" selected="true"> '.$results["s_s"].' คะแนน  '.$results["s_detail"].'</option>';
                                             }else{
-                                                echo' <option value="'.$results["s_s"].'" >[[ '.$results["s_s"].' คะแนน ]] '.$results["s_detail"].'</option>';
+                                                echo' <option value="'.$results["s_s"].'" > '.$results["s_s"].' คะแนน  '.$results["s_detail"].'</option>';
                                             }
                                         }
                                         ?>
@@ -216,7 +217,7 @@ extract($row);
 
                
 
-                <button class="btn btn-block btn-success" type="submit">บันทึก</button>
+                <button class="btn btn-block btn-success" type="submit"  name="SubmitEditCom05">บันทึก</button>
             </form>
                     
 
@@ -250,7 +251,7 @@ extract($row);
                     INNER JOIN project ON appoint.project_id = project.project_id
                     INNER JOIN teacher ON appoint.teacher_id = teacher.teacher_id
                     INNER JOIN appoint_status ON appoint.appoint_status = appoint_status.appoint_status_id
-                    INNER JOIN student ON student.student_project = project.project_id AND appoint.recorder = student.student_id
+                    INNER JOIN student ON appoint.recorder = student.student_id
                     WHERE
                     appoint.appoint_id ='$appoint_id'";
 					$result = $con->query($sql);
@@ -284,8 +285,70 @@ $con->close();
                             </div>
                 </div>
             </div>
-        
 
+
+        <?php
+            if (isset($_POST["SubmitEditCom05"])) {
+    include '../../conn.php';
+
+   
+    
+$com05_id  = $_POST['com05_id'];
+$appoint_id  = $_POST['appoint_id'];
+$project_id  = $_POST['project_id'];
+$comment_teacher  = $_POST['comment_teacher'];
+$comment_assign  = $_POST['comment_assign'];
+
+$score  = $_POST['score'];
+$meet_check  = $_POST['meet_check'];
+$teacher_id  = $_POST['teacher_id'];
+
+
+
+$sqleditcom05 ="UPDATE com05 SET
+
+comment_teacher ='$comment_teacher',
+comment_assign ='$comment_assign',
+score ='$score',
+meet_check ='$meet_check'
+    
+    
+    
+    
+          WHERE com05.com05_id='$com05_id'";
+
+    if (mysqli_query($con, $sqleditcom05)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'แก้ไขข้อมูลการเข้าพบ COM-05 เรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขการเข้าพบไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+
+
+
+
+
+mysqli_close($con);
+    ?>
 
         <?php include '../footer.php';?>
         

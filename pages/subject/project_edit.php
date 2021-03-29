@@ -42,7 +42,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
             }
         }
     </script>
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -99,13 +100,14 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="project_edit_ac.php" method="post">
+                <form action="" method="post">
 
                 <?php
 
 $project_idd = $_REQUEST["ID"];
 
 $class_idd = $_REQUEST["IDR"];
+
 
 $sql = "SELECT
 project.project_id,
@@ -117,7 +119,7 @@ project
 
 WHERE
 project.project_id = '$project_idd'";
-$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
+$result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 extract($row);
 ?>
@@ -217,7 +219,7 @@ extract($row);
 
                    
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="ProjectEditInfo">บันทึก</button>
             <a type="button" class="btn btn-info" href="project.php?act=show&ID=<?php echo $class_idd ?>">กลับ</a>
         </div>
 
@@ -300,7 +302,7 @@ extract($row);
     <td><a type="button" data-toggle="modal" data-target="#myModal'. $row["pha_key"].'" class="btn btn-warning btn-sm">
     <span class="icon icon-sm"><span class="fas fa-edit icon-dark"></span>
     </span></a>
-    <a type="button" href="javascript: delete_adviser(' . $row["pha_key"].')" class="btn btn-danger btn-sm">
+    <a type="button" href="project_edit.php?DelAdivserProject=req&ID=' . $row["pha_key"].'&Project_id=' . $project_idd.'&IDRoom=' . $class_idd.'" class="btn btn-danger btn-sm">
     <span class="icon icon-sm"><span class="fas fa-trash-alt icon-dark"></span>
     </span></a></td>
     </tr>';     
@@ -336,7 +338,7 @@ WHERE
     <div class="modal-body">
 
     
-      <form role="form" action="adviser_edit_ac.php" method="post">
+      <form role="form" action="" method="post">
 
       <input type="text" class="form-control" id="pha_key" name="pha_key"
       aria-describedby="date_end-describ" value="'. $row["pha_key"].'" hidden>
@@ -397,7 +399,7 @@ WHERE
     }
    
       echo'<div class="modal-footer">  
-      <button type="submit" class="btn btn-success">ยืนยัน</button>
+      <button type="submit" class="btn btn-success" name="ProjectEditAdivser">ยืนยัน</button>
       <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
     </div>';
  
@@ -468,12 +470,12 @@ $con->close();
                             echo '<tr>
     <td>' . $row["phs_student_id"].'</td>
     <td>' . $row["student_name"].'</td>
-    <td><a type="button" href="javascript: delete_student(' . $row["phs_key"].')" class="btn btn-danger btn-sm">
+    <td><a type="button" href="project_edit.php?DelStudentProject=req&ID=' . $row["phs_key"].'&Project_id=' . $project_idd.'&IDRoom=' . $class_idd.'" class="btn btn-danger btn-sm">
     <span class="icon icon-sm"><span class="fas fa-trash-alt icon-dark"></span>
     </span></a></td>                             
     </tr>';       
 }
-}if ($result->num_rows == 0){
+}if ($result->num_rows == 0){  
     echo "ไม่พบรายชื่อนักศึกษาจัดทำโครงงานนี้";
 }
 $con->close();
@@ -487,6 +489,281 @@ $con->close();
 </div>
 
 </div>
+
+
+
+
+
+
+
+
+<?php
+ include '../../conn.php';
+
+
+            if (isset($_POST["ProjectEditInfo"])) {
+   
+
+   
+$project_id  = $_POST['project_id'];
+$project_name  = $_POST['project_name'];
+$project_type  = $_POST['project_type'];
+
+$project_status  = $_POST['project_status'];
+
+
+
+
+
+  $sqleditproject ="UPDATE project SET
+
+project_name ='$project_name',
+project_type ='$project_type',
+project_status = '$project_status'
+    
+    
+    
+    
+          WHERE project.project_id='$project_id'";
+
+    if (mysqli_query($con, $sqleditproject)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'แก้ไขข้อมูลโครงงานเรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขข้อมูลโครงงานไม่สำเร็จ', 
+            }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+        </script>";
+    }
+  
+   
+}
+
+
+
+
+if (isset($_POST["ProjectEditAdivser"])) {
+   
+    $pha_key  = $_POST['pha_key'];
+    $pha_project_id  = $_POST['pha_project_id'];
+    $pha_teacher_id  = $_POST['pha_teacher_id'];
+    $pha_type  = $_POST['pha_type'];
+    $class_idd  = $_POST['class_idd'];
+    
+    
+    
+    
+    $check = "select * from project_has_adviser  where pha_project_id = '$pha_project_id' and pha_teacher_id = '$pha_teacher_id' ";
+          $result1 = mysqli_query($con, $check)  or die(mysql_error());
+            
+            if($result1->num_rows > 0){
+    
+    
+    
+    
+    $check2 = "select * from project_has_adviser  where pha_project_id = '$pha_project_id' and pha_teacher_id = '$pha_teacher_id' and pha_type = '$pha_type' ";
+          $result2 = mysqli_query($con, $check2)  or die(mysql_error());
+          if($result2->num_rows > 0){
+              echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ไม่สามารถเปลี่ยนแปลงได้ เนื่องจากอาจารย์มีสถานะการเป็นที่ปรึกษาโครงงานนี้อยู่แล้ว', 
+            }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+        </script>";
+          }else{
+    
+            $sqledit ="UPDATE project_has_adviser SET
+            pha_type ='$pha_type'
+            WHERE project_has_adviser.pha_key = '$pha_key'";
+            
+            if(mysqli_query($con, $sqledit)){
+                echo
+                "<script> 
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'แก้ไขข้อมูลสถานะอาจารย์ที่ปรึกษาเรียบร้อย!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+                </script>";
+    
+            } else {  echo
+                "<script> 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
+                }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+            </script>";
+            }
+        }
+    
+    }else{
+        $sqledit2 ="UPDATE project_has_adviser SET
+            pha_teacher_id ='$pha_teacher_id',
+            pha_type ='$pha_type'
+            WHERE project_has_adviser.pha_key = '$pha_key'";
+            
+            if(mysqli_query($con, $sqledit2)){
+                echo
+                "<script> 
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'แก้ไขข้อมูลสถานะอาจารย์ที่ปรึกษาเรียบร้อย!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+                </script>";
+    
+            } else {  echo
+                "<script> 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
+                }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+            </script>";
+            }
+    } 
+       
+    }
+
+
+    if (isset($_GET["DelAdivserProject"] )) {
+
+
+        echo
+            "<script> 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ลบอาจารย์ที่ปรึกษาโครงงานออกจากโครงงานนี้?',
+                    text: 'ท่านเเน่ใจว่าต้องการลบ!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        location = 'project_edit.php?deleteR2=req&ID={$_GET["ID"]}&IDR11={$_GET["IDRoom"]}&IDPro={$_GET["Project_id"]}'
+                    }else{
+                        
+                        location = 'project_edit.php?act=show&ID={$_GET["Project_id"]}&IDR={$_GET["IDRoom"]}'
+                    }
+                }); 
+        </script>";
+
+    }
+
+
+if (isset($_GET["deleteR2"])) {
+   
+
+  
+    $sql288 = "DELETE FROM project_has_adviser  WHERE pha_key={$_GET["ID"]} ";
+
+    if (mysqli_query($con, $sql288)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'ลบอาจารย์ที่ปรึกษาเรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000  
+                }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ลบอาจารย์ที่ปรึกษาไม่สำเร็จ', 
+            }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+        </script>";
+    }
+  
+   
+}
+
+
+
+if (isset($_GET["DelStudentProject"] )) {
+
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ลบนักศึกษาออกจากโครงงานนี้?',
+                text: 'ท่านเเน่ใจว่าต้องการลบ!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'project_edit.php?deleteR3=req&ID={$_GET["ID"]}&IDR11={$_GET["IDRoom"]}&IDPro={$_GET["Project_id"]}'
+                }else{
+                    
+                    location = 'project_edit.php?act=show&ID={$_GET["Project_id"]}&IDR={$_GET["IDRoom"]}'
+                }
+            }); 
+    </script>";
+
+}
+
+
+if (isset($_GET["deleteR3"])) {
+
+
+
+$sql289 = "DELETE FROM project_has_student  WHERE phs_key={$_GET["ID"]} ";
+
+if (mysqli_query($con, $sql289)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบนักศึกษาเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบนักศึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+    </script>";
+}
+
+
+}
+
+mysqli_close($con);
+    ?>
         <?php include '../footer.php';?>
 
     </main>

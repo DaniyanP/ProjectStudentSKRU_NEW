@@ -402,11 +402,13 @@ if (isset($_GET["deleteR2"])) {
     if (mysqli_query($con, $sql288)) {
         echo
             "<script> 
-                Swal.fire(
-                    'ยกเลิกการนัดพบสำเร็จ!',
-                    'ท่านได้ยกเลิกเรียบร้อย',
-                    'success'
-                ).then(()=> location = 'index.php')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'ยกเลิกการนัดพบสำเร็จ!!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
             </script>";
         //header('Location: index.php');
     } else {

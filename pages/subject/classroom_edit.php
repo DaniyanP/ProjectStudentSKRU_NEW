@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -108,7 +110,7 @@ $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_erro
 $row = mysqli_fetch_array($result);
 extract($row);
 ?>
-                <form action="classroom_edit_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -243,7 +245,7 @@ extract($row);
                     </div>
 
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="submit" class="btn btn-primary" name="SubmitEditClassroom">บันทึก</button>
                     </div>
 
 
@@ -267,7 +269,74 @@ extract($row);
         </div>
         </div>
 
+        <?php
+            if (isset($_POST["SubmitEditClassroom"])) {
+    include '../../conn.php';
 
+   
+$subject_id  = $_POST['subject_id'];
+$subject_id2  = $_POST['subject_id2'];
+$subject_classroom  = $_POST['subject_classroom'];
+$subject_name  = $_POST['subject_name'];
+$subject_semester  = $_POST['subject_semester'];
+$subject_year  = $_POST['subject_year'];
+$subject_sec  = $_POST['subject_sec'];
+$subject_day  = $_POST['subject_day'];
+$subject_time_start  = $_POST['subject_time_start'];
+$subject_time_end  = $_POST['subject_time_end'];
+
+
+  
+  $sqleditclassroom = "UPDATE subject_project SET
+
+
+subject_id2='$subject_id2',
+subject_classroom='$subject_classroom',
+subject_name='$subject_name',
+subject_semester='$subject_semester',
+subject_year='$subject_year',
+subject_sec='$subject_sec',
+subject_day='$subject_day',
+subject_time_start='$subject_time_start',
+subject_time_end='$subject_time_end'
+
+
+
+      WHERE subject_key='$subject_id' 
+      ";
+
+    if (mysqli_query($con, $sqleditclassroom)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'แก้ไขข้อมูลกลุ่มเรียนเรียบร้อยแล้ว!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขข้อมูลกลุ่มเรียนไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+
+
+
+
+
+mysqli_close($con);
+    ?>
 
         <?php include '../footer.php';?>
 

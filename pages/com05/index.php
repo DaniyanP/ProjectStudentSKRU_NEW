@@ -74,7 +74,8 @@ if (!$_SESSION["TeacherID"]){
             });
         });
     </script>
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <?php include '../dateth.php';?>
 </head>
 
@@ -198,7 +199,7 @@ if (!$_SESSION["TeacherID"]){
                                                     class="fas fa-eye mr-2"></span>ดูรายละเอียด</a>
                                             <a class="dropdown-item" href="com05_edit.php?act=edit&ID=' . $row["com05_id"].'"><span
                                                     class="fas fa-edit mr-2"></span>แก้ไข</a>
-                                            <a class="dropdown-item text-danger" href="com05_del.php?ID=' . $row["com05_id"].'"><span
+                                            <a class="dropdown-item text-danger" href="index.php?deleteCOM05=req&ID=' . $row["com05_id"].'"><span
                                                     class="fas fa-trash-alt mr-2"></span>ลบ</a>
                                         </div>
 
@@ -239,7 +240,63 @@ if (!$_SESSION["TeacherID"]){
             </div>
         </div>
 
+<?php
+    include '../../conn.php';
+if (isset($_GET["deleteCOM05"] )) {
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ลบข้อมูลการเข้าพบ?',
+                text: 'หากลบแล้วไม่สามารถเรียกกลับได้!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location = 'index.php?deleteCOM05ID=req&ID={$_GET["ID"]}'
+                }else{
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+}
 
+
+if (isset($_GET["deleteCOM05ID"])) {
+
+
+    $sqldelcom05 = "DELETE FROM com05 WHERE com05_id={$_GET["ID"]} ";
+
+if (mysqli_query($con, $sqldelcom05)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบข้อมูลการเข้าพบสำเร็จ!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบข้อมูลการเข้าพบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+mysqli_close($con);
+?>
 
         <?php include '../footer.php';?>
 

@@ -96,7 +96,7 @@ $appoint_id = $_REQUEST["ID"];
                 <div class="mb-2">
                     <label for="comment_teacher">ความคิดเห็นอาจารย์ที่ปรึกษาโครงงาน</label>
                     <textarea  class="form-control" id="comment_teacher" name="comment_teacher"
-                        aria-describedby="present-describ" maxlength="255"></textarea>
+                        aria-describedby="present-describ" maxlength="255" required></textarea>
                     <small id="present-describ"
                         class="form-text text-muted">กรอกรายละเอียดความคิดเห็นอาจารย์ที่ปรึกษาโครงงาน</small>
                 </div>
@@ -104,7 +104,7 @@ $appoint_id = $_REQUEST["ID"];
                 <div class="mb-2">
                     <label for="comment_assign">งานที่มอบหมายครั้งถัดไป</label>
                     <textarea  class="form-control" id="comment_assign" name="comment_assign"
-                        aria-describedby="present-describ" maxlength="255"></textarea>
+                        aria-describedby="present-describ" maxlength="255" required></textarea>
                     <small id="present-describ"
                         class="form-text text-muted">กรอกรายละเอียดงานที่มอบหมายครั้งถัดไป</small>
                 </div>

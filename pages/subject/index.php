@@ -38,7 +38,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         
         
   
-
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     </head>
     
@@ -313,7 +314,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
                                                 <a class="dropdown-item" href="classroom_edit.php?act=edit&ID=' . $row["subject_key"].'"><span
                                                         class="fas fa-edit mr-2"></span>แก้ไข</a>'; ?>
-                                                <a class="dropdown-item text-danger" href="classroom_del.php?ID=<?php echo $row["subject_key"]; ?>" onclick="return confirm('คุณต้องการลบรายวิชานี้ออกใช่ไหม')"><span
+                                                <a class="dropdown-item text-danger" href="index.php?ClassRoomDEL=req&ID=<?php echo $row["subject_key"]; ?>"><span
                                                         class="fas fa-trash-alt mr-2"></span>ลบ</a>
                                        <?php     echo'</div>                                       
                                         </div>                                 
@@ -350,7 +351,78 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                     </div>
                 </div>
             
+                <?php
+include '../../conn.php';
+if (isset($_GET["ClassRoomDEL"] )) {
+        echo
+            "<script> 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ลบกลุ่มเรียนนี้ออกหรือไม่?',
+                    text: 'หากลบแล้วไม่สามารถเรียกคืนได้!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location = 'index.php?ClassRoomDELID=req&ID={$_GET["ID"]}'
+                    }else{
+                        location = 'index.php'
+                    }
+                }); 
+        </script>";
+}
+
+
+if (isset($_GET["ClassRoomDELID"])) {
+   
+
     
+    $subject_id = $_GET["ID"];
+
+    $sql2 = "DELETE FROM subject_hash_project  WHERE sp_subject_id='$subject_id' ";
+    $result2 = mysqli_query($con, $sql2);
+    
+    $sql3 = "DELETE FROM subject_hash_student  WHERE ss_subject_id='$subject_id' ";
+    $result3 = mysqli_query($con, $sql3);
+    
+      
+      $sql111 = "DELETE FROM subject_project  WHERE subject_key='$subject_id' ";
+
+    
+        
+
+    if (mysqli_query($con,$sql111 )) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'ลบข้อมูลกลุ่มเรียนเรียบร้อย!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ลบข้อมูลกลุ่มเรียนไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+  
+   
+}
+
+
+
+mysqli_close($con);
+    ?>
     
             <?php include '../footer.php';?>
             
