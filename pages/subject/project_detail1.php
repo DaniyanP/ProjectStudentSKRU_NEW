@@ -17,19 +17,10 @@ project_has_student.phs_student_id = '$get_student_id'
 ORDER BY
 project_has_student.phs_key DESC
 LIMIT 1";
-                
-                  $result44 = mysqli_query($con,$sql);
-				
-                  if(mysqli_num_rows($result44)==1){
-
-                      $row = mysqli_fetch_array($result44);
-
+    $result44 = mysqli_query($con,$sql);            
+                             
                       
-                      $_SESSION["ProjectID"] = $row["phs_project_id"];
-                      }
-
-                      $id_project = $_SESSION["ProjectID"];
-                      $id_ptojrct = $_SESSION["ProjectID"];
+                      
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +69,19 @@ LIMIT 1";
 
     <?php include '../menu_te.php';?>
 
+<?php 
 
+		
+if(mysqli_num_rows($result44)==1){
+
+    $row = mysqli_fetch_array($result44);
+
+    
+    $_SESSION["ProjectID"] = $row["phs_project_id"];
+    $id_project = $_SESSION["ProjectID"];
+    $id_ptojrct = $_SESSION["ProjectID"];
+    
+?>
     <main class="content">
 
         <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark pl-0 pr-2 pb-0">
@@ -938,6 +941,87 @@ appoint.appoint_date_start
 
     </main>
 
+
+    
+<?php  
+
+}
+
+?>
+
+
+<?php 
+
+				
+if(mysqli_num_rows($result44)==0){?>
+
+
+<main class="content">
+
+        <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark pl-0 pr-2 pb-0">
+            <div class="container-fluid px-0">
+                <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
+                    <div class="d-flex">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                            <li class="breadcrumb-item"><a href="../subject"><span class="fas fa-home"></span></a></li>
+                                <li class="breadcrumb-item"><a href="../subject">ข้อมูลรายวิชา</a></li>
+                                <li class="breadcrumb-item"><a href="#">ข้อมูลโครงงาน</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">ไม่พบรหัสโครงงาน</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <!-- Navbar links -->
+                    <?php include '../navbar_te.php';?>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="py-0">
+
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                   
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="card border-light shadow-sm mb-4">
+            <div class="card-body">
+
+            <font color="red">**** ไม่พบข้อมูลโครงงาน ****</font>
+        <ul>
+            <li>ให้อาจารย์ประจำวิชาบันทึกการทำโครงงานนักศึกษา</li>
+        </ul>
+               
+            
+               
+            </div>
+        </div>
+        
+
+
+        <?php include '../footer.php';?>
+        
+    </main>
+
+
+
+
+
+
+    <?php  
+
+}
+    
+?>
+
+
+
+
     <!-- Core -->
     <script src="../../vendor/popper.js/dist/umd/popper.min.js"></script>
     <script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -976,11 +1060,11 @@ appoint.appoint_date_start
     <!-- Volt JS -->
     <script src="../../assets/js/volt.js"></script>
 
-
+    <!-- session_unregister("$_SESSION[ProjectID]"); -->
 </body>
 
 </html>
-<?php   session_unregister("$_SESSION[ProjectID]"); ?>
+
 <?php }else{
 
 Header("Location: ../404/404.php");

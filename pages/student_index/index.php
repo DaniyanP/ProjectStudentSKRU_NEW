@@ -14,7 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal.
 
 -->
-<?php session_start();?>
+<?php session_start();
+ date_default_timezone_set("Asia/Bangkok");
+?>
 <?php 
 
 if (!$_SESSION["UserID"]){  

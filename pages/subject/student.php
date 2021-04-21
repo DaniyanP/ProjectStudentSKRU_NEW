@@ -60,17 +60,11 @@ $id_section_room =$_REQUEST["ID"];
     </script>
 
 
-    <script type="text/javascript">
-        function delete_student(student_id) {
-            if (confirm('ต้องการลบนักศึกษาคนนี้ออกจากกลุ่มนี้ใช่ไหม')) {
-                window.location.href = 'student_del.php?&ID=' + student_id;
-            }
-        }
-
-        
-    </script>
+    
 
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -156,13 +150,13 @@ $id_section_room =$_REQUEST["ID"];
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
-                            <form action="student_add.php" method="post">
+                            <form action="" method="post">
                                 <label for="student_id">เพิ่มนักศึกษา</label>
                                 <input type="text" name="student_id" id="student_id" placeholder="กรอกรหัสนักศึกษา"
                                     required>
                                 <input type="text" name="id_class" id="id_class" value="<?php echo $id_section_room ?>"
                                     hidden>
-                                <button type="submit" class="btn btn-primary btn-sm">บันทึก</button>
+                                <button type="submit" class="btn btn-primary btn-sm" name="StudentAdder">บันทึก</button>
                             </form>
                         </div>
 
@@ -313,7 +307,7 @@ $id_section_room =$_REQUEST["ID"];
                                             
                                         </a>
 
-                                        <a type="button" href="student_edit.php?act=show&ID=' . $row["ss_student_id"].'"
+                                        <a type="button" href="student_edit.php?act=show&ID=' . $row["ss_student_id"].'&IDRoom=' . $id_section_room.'"
                                         class="btn btn-warning btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -322,7 +316,7 @@ $id_section_room =$_REQUEST["ID"];
                                         
                                     </a>
 
-                                    <a type="button" href="javascript: delete_student(' . $row["ss_id"].')"
+                                    <a type="button" href="student.php?DelStudent=req&ID=' . $row["ss_id"].'&IDRoom=' . $id_section_room.'"
                                         class="btn btn-danger btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -372,7 +366,142 @@ $id_section_room =$_REQUEST["ID"];
         </div>
         </div>
 
+        <?php
+ include '../../conn.php';
+ if (isset($_GET["DelStudent"] )) {
 
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ลบนักศึกษาออกจากกลุ่มเรียนนี้?',
+                text: 'ท่านเเน่ใจว่าต้องการลบ!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'student.php?deleteR3=req&ID={$_GET["ID"]}&IDR11={$_GET["IDRoom"]}'
+                }else{
+                    
+                    location = 'student.php?act=show&ID={$_GET["IDRoom"]}'
+                    
+                }
+            }); 
+    </script>";
+
+}
+
+
+if (isset($_GET["deleteR3"])) {
+
+
+
+$sql289 = "DELETE FROM subject_hash_student  WHERE ss_id={$_GET["ID"]} ";
+
+if (mysqli_query($con, $sql289)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบนักศึกษาเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'student.php?act=show&ID={$_GET["IDR11"]}')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบนักศึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'student.php?act=show&ID={$_GET["IDR11"]}')
+    </script>";
+}
+
+mysqli_close($con);
+}
+
+
+if (isset($_POST["StudentAdder"])) {
+
+    $student_id  = $_POST['student_id'];
+    $id_class  = $_POST['id_class'];
+    
+    
+    
+    
+    // เช็คว่ามีข้อมูลนี้อยู่หรือไม่
+        $check = "select * from subject_hash_student  where ss_subject_id = '$id_class' and ss_student_id = '$student_id' ";
+          $result1 = mysqli_query($con, $check)  or die(mysql_error());
+            
+            if($result1->num_rows > 0)   		
+            {
+    //ถ้ามี นักศึกษา นี้อยู่ในระบบแล้วให้แจ้งเตือน
+
+    echo "<script> 
+    Swal.fire(
+        'ไม่สามารถบันทึกได้!  ',
+        'เนื่องจากนักศึกษานี้อยู่ในกลุ่มเรียนนี้แล้ว โปรดตรวจสอบรหัสนักศึกษาอีกครั้ง',
+        'warning'
+    ).then(()=> location = 'student.php?act=show&ID=$id_class')
+</script>";
+
+                
+     
+            }else{
+        
+    //ถ้าไม่มีก็บันทึกลงฐานข้อมูล
+     $sql = "INSERT INTO subject_hash_student
+            (ss_subject_id, ss_student_id)
+            
+             VALUES
+            ('$id_class', '$student_id') "; 
+        $result = mysqli_query($con, $sql);
+     
+     
+    }
+        mysqli_close($con);
+        
+        if($result){
+
+
+            "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มนักศึกษาเข้ากลุ่มเรียนเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'student.php?act=show&ID=$id_class')
+        </script>";
+
+         
+        } else {
+          
+            echo "<script> 
+            Swal.fire(
+                'ไม่พบรหัสนักศึกษาในระบบ!  ',
+                'โปรดตรวจสอบรหัสนักศึกษาอีกครั้ง เพื่อความถูกต้อง',
+                'error'
+            ).then(()=> location = 'student.php?act=show&ID=$id_class')
+        </script>";
+        }
+
+
+
+}
+
+ 
+
+
+    ?>
 
         <?php include '../footer.php';?>
 

@@ -27,6 +27,10 @@ $class_id1 = $_REQUEST["ID"];  ?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+
+     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 
 <body>
@@ -83,7 +87,7 @@ $class_id1 = $_REQUEST["ID"];  ?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="student_add_one.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -149,8 +153,8 @@ $result2 = mysqli_query($con, $query2);
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
-            <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
+            <button type="submit" class="btn btn-primary" name="summit_student">บันทึก</button>
+            <?php echo'  <a type="buttoon" class="btn btn-info" href="student.php?act=show&ID='.$class_id1.'">กลับ</a>' ?>
         </div>
         </div>
 
@@ -174,8 +178,147 @@ $result2 = mysqli_query($con, $query2);
         </div>
         </div>
 
+        <?php
+ include '../../conn.php';
+ if (isset($_POST["summit_student"])) {
 
 
+
+    $student_id  = $_POST['student_id'];
+    $id_class  = $_POST['class_key'];
+    
+    $student_name  = $_POST['student_name'];
+    $student_major  = $_POST['student_major'];
+    
+    
+    $set_password = $student_id;
+    $student_password = md5($set_password);
+    
+    
+    
+    
+        $check1 = "select * from student  where student_id = '$student_id'";
+          $result1 = mysqli_query($con, $check1)  or die(mysql_error());
+            
+            if($result1->num_rows > 0)   		
+            {
+    
+    
+                $check2 = "select * from subject_hash_student  where ss_subject_id = '$id_class' and ss_student_id = '$student_id' ";
+                $result2 = mysqli_query($con, $check2)  or die(mysql_error());
+                  
+                  if($result2->num_rows > 0)   		
+                  {
+
+                    echo"<script> 
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'บันทึกไม่สำเร็จ เนื่องจากนักศึกษาอยู่ในกลุ่มเรียนนี้แล้ว!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(()=> location = 'student.php?act=show&ID=$id_class')
+                </script>";
+
+
+                  
+    
+            } else {
+        $sql22 = "INSERT INTO subject_hash_student
+        (ss_subject_id, ss_student_id)
+        
+         VALUES
+        ('$id_class', '$student_id') "; 
+        $result = mysqli_query($con, $sql22);
+    
+        if($result){
+
+            echo"<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มนักศึกษาเรียบร้อย!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'student.php?act=show&ID=$id_class')
+        </script>";
+         
+        } else {
+            echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ', 
+            }).then(()=> location = 'window.location = history.back(1);')
+        </script>";
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+            }else{
+        
+                $sql3 = "INSERT INTO student
+                (student_id, student_name, student_major, student_email, student_password)
+                
+                 VALUES
+                ('$student_id', '$student_name', '$student_major', '$student_id@parichat.skru.ac.th', '$student_password') "; 
+            $result = mysqli_query($con, $sql3);
+    
+    
+    
+     $sql4 = "INSERT INTO subject_hash_student
+            (ss_subject_id, ss_student_id)
+            
+             VALUES
+            ('$id_class', '$student_id') "; 
+        $result = mysqli_query($con, $sql4);
+      mysqli_close($con);
+        
+      if($result){
+        echo"<script> 
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'เพิ่มนักศึกษาเรียบร้อย!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(()=> location = 'student.php?act=show&ID=$id_class')
+                </script>";
+
+       
+      } else {
+        echo
+                "<script> 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ', 
+                }).then(()=> location = 'window.location = history.back(1);')
+            </script>";
+     
+      }
+     
+    }
+
+
+
+
+ }
+
+
+
+
+
+
+       
+    ?>
         <?php include '../footer.php';?>
 
     </main>

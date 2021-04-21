@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2021 at 03:08 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
+-- Generation Time: Apr 18, 2021 at 07:14 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.4.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `projectstudenv3`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `23`
+-- (See below for the actual view)
+--
+CREATE TABLE `23` (
+`appoint_id` int(255)
+,`project_id` int(15)
+,`appoint_date_start` datetime
+,`appoint_date_end` datetime
+,`apooint_minute` int(3)
+,`appoint_comment` varchar(255)
+,`teacher_id` int(15)
+,`appoint_status` int(2)
+,`recorder` int(15)
+,`appoint_recorder` datetime
+);
 
 -- --------------------------------------------------------
 
@@ -47,10 +66,27 @@ CREATE TABLE `appoint` (
 INSERT INTO `appoint` (`appoint_id`, `project_id`, `appoint_date_start`, `appoint_date_end`, `apooint_minute`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`, `appoint_recorder`) VALUES
 (4, 5511, '2021-03-26 16:54:00', '2021-03-26 17:24:00', 30, 'eeeeee', 99001, 4, 594235001, '2021-03-12 23:50:04'),
 (5, 5512, '2021-03-16 00:29:00', '2021-03-16 00:59:00', 30, 'ss', 99001, 4, 594235001, '2021-03-13 00:24:11'),
-(6, 5512, '2021-03-31 21:27:00', '2021-03-31 21:30:00', 3, '4411', 99001, 2, 594235002, '2021-03-14 21:27:50'),
+(6, 5512, '2021-03-31 21:27:00', '2021-03-31 21:30:00', 3, '4411', 99001, 6, 594235002, '2021-03-14 21:27:50'),
 (7, 5512, '2021-03-16 00:29:00', '2021-03-16 00:59:00', 30, 'ss', 99001, 4, 594235003, '2021-03-13 00:24:11'),
-(8, 7878, '2021-03-03 01:23:00', '2021-03-03 01:43:00', 20, 'fgf', 99003, 1, 574235001, '2021-03-15 22:23:39'),
-(9, 7878, '2021-03-25 22:48:00', '2021-03-25 23:13:00', 25, 'ssfsf', 99001, 4, 574235001, '2021-03-15 22:48:53');
+(11, 5588, '2021-03-31 17:11:00', '2021-03-31 17:21:00', 10, 'llllllllllllll', 99001, 2, 574235001, '2021-03-20 17:11:48'),
+(12, 5588, '2021-03-23 17:11:00', '2021-03-23 17:12:00', 1, '111', 99001, 2, 574235001, '2021-03-20 17:39:06'),
+(13, 5588, '2021-03-25 17:39:00', '2021-03-25 17:49:00', 10, '10', 99001, 2, 574235001, '2021-03-20 17:42:34'),
+(14, 5588, '2021-03-26 17:42:00', '2021-03-26 17:53:00', 30, 'vfv', 99001, 2, 574235001, '2021-03-20 17:55:37'),
+(15, 5588, '2021-03-26 17:55:00', '2021-03-26 18:15:00', 20, 'dv', 99001, 2, 574235001, '2021-03-20 17:56:24'),
+(16, 5588, '2021-04-09 18:57:00', '2021-04-09 19:27:00', 30, 'แกแ', 99001, 2, 574235001, '2021-03-20 18:57:44'),
+(17, 5588, '2021-03-26 18:58:00', '2021-03-26 19:08:00', 10, 'าใา', 99001, 4, 574235001, '2021-03-20 18:58:33'),
+(18, 5588, '2021-04-01 21:07:00', '2021-04-01 21:47:00', 40, 'ด้ด้้', 99001, 6, 574235001, '2021-03-20 19:07:59'),
+(19, 5588, '2021-03-24 19:07:00', '2021-03-24 19:47:00', 40, 'ด้ด้้dcdcdcdcdcd rrrrrttttt bggb', 99001, 6, 574235001, '2021-03-20 19:08:49'),
+(20, 5588, '2021-03-25 19:08:00', '2021-03-25 19:48:00', 40, 'รารารา', 99001, 4, 574235001, '2021-03-20 19:08:59'),
+(21, 5588, '2021-03-26 19:08:00', '2021-03-26 19:20:00', 40, 'รารารา', 99001, 4, 574235001, '2021-03-20 19:10:15'),
+(22, 5588, '2021-03-25 19:10:00', '2021-03-25 19:54:00', 44, 'ยวววววว', 99001, 6, 574235001, '2021-03-20 19:10:26'),
+(23, 5588, '2021-03-26 19:15:00', '2021-03-26 19:16:00', 1, 'ำดดำดำดำด', 99001, 4, 574235001, '2021-03-20 19:15:52'),
+(24, 5588, '2021-03-24 19:18:00', '2021-03-24 19:38:00', 20, 'พะพะพะพะ', 99001, 4, 574235001, '2021-03-20 19:18:12'),
+(25, 5588, '2021-03-25 21:59:00', '2021-03-25 22:19:00', 20, 'Kiklkkkkkmmmmmmmmmmmmmmmmmmm', 99001, 4, 574235001, '2021-03-20 22:00:38'),
+(26, 5588, '2021-03-25 22:38:00', '2021-03-25 23:03:00', 25, 'ฟฟฟฟฟฟฟฟฟฟฟ', 99001, 4, 574235001, '2021-03-20 22:39:56'),
+(27, 5511, '2021-03-25 13:15:00', '2021-03-25 13:45:00', 30, 'O', 99001, 6, 574235007, '2021-03-22 13:15:47'),
+(28, 5511, '2021-03-25 13:15:00', '2021-03-25 13:45:00', 30, 'P', 99001, 3, 574235007, '2021-03-22 13:16:09'),
+(29, 5511, '2021-03-27 13:16:00', '2021-03-27 13:46:00', 30, 'I', 99001, 3, 574235007, '2021-03-22 13:16:38');
 
 -- --------------------------------------------------------
 
@@ -102,7 +138,14 @@ CREATE TABLE `com05` (
 INSERT INTO `com05` (`com05_id`, `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`) VALUES
 (1, 4, 5512, 'aaa', 'sss', 2, 1, 99001),
 (2, 5, 5512, 'sxaaa', 'asaaqqq', 1, 1, 99001),
-(43, 5, 7878, 'sxaaa', 'asaaqqq', 1, 1, 99001);
+(44, 25, 5588, 'deddde', 'ededed', 2, 1, 99001),
+(49, 22, 5588, 'ff', 'fff', 1, 1, 99001),
+(54, 22, 5588, 'dvdvd', 'dvdv', 1, 1, 99001),
+(55, 22, 5588, 'yyyy', 'hyhyh', 1, 1, 99001),
+(57, 21, 5588, 'yuyuyu', 'yuyuyuy', 1, 1, 99001),
+(60, 18, 5588, '', '33', 1, 1, 99001),
+(77, 17, 5588, '', '', 1, 1, 99001),
+(91, 13, 5588, '14242', '4242', 2, 2, 99001);
 
 -- --------------------------------------------------------
 
@@ -162,8 +205,9 @@ CREATE TABLE `filee` (
 INSERT INTO `filee` (`file_id`, `project_id`, `file_type`, `file_link`, `file_apporve`) VALUES
 (3, 5512, 1, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
 (4, 5512, 3, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
-(5, 7878, 3, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
-(6, 7878, 1, 'https://getbootstrap.com/docs/5.0/content/tables/', 2);
+(7, 5533230, 1, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 2),
+(15, 5588, 1, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1),
+(17, 5588, 1, 'https://www.bing.com/search?q=google&cvid=893ca692cc6940e2ac95c4a38dcfb0f3&FORM=ANAB01&PC=U531', 1);
 
 -- --------------------------------------------------------
 
@@ -202,7 +246,7 @@ CREATE TABLE `major` (
 
 INSERT INTO `major` (`student_major_id`, `student_major_name`) VALUES
 (1, 'เทคโนโลยีสารสนเทศ'),
-(2, 'cs');
+(2, 'วิทยาการคอมพิวเตอร์');
 
 -- --------------------------------------------------------
 
@@ -237,6 +281,13 @@ CREATE TABLE `pr` (
   `pr_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `pr`
+--
+
+INSERT INTO `pr` (`pr_id`, `pr_header`, `pr_content`, `pr_record`, `pr_date`) VALUES
+(1, 'Jjjjhh', 'Gugugigig', 99004, '2021-03-22 06:29:02');
+
 -- --------------------------------------------------------
 
 --
@@ -255,10 +306,13 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`project_id`, `project_name`, `project_type`, `project_status`) VALUES
+(4111, 'jkkjkjk', 3, 1),
 (5511, 'ระบบนัดแพทย์โรงบาลศรีเมือง', 1, 1),
 (5512, 'ระบบขายหวยออนไลน์', 1, 1),
-(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 2),
-(7878, 'ระบบพนันออนไลน์', 1, 1);
+(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 1),
+(414141, 'เเ', 1, 1),
+(553323, 'cccc', 1, 3),
+(5533230, '553323', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -278,14 +332,9 @@ CREATE TABLE `project_has_adviser` (
 --
 
 INSERT INTO `project_has_adviser` (`pha_key`, `pha_project_id`, `pha_teacher_id`, `pha_type`) VALUES
-(26, 5512, 99001, 1),
-(27, 5512, 99002, 1),
-(28, 5512, 99003, 2),
-(29, 5511, 99001, 1),
-(30, 5511, 99002, 2),
-(31, 7878, 99003, 1),
-(32, 7878, 99002, 2),
-(33, 7878, 99001, 1);
+(36, 5533230, 99003, 2),
+(37, 5533230, 99002, 2),
+(41, 5588, 99002, 2);
 
 -- --------------------------------------------------------
 
@@ -304,13 +353,13 @@ CREATE TABLE `project_has_student` (
 --
 
 INSERT INTO `project_has_student` (`phs_key`, `phs_project_id`, `phs_student_id`) VALUES
-(3, 5511, 594235001),
 (4, 5512, 594235001),
 (5, 5512, 594235002),
 (7, 5511, 574235007),
-(8, 7878, 574235001),
-(9, 7878, 594235003),
-(11, 7878, 594235008);
+(17, 5588, 594235002),
+(20, 5533230, 594235002),
+(21, 5533230, 594235001),
+(23, 5588, 574235001);
 
 -- --------------------------------------------------------
 
@@ -400,7 +449,7 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`student_id`, `student_name`, `student_major`, `student_phone`, `student_email`, `student_password`, `student_photo`, `student_type`) VALUES
 (3, '3', 1, '0000000000', '3@parichat.skru.ac.th', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
-(574235001, 'นายสมพร สุวรรณมณี', 1, '0000000000', '574235001@parichat.skru.ac.th', '1ee1c9b2ba5aa6960ec85aed77bae1d5', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(574235001, 'นายสมพร สุวรรณมณี', 1, '1000000100', '574235001@parichat.skru.ac.th', '1ee1c9b2ba5aa6960ec85aed77bae1d5', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
 (574235002, 'นายแดง ชัยศรี', 1, '0000000000', '574235002@parichat.skru.ac.th', 'cbcd536ec5742ce3c7e35bb7153438e2', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
 (574235003, 'นางสาวกิตติยา ทองมณี', 1, '0000000000', '574235003@parichat.skru.ac.th', '5b862d22b22489b132b362e406f401b6', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
 (574235004, 'นางสาววิภาวัลย์ ทองดี', 2, '0000000000', '574235004@parichat.skru.ac.th', '2b5d646dd5c3cead9b057948aee8f692', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
@@ -412,7 +461,8 @@ INSERT INTO `student` (`student_id`, `student_name`, `student_major`, `student_p
 (594235002, 'นางสาวภาวิดา ไชยภัคดี', 1, '0000000000', '594235002@parichat.skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
 (594235003, 'นางสาวกิตติhhกร ชัยเนศhhhh', 2, '0000000000', '594235001@parichat.skru.ac.th', 'a042f04d4cf3a7db5ff70ae203d35c57', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
 (594235005, 'นายสไว', 1, '0000000000', '594235005@parichat.skru.ac.th', 'e435b2dc40ab776e5d6b9d27725081a7', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
-(594235008, 'นายดานิยาน พร้อมมูล', 1, '0000000000', '594235008@parichat.skru.ac.th', '1b141834cd8071a8ed9b1682a60b8a33', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1);
+(594235008, 'นายดานิยาน พร้อมมูล', 1, '0000000000', '594235008@parichat.skru.ac.th', '1b141834cd8071a8ed9b1682a60b8a33', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1),
+(2147483647, 'ทด', 1, '0000000000', '59423500800@parichat.skru.ac.th', 'e35dd14ed5e8947ae994139558178e0f', 'https://i.ibb.co/BVcPqGJ/profile-picture-2qq.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -474,9 +524,9 @@ CREATE TABLE `subject_hash_project` (
 INSERT INTO `subject_hash_project` (`sp_id`, `sp_subject_id`, `sp_project_id`) VALUES
 (3, 'knTNnb', 5512),
 (4, 'knTNnb', 5511),
-(5, 'knTNnb', 7878),
-(10, 'v0HXW5', 7878),
-(12, 'v0HXW5', 5588);
+(34, 'v0HXW5', 5511),
+(36, 'v0HXW5', 5512),
+(37, 'v0HXW5', 4111);
 
 -- --------------------------------------------------------
 
@@ -510,7 +560,9 @@ INSERT INTO `subject_hash_student` (`ss_id`, `ss_subject_id`, `ss_student_id`) V
 (65, 'v0HXW5', 594235008),
 (66, 'v0HXW5', 594235001),
 (67, 'v0HXW5', 594235002),
-(68, 'v0HXW5', 594235003);
+(68, 'v0HXW5', 594235003),
+(75, 'v0HXW5', 2147483647),
+(76, 'v0HXW5', 574235001);
 
 -- --------------------------------------------------------
 
@@ -539,7 +591,7 @@ CREATE TABLE `subject_project` (
 
 INSERT INTO `subject_project` (`subject_key`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_record`, `subject_time_start`, `subject_time_end`) VALUES
 ('knTNnb', '33232', 'fgfgfgfg', 'weewewew', '1', 2566, '05', 1, 99001, '2021-03-13 00:47:18', '01:48:00', '02:50:00'),
-('v0HXW5', '22', '22', '22', '22', 22, '22', 1, 99001, '2021-03-16 12:18:01', '12:22:00', '12:22:00');
+('v0HXW5', '22333', '22333', '22333', '223', 22333, '22333', 2, 99001, '2021-03-16 12:18:01', '13:22:00', '13:22:00');
 
 -- --------------------------------------------------------
 
@@ -563,7 +615,8 @@ CREATE TABLE `teacher` (
 INSERT INTO `teacher` (`teacher_id`, `teacher_name`, `teacher_email`, `teacher_password`, `teacher_photo`, `teacher_type`) VALUES
 (99001, 'นางสาวตรีเนตร วัชรภัคดี', 'teenaet_wa@skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/HFB65Yz/asa.png', 2),
 (99002, 'นางสาวเพ็ญศรี มณีฉายแสง', 'pensri_ma@skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/HFB65Yz/asa.png', 2),
-(99003, 'นายเด่นชัย ปราถนาดี', 'denchai_pa@skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/HFB65Yz/asa.png', 2);
+(99003, 'นายเด่นชัย ปราถนาดี', 'denchai_pa@skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/HFB65Yz/asa.png', 2),
+(99004, 'นายสมศักดิ์  กวีนิพนธ์', 'denchai_pa@skru.ac.th', '698d51a19d8a121ce581499d7b701668', 'https://i.ibb.co/HFB65Yz/asa.png', 3);
 
 -- --------------------------------------------------------
 
@@ -584,6 +637,15 @@ INSERT INTO `teacher_type` (`teacher_type_id`, `teacher_type_name`) VALUES
 (1, 'อาจารย์'),
 (2, 'อาจารย์ประจำวิชา'),
 (3, 'ผู้ดูแลระบบ');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `23`
+--
+DROP TABLE IF EXISTS `23`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `23`  AS SELECT `appoint`.`appoint_id` AS `appoint_id`, `appoint`.`project_id` AS `project_id`, `appoint`.`appoint_date_start` AS `appoint_date_start`, `appoint`.`appoint_date_end` AS `appoint_date_end`, `appoint`.`apooint_minute` AS `apooint_minute`, `appoint`.`appoint_comment` AS `appoint_comment`, `appoint`.`teacher_id` AS `teacher_id`, `appoint`.`appoint_status` AS `appoint_status`, `appoint`.`recorder` AS `recorder`, `appoint`.`appoint_recorder` AS `appoint_recorder` FROM `appoint` ;
 
 --
 -- Indexes for dumped tables
@@ -763,49 +825,49 @@ ALTER TABLE `teacher_type`
 -- AUTO_INCREMENT for table `appoint`
 --
 ALTER TABLE `appoint`
-  MODIFY `appoint_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `appoint_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `com05`
 --
 ALTER TABLE `com05`
-  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `com05_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `filee`
 --
 ALTER TABLE `filee`
-  MODIFY `file_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `file_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `pr`
 --
 ALTER TABLE `pr`
-  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `project_has_adviser`
 --
 ALTER TABLE `project_has_adviser`
-  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `pha_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `project_has_student`
 --
 ALTER TABLE `project_has_student`
-  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_project`
 --
 ALTER TABLE `subject_hash_project`
-  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `sp_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_student`
 --
 ALTER TABLE `subject_hash_student`
-  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `ss_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- Constraints for dumped tables

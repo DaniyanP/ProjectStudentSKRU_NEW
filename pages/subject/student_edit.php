@@ -4,7 +4,8 @@
 
 if ($_SESSION["Teacherlevel"]=="2"){?>
 
-<?php include '../../conn.php';?>
+<?php include '../../conn.php';
+$roomID = $_REQUEST["IDRoom"];?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +27,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -109,7 +112,7 @@ $row = mysqli_fetch_array($result);
 extract($row);
 ?>
             
-                <form action="student_edit_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -140,6 +143,7 @@ extract($row);
                                 <label for="student_email">อีเมลล์</label>
                                 <input class="form-control" id="student_email" name="student_email" type="email"
                                     placeholder="กรอกอีเมลล์นักศึกษา" required value="<?php echo $student_email?>">
+                                    
                             </div>
                         </div>
 
@@ -191,7 +195,7 @@ $result2 = mysqli_query($con, $query2);
                             <div class="form-group">
                                 <label for="student_type">สถานะการใช้งาน</label>
                                 <select class="form-select" id="student_type" name="student_type" aria-label="Default select example">
-                        <option selected>---สถานะการใใช้งาน---</option>
+                        <option selected>---สถานะการใช้งาน---</option>
                         
 
 <?php
@@ -221,8 +225,10 @@ $result2 = mysqli_query($con, $query2);
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
-            <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
+                    <input class="form-control" id="classID" name="classID" type="text"
+                                    value="<?php echo $roomID?>" hidden>
+            <button type="submit" class="btn btn-primary" name="studentedit">บันทึก</button>
+          <?php echo'  <a type="buttoon" class="btn btn-info" href="student.php?act=show&ID='.$roomID.'">กลับ</a>' ?>
         </div>
         </div>
 
@@ -247,7 +253,65 @@ $result2 = mysqli_query($con, $query2);
         </div>
 
 
+        <?php
+ include '../../conn.php';
 
+ if (isset($_POST["studentedit"])) {
+   
+
+    $student_id  = $_POST['student_id'];
+    $student_name  = $_POST['student_name'];
+    $student_major  = $_POST['student_major'];
+    $student_email  = $_POST['student_email'];
+    $student_phone  = $_POST['student_phone'];
+    $student_type  = $_POST['student_type'];
+    $classID  = $_POST['classID'];
+    
+    
+      $sql = "UPDATE student SET
+    
+    
+    student_name='$student_name',
+    student_major='$student_major',
+    student_email='$student_email',
+    student_phone='$student_phone',
+    student_type='$student_type'
+    
+    
+    
+          WHERE student_id='$student_id' 
+          ";
+    
+    
+    if(mysqli_query($con,$sql)){
+        echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'แก้ไขข้อมูลนักศึกษาเรียบร้อย!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'student.php?act=show&ID=$classID')
+        </script>";
+
+    } else {  echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'student.php?act=show&ID=$classID')
+    </script>";
+    }
+
+
+    
+
+       
+    }
+    mysqli_close($con);
+
+    ?>
         <?php include '../footer.php';?>
 
     </main>
