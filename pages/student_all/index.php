@@ -60,21 +60,11 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
     </script>
 
 
-    <script type="text/javascript">
-        function delete_teacher(student_id) {
-            if (confirm('คุณต้องการลบใช่ไหม')) {
-                window.location.href = 'student_del.php?&ID=' + student_id;
-            }
-        }
-
-        function setpass_student(student_id) {
-            if (confirm('คุณต้องการรีเซ็ตรหัสผ่านใช่ไหม')) {
-                window.location.href = 'student_setpass.php?&ID=' + student_id;
-            }
-        }
-    </script>
+   
 
     <?php include '../dateth.php';?>
+<!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -252,7 +242,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                 <td>'. $row["student_major_name"].'</td>
                                 <td>
                                 
-                                <a type="button" href="javascript: setpass_student(' . $row["student_id"].')"
+                                <a type="button" href="index.php?Setpassword=req&ID=' . $row["student_id"].'"
                                 class="btn btn-success btn-xs"
                                >
                                 <span class="icon icon-sm">
@@ -270,7 +260,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         
                                     </a>
 
-                                    <a type="button" href="javascript: delete_teacher(' . $row["student_id"].')"
+                                    <a type="button" href="index.php?DelStudent=req&ID=' . $row["student_id"].'"
                                         class="btn btn-danger btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -323,7 +313,157 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         </div>
         </div>
 
+<?php
 
+include '../../conn.php';
+if (isset($_GET["DelStudent"] )) {
+
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ลบข้อมูลนักศึกษา?',
+                text: 'เเน่ใจว่าต้องการลบ!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'index.php?deleteR3=req&ID={$_GET["ID"]}'
+                }else{
+                    
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+
+}
+
+
+if (isset($_GET["deleteR3"])) {
+
+
+
+    $sql1 = "DELETE FROM project_has_student  WHERE phs_student_id={$_GET["ID"]} ";
+    $result1 = mysqli_query($con, $sql1);
+
+    $sql2 = "DELETE FROM subject_hash_student  WHERE ss_student_id={$_GET["ID"]} ";
+    $result2 = mysqli_query($con, $sql2);
+
+    $sql3 = "DELETE FROM appoint  WHERE recorder={$_GET["ID"]} ";
+    $result3 = mysqli_query($con, $sql3);
+
+
+    
+    $sql = "DELETE FROM student  WHERE student_id={$_GET["ID"]} ";
+    
+
+
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบนักศึกษาเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบนักศึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+}
+
+
+
+if (isset($_GET["Setpassword"] )) {
+
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ต้องการรีเซ็ตรหัสรหัสผ่าน',
+                text: 'รหัสผ่านคือรหัสนักศึกษา',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'index.php?SetPassStudentID=req&ID={$_GET["ID"]}'
+                }else{
+                    
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+
+}
+
+
+if (isset($_GET["SetPassStudentID"])) {
+
+
+
+    $student = $_GET["ID"];
+$setpassword = md5($student);
+
+  $sql = "UPDATE student SET
+
+student_password ='$setpassword'
+
+
+      WHERE student_id='$student' 
+      ";
+
+
+    
+    
+
+
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'รีเซ็ตรหัสผ่านนักศึกษาเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'รีเซ็ตรหัสผ่านนักศึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+}
+
+
+mysqli_close($con);
+?>
 
         <?php include '../footer.php';?>
 

@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -108,7 +110,7 @@ $row = mysqli_fetch_array($result);
 extract($row);
 ?>
             
-                <form action="student_edit_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -216,7 +218,7 @@ $result2 = mysqli_query($con, $query2);
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="StudenEdit">บันทึก</button>
             <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
         </div>
         </div>
@@ -241,7 +243,61 @@ $result2 = mysqli_query($con, $query2);
         </div>
         </div>
 
+        
+        <?php
+include '../../conn.php';
+if (isset($_POST["StudenEdit"])) {
 
+
+    $student_id  = $_POST['student_id'];
+    $student_name  = $_POST['student_name'];
+    $student_major  = $_POST['student_major'];
+    $student_email  = $_POST['student_email'];
+    $student_phone  = $_POST['student_phone'];
+    $student_type = $_POST['student_type'];
+    
+    
+      $sql = "UPDATE student SET
+    
+    
+    student_name='$student_name',
+    student_major='$student_major',
+    student_email='$student_email',
+    student_phone='$student_phone',
+    student_type='$student_type'
+    
+    
+    
+          WHERE student_id='$student_id' 
+          ";
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'แก้ไขข้อมูลนักศึกษาเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'แก้ไขข้อมูลนักศึกษาไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+
+}
+mysqli_close($con);
+        ?>
 
         <?php include '../footer.php';?>
 
