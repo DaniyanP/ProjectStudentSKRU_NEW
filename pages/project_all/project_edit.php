@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -82,7 +84,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="project_edit_ac.php" method="post">
+                <form action="" method="post">
 
                 <?php
 
@@ -168,7 +170,8 @@ extract($row);
 
                    
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="ProjectEdit">บันทึก</button>
+            <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
         </div>
 
 
@@ -192,7 +195,54 @@ extract($row);
         </div>
         </div>
 
+        <?php
 
+include '../../conn.php';
+if (isset($_POST["ProjectEdit"] )) {
+
+
+    $project_id  = $_POST['project_id'];
+$project_name  = $_POST['project_name'];
+$project_type  = $_POST['project_type'];
+
+
+
+
+$sql ="UPDATE project SET
+
+project_name ='$project_name',
+project_type ='$project_type'
+    
+    
+    
+    
+          WHERE project.project_id='$project_id'";
+
+    if (mysqli_query($con, $sql)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'แก้ไขข้อมูลโครงงานเรียบร้อย',
+                    showConfirmButton: false,
+                    timer: 2000  
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'แก้ไขข้อมูลโครงงานไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+}
+
+    mysqli_close($con);
+?>
 
         <?php include '../footer.php';?>
 
