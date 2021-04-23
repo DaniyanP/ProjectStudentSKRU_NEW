@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+      <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -86,7 +88,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
 
-                <form action="classroom_add_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -210,7 +212,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                     </div>
 
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                        <button type="submit" class="btn btn-primary" name="ClassRoomAdd">บันทึก</button>
                         <a type="button" class="btn btn-info" href="../subject">กลับ</a>
                     </div>
 
@@ -234,6 +236,80 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
+if (isset($_POST["ClassRoomAdd"])) {
+    function random_id($len)
+    {
+        srand((double)microtime()*10000000);
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        $ret_str = "";
+        $num = strlen($chars);
+        for($i = 0; $i < $len; $i++)
+        {
+            $ret_str.= $chars[rand()%$num];
+            $ret_str.=""; 
+        }
+        return $ret_str; 
+    }
+    // echo random_password(8); 
+    $passw = random_id(6); 
+
+
+
+
+$subject_id  = $passw;
+$subject_id2  = $_POST['subject_id2'];
+$subject_classroom  = $_POST['subject_classroom'];
+$subject_name  = $_POST['subject_name'];
+$subject_semester  = $_POST['subject_semester'];
+$subject_year  = $_POST['subject_year'];
+$subject_sec  = $_POST['subject_sec'];
+$subject_day  = $_POST['subject_day'];
+$subject_teacher  = $_POST['subject_teacher'];
+$subject_time_start  = $_POST['subject_time_start'];
+$subject_time_end  = $_POST['subject_time_end'];
+
+
+
+
+
+$sql ="INSERT INTO subject_project
+
+( `subject_key`, `subject_id2`, `subject_classroom`, `subject_name`, `subject_semester`, `subject_year`, `subject_sec`, `subject_day`, `subject_teacher`, `subject_time_start`, `subject_time_end`)
+
+VALUES 
+
+('$subject_id','$subject_id2','$subject_classroom','$subject_name','$subject_semester','$subject_year','$subject_sec','$subject_day','$subject_teacher','$subject_time_start','$subject_time_end')";
+
+
+
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มข้อมูลโครงงานเรียบร้อย',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'มีรหัสโครงงานนี้อยู่แล้ว', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+}
+mysqli_close($con);
+        ?>
 
 
         <?php include '../footer.php';?>

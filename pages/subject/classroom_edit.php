@@ -74,7 +74,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
             <div class="d-flex justify-content-between w-100 flex-wrap">
                 <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">เพิ่มข้อมูลรายวิชาที่สอน</h1>
+                    <h1 class="h4">แก้ไขข้อมูลรายวิชาที่สอน</h1>
 
                 </div>
 
@@ -246,9 +246,11 @@ extract($row);
 
                     <div class="mt-3">
                         <button type="submit" class="btn btn-primary" name="SubmitEditClassroom">บันทึก</button>
+                   
+                    
+                    <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
+
                     </div>
-
-
 
 
             </div>

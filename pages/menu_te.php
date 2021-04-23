@@ -88,18 +88,18 @@
 </a>
 </li>
 
-<li class="nav-item ">
-<a href="../../pages/teacher_all" class="nav-link">
-    <span class="sidebar-icon"><span class="fas fa-user"></span></span>
-    <span>จัดการข้อมูลอาจารย์</span>
-</a>
-</li>
+
 
 ';
         }
         
      
-        
+       /*  <li class="nav-item ">
+<a href="../../pages/teacher_all" class="nav-link">
+    <span class="sidebar-icon"><span class="fas fa-user"></span></span>
+    <span>จัดการข้อมูลอาจารย์</span>
+</a>
+</li> */
         
         ?>
         </ul>
