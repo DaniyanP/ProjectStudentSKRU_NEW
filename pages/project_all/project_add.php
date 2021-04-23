@@ -145,7 +145,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                    
                     <div class="mt-3">
             <button type="submit" class="btn btn-primary" name="StudentAdd">บันทึก</button>
-            <a type="buttoon" class="btn btn-info" href="index.php">กลับ</a>
+            <a type="button" class="btn btn-info" href="index.php">กลับ</a>
         </div>
 
 

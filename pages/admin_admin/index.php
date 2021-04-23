@@ -60,22 +60,11 @@ $admin_id = $_SESSION["TeacherID"];
     </script>
 
 
-    <script type="text/javascript">
-        function delete_teacher(teacher_id) {
-            if (confirm('คุณต้องการลบใช่ไหม')) {
-                window.location.href = 'teacher_del.php?&ID=' + teacher_id;
-            }
-        }
-
-
-        function setpass_teacher(teacher_id) {
-            if (confirm('คุณต้องการรีเซ็ตรหัสผ่านใช่ไหม')) {
-                window.location.href = 'teacher_setpass.php?&ID=' + teacher_id;
-            }
-        }
-    </script>
+    
 
     <?php include '../dateth.php';?>
+     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -198,7 +187,7 @@ $admin_id = $_SESSION["TeacherID"];
                     teacher
                     INNER JOIN teacher_type ON teacher.teacher_type = teacher_type.teacher_type_id
                     WHERE
-                    teacher.teacher_type NOT IN(1,2) and teacher.teacher_id NOT IN($admin_id) ;
+                    teacher.teacher_type NOT IN(1,2)
                     ";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
@@ -218,7 +207,7 @@ $admin_id = $_SESSION["TeacherID"];
 
 
 
-                            <a type="button" href="javascript: setpass_teacher(' . $row["teacher_id"].')"
+                            <a type="button" href="index.php?Setpassword=req&ID=' . $row["teacher_id"].'"
                                         class="btn btn-success btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -236,24 +225,31 @@ $admin_id = $_SESSION["TeacherID"];
                                             <span class="fas fa-edit icon-dark"></span>
                                         </span>
                                         
-                                    </a>
-
-                                    <a type="button" href="javascript: delete_teacher(' . $row["teacher_id"].')"
-                                        class="btn btn-danger btn-xs"
-                                       >
-                                        <span class="icon icon-sm">
-                                            <span class="fas fa-trash-alt icon-dark"></span>
-                                        </span>
-                                        
-                                    </a>
+                                    </a>'; ?>
 
 
+
+                                   <?php 
+                                   
+                                   if ($admin_id == $row["teacher_id"]) {
+                                       # code...
+                                   } else {
+                                    echo' <a type="button" href="index.php?AdminDelCF=req&ID=' . $row["teacher_id"].'"
+                                    class="btn btn-danger btn-xs"
+                                   >
+                                    <span class="icon icon-sm">
+                                        <span class="fas fa-trash-alt icon-dark"></span>
+                                    </span>
                                     
-                                       
+                                </a>';
+                                   }
+                                   
+                                   
+                                    ?>
 
-                                       
-                                    
-                                </td>
+
+
+                                    <?php echo'</td>
                                
                             </tr>';
                                                    
@@ -288,8 +284,154 @@ $admin_id = $_SESSION["TeacherID"];
             </div>
         </div>
         </div>
+        <?php
+include '../../conn.php';
+
+        if (isset($_GET["Setpassword"] )) {
 
 
+echo
+    "<script> 
+        Swal.fire({
+            icon: 'warning',
+            title: 'ต้องการรีเซ็ตรหัสรหัสผ่าน',
+            text: 'รหัสผ่านคือรหัสประจำตัว',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ใช่',
+            cancelButtonText: 'ไม่!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                location = 'index.php?SetPassStudentID=req&ID={$_GET["ID"]}'
+            }else{
+                
+                location = 'index.php'
+            }
+        }); 
+</script>";
+
+}
+
+
+if (isset($_GET["SetPassStudentID"])) {
+
+
+
+
+
+
+
+$teacher = $_GET["ID"];
+$setpassword = md5($teacher);
+
+  $sql = "UPDATE teacher SET
+
+teacher_password ='$setpassword'
+
+
+      WHERE teacher_id='$teacher' 
+      ";
+
+
+
+
+if (mysqli_query($con, $sql)) {
+echo
+    "<script> 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'รีเซ็ตรหัสผ่านผู้ดูแลระบบเรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 2000  
+        }).then(()=> location = 'index.php')
+    </script>";
+//header('Location: index.php');
+} else {
+echo
+    "<script> 
+    Swal.fire({
+        icon: 'error',
+        title: 'รีเซ็ตรหัสผ่านไม่สำเร็จ', 
+    }).then(()=> location = 'index.php')
+</script>";
+}
+}
+
+
+
+
+//ลบแอดมิน
+if (isset($_GET["AdminDelCF"] )) {
+
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ต้องกาลบผู้ดูแลระบบ',
+                text: 'ยืนยันการลบ',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'index.php?DelAdminC=req&ID={$_GET["ID"]}'
+                }else{
+                    
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+    
+    }
+    
+    
+    if (isset($_GET["DelAdminC"])) {
+    
+    
+    
+    
+    
+    
+    
+   
+    $teacher_id = $_GET["ID"];
+
+    $sql = "DELETE FROM teacher  WHERE teacher_id='$teacher_id' ";
+    
+    
+    
+    
+    if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบผู้ดูแลระบบเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+    } else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบผู้ดูแลระบบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+    }
+    }
+mysqli_close($con);
+        ?>
 
         <?php include '../footer.php';?>
 

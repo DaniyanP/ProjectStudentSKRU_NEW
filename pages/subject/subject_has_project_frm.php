@@ -27,6 +27,8 @@ $class_id1 = $_REQUEST["ID"];?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+        <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -83,7 +85,7 @@ $class_id1 = $_REQUEST["ID"];?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="subject_has_project_add.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -145,7 +147,7 @@ $class_id1 = $_REQUEST["ID"];?>
                     
                    
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="SujectAddProject">บันทึก</button>
             <a type="buttoon" class="btn btn-info" href="project.php?act=show&ID=<?php echo  $class_id1 ?>">กลับ</a>
         </div>
 
@@ -170,7 +172,112 @@ $class_id1 = $_REQUEST["ID"];?>
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
+if (isset($_POST["SujectAddProject"])) {
 
+    $project_id  = $_POST['project_id'];
+    $id_class  = $_POST['class_key'];
+    
+    $project_name  = $_POST['project_name'];
+    
+    $project_type  = $_POST['project_type'];
+    
+    
+    
+    
+    
+    
+        $check1 = "select * from project  where project_id = '$project_id'";
+          $result1 = mysqli_query($con, $check1)  or die(mysql_error());
+            
+            if($result1->num_rows > 0)   		
+            {
+    
+    
+                $check2 = "select * from subject_hash_project  where sp_subject_id = '$id_class' and sp_project_id = '$project_id' ";
+                $result2 = mysqli_query($con, $check2)  or die(mysql_error());
+                  
+                  if($result2->num_rows > 0)   		
+                  {
+    
+                    echo
+                    "<script> 
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'บันทึกไม่สำเร็จ เนื่องจากโครงงานนี้อยู่ในกลุ่มเรียนนี้แล้ว', 
+                    }).then(()=> location = 'project.php?act=show&ID=$id_class')
+                </script>";
+
+                   
+    
+    } else {
+        $sql22 = "INSERT INTO subject_hash_project
+        (sp_subject_id, sp_project_id)
+        
+         VALUES
+        ('$id_class', '$project_id') "; 
+        $result = mysqli_query($con, $sql22);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+            }else{
+        
+                $sql3 = "INSERT INTO project
+                (project_id, project_name, project_type)
+                
+                 VALUES
+                ('$project_id', '$project_name', '$project_type') "; 
+            $result = mysqli_query($con, $sql3);
+    
+    
+    
+     $sql4 = "INSERT INTO subject_hash_project
+            (sp_subject_id, sp_project_id)
+            
+             VALUES
+            ('$id_class', '$project_id') "; 
+        $result = mysqli_query($con, $sql4);
+     
+      mysqli_close($con);
+        
+        if($result){
+            echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'เพิ่มโครงงานเรียบร้อยแล้ว',
+                    showConfirmButton: false,
+                    timer: 2000  
+                }).then(()=> location = 'project.php?act=show&ID=$id_class' )
+            </script>";
+
+
+
+        } else {
+          
+            echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'เพิ่มข้อมูลไม่สำเร็จ', 
+            }).then(()=> location = 'project.php?act=show&ID=$id_class')
+        </script>";
+        }
+    }
+
+}
+
+        ?>
 
         <?php include '../footer.php';?>
 

@@ -34,9 +34,11 @@ $class_id1 = $_REQUEST["ID"];
 <?php 
 $query2 = "SELECT
 teacher.teacher_id as t_id, 
-teacher.teacher_name as t_name
+teacher.teacher_name as t_name,
+teacher.teacher_type
 FROM
 teacher
+where teacher_type NOT IN ('3')
 ORDER BY
 teacher.teacher_id ASC";
 $result2 = mysqli_query($con, $query2);

@@ -446,7 +446,7 @@ if (isset($_GET["DelProjectG"] )) {
                 if (result.isConfirmed) {
                     location = 'project.php?DelProjectGID=req&ID={$_GET["ID"]}&IDR={$_GET["IDR"]}'
                 }else{
-                    location = history.back(1);
+                    location = 'project.php?act=show&ID={$_GET["IDR"]}'
                 }
             }); 
     </script>";

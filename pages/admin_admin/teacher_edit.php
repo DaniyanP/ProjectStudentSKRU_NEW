@@ -27,6 +27,8 @@ $teacher_id = $_REQUEST["ID"];?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+        <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -104,7 +106,7 @@ $row = mysqli_fetch_array($result);
 extract($row);
 ?>
 
-                <form action="teacher_edit_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -112,7 +114,7 @@ extract($row);
                         <div class="col-md-3 mb-3">
                             <div class="form-group">
                                 <label for="teacher_id">รหัสผู้ดูแลระบบ</label>
-                                <input class="form-control" id="teacher_id" name="teacher_id" type="number"
+                                <input class="form-control" id="teacher_id" name="teacher_id" type="text"
                                     placeholder="กรอกรหัสผู้ดูแลระบบ" required value="<?php echo $teacher_id ?>" readonly>
                             </div>
                         </div>
@@ -151,7 +153,8 @@ extract($row);
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary"  name="AdminEditInfo">บันทึก</button>
+            <a type="button" class="btn btn-info" href="index.php">กลับ</a>
         </div>
         </div>
 
@@ -175,6 +178,49 @@ extract($row);
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
+if (isset($_POST["AdminEditInfo"])) {
+
+    $teacher_id  = $_POST['teacher_id'];
+    $teacher_name  = $_POST['teacher_name'];
+    $teacher_email  = $_POST['teacher_email'];
+    
+      $sql = "UPDATE teacher SET
+    
+    teacher_name ='$teacher_name',
+    teacher_email ='$teacher_email'
+    
+    
+          WHERE teacher_id='$teacher_id' 
+          ";
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'แก้ไขข้อมูลผู้ดูแลระบบเรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'แก้ไขข้อมูลผู้ดูแลระบบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+mysqli_close($con);
+        ?>
 
 
         <?php include '../footer.php';?>
