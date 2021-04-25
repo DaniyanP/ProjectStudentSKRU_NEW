@@ -51,7 +51,7 @@
                                 <h1 class="mb-0 h3">เข้าสู่ระบบ</h1>
                             </div>
                             <form action="login_ac.php" method="post" class="mt-4">
-                                <!-- Form -->
+                              
                                 <div class="form-group mb-4">
                                     <label for="Username">รหัสประจำตัว</label>
                                     <div class="input-group">
@@ -59,9 +59,9 @@
                                         <input type="text" class="form-control" name="Username" placeholder="594235XXX" id="Username" autofocus required>
                                     </div>  
                                 </div>
-                                <!-- End of Form -->
+                               
                                 <div class="form-group">
-                                    <!-- Form -->
+                                 
                                     <div class="form-group mb-4">
                                         <label for="Password">รหัสผ่าน</label>
                                         <div class="input-group">
@@ -69,29 +69,16 @@
                                             <input type="password" placeholder="รหัสผ่าน" class="form-control" name="Password" id="Password" required>
                                         </div>  
                                     </div>
-                                    <!-- End of Form -->
-                                   <!--  <div class="d-flex justify-content-between align-items-top mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="remember">
-                                            <label class="form-check-label mb-0" for="remember">
-                                              Remember me
-                                            </label>
-                                        </div>
-                                        <div><a href="./forgot-password.html" class="small text-right">Lost password?</a></div>
-                                    </div> -->
+                                   
                                 </div>
-                                <button type="submit" class="btn btn-block btn-primary">ล็อกอิน</button>
+                                <center>
+                                <button type="submit" class="btn  btn-primary " name="StudentLogin"><span class="fas fa-user"></span> นักศึกษา</button>
+                                <button type="submit" class="btn  btn-warning" name="TeacherLogin"><span class="fas fa-user"></span> อาจารย์</button></center>
                             </form>
-                            <!-- <div class="mt-3 mb-4 text-center">
-                                <span class="font-weight-normal">or login with</span>
-                            </div> -->
+
                            
-                            <!-- <div class="d-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal">
-                                    ยังไม่ได้เป็นสมาชิก?
-                                    <a href="sign-up.php" class="font-weight-bold">สมัครสมาชิก</a>
-                                </span>
-                            </div> -->
+
+                           
                         </div>
                     </div>
                 </div>

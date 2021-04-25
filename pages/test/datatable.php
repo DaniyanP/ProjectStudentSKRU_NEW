@@ -74,7 +74,7 @@
                     "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
                     "sSearch": "ค้นหา :",
                     "oPaginate": {
-                        "sFirst": "เิริ่มต้น",
+                        "sFirst": "เริ่มต้น",
                         "sPrevious": "ก่อนหน้า",
                         "sNext": "ถัดไป",
                         "sLast": "สุดท้าย"
