@@ -159,11 +159,11 @@ $admin_id = $_SESSION["TeacherID"];
 
                     <thead>
                         <tr>
-                            <th scope="col">รหัสผู้ดูแลระบบ</th>
-                            <th scope="col">ชื่อ - นามสกุล</th>
-                            <th scope="col">อีเมลล์</th>
-                            <th scope="col">บทบาท</th>
-                            <th scope="col">เพิ่มเติม</th>
+                            <th>รหัสผู้ดูแลระบบ</th>
+                            <th>ชื่อ - นามสกุล</th>
+                            <th>อีเมลล์</th>
+                            <th>บทบาท</th>
+                            <th>เพิ่มเติม</th>
 
 
 
@@ -268,16 +268,7 @@ $admin_id = $_SESSION["TeacherID"];
 
                     </tbody>
                     <tfoot>
-                        <tr>
-                        <th>รหัสผู้ดูแลระบบ</th>
-                            <th>ชื่อ - นามสกุล</th>
-                            <th>อีเมลล์</th>
-                            <th>บทบาท</th>
-                            <th>เพิ่มเติม</th>
-
-
-
-                        </tr>
+                       
                     </tfoot>
                 </table>
 

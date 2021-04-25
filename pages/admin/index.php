@@ -158,12 +158,12 @@ $admin_id = $_SESSION["TeacherID"];
 
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">หัวข้อข่าวสาร</th>
+                            <th>#</th>
+                            <th>หัวข้อข่าวสาร</th>
                            
-                            <th scope="col">ผู้ประกาศ</th>
-                            <th scope="col">ประกาศเมื่อ</th>
-                            <th scope="col">จัดการ</th>
+                            <th >ผู้ประกาศ</th>
+                            <th >ประกาศเมื่อ</th>
+                            <th >จัดการ</th>
 
 
 
@@ -259,17 +259,7 @@ $admin_id = $_SESSION["TeacherID"];
 
                     </tbody>
                     <tfoot>
-                        <tr>
-                        <th>#</th>
-                            <th>หัวข้อข่าวสาร</th>
-                           
-                            <th>ผู้ประกาศ</th>
-                            <th>ประกาศเมือ</th>
-                            <th>เพิ่มเติม</th>
-
-
-
-                        </tr>
+                        
                     </tfoot>
                 </table>
 

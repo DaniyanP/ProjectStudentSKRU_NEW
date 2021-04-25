@@ -200,11 +200,11 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
                     <thead>
                         <tr>
-                            <th scope="col">รหัสอาจารย์</th>
-                            <th scope="col">ชื่อ - นามสกุล</th>
-                            <th scope="col">อีเมลล์</th>
-                            <th scope="col">บทบาท</th>
-                            <th scope="col">เพิ่มเติม</th>
+                            <th>รหัสอาจารย์</th>
+                            <th>ชื่อ - นามสกุล</th>
+                            <th>อีเมลล์</th>
+                            <th>บทบาท</th>
+                            <th>เพิ่มเติม</th>
 
 
 
@@ -302,16 +302,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
                     </tbody>
                     <tfoot>
-                        <tr>
-                        <th>รหัสอาจารย์</th>
-                            <th>ชื่อ - นามสกุล</th>
-                            <th>อีเมลล์</th>
-                            <th>บทบาท</th>
-                            <th>เพิ่มเติม</th>
-
-
-
-                        </tr>
+                       
                     </tfoot>
                 </table>
 
