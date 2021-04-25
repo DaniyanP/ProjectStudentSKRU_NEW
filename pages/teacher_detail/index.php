@@ -177,10 +177,10 @@ extract($row);
                     <div class="row">
                         <div class="col-12 mb-4">
                             <div class="card border-light text-center p-0">
-                                <div class="profile-cover rounded-top" data-background="../../assets/img/profile-cover.jpg"></div>
+                                <div class="profile-cover rounded-top" data-background="../../assets/img/cover_t.jpg"></div>
                                 <div class="card-body pb-5">
                                     <img src="<?php echo $teacher_photo ?>" class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
-                                    <h4 class="h3"><?php echo $teacher_name ?></h4>
+                                    <h4 class="h4"><?php echo $teacher_name ?></h4>
                                     <h5 class="font-weight-normal">#<?php echo $teacher_id ?></h5>
                                     <p class="text-gray mb-4"><?php echo $teacher_email ?></p>
                                     <!-- <a class="btn btn-sm btn-primary mr-2" href="#"><span class="fas fa-user-plus mr-1"></span> Connect</a>

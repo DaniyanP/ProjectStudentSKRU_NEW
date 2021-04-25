@@ -142,10 +142,16 @@ if (!$_SESSION["UserID"]){
                     com05.appoint_id,
                     appoint.appoint_comment,
                     com05.score,
-appoint.appoint_date_start
+                  
+appoint.appoint_date_start, 
+	score.score_score
                     FROM
                     com05
                     INNER JOIN appoint ON com05.appoint_id = appoint.appoint_id
+                    INNER JOIN
+	score
+	ON 
+		com05.score = score.score_id
                     WHERE
                     com05.project_id = '$id_ptojrct'
                     ORDER BY
@@ -160,7 +166,7 @@ appoint.appoint_date_start
 
                             <td>'.DateThai($strDate).'</td>
                             <td>'. mb_substr($row["appoint_comment"],0,50,'UTF-8').'</td>
-                            <td>' . $row["score"].'</td>
+                            <td>' . $row["score_score"].'</td>
                             <td><a href="com05.php?act=show&ID='. $row["com05_id"].'"" class="btn  btn-sm btn-outline-info mr-3"><span class="far fa-paper-plane mr-2"></span>COM-05</a></td>
                         </tr>';       
                     }

@@ -72,16 +72,125 @@ if (!$_SESSION["TeacherID"]){
 
         <div class="py-0">
 
-            <div class="d-flex justify-content-between w-100 flex-wrap">
+           <!--  <div class="d-flex justify-content-between w-100 flex-wrap">
                 <div class="mb-3 mb-lg-0">
                     <h1 class="h4">หัวข้อ</h1>
                     <p class="mb-0">อธิบายหัวข้อ
                     </p>
                 </div>
 
-            </div>
+            </div> -->
         </div>
 
+        <!-- ยอดโครงงาน -->
+        <div class="row">
+
+
+        <!-- กล่องที่1 -->
+        <div class="col-12 col-sm-6 col-xl-3 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <div class="row d-block d-xl-flex align-items-center">
+                                <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                    <div class="icon icon-shape icon-md icon-shape-blue rounded mr-4 mr-sm-0"><span class="far fa-clone"></span></div>
+                                    <div class="d-sm-none">
+                                        <h2 class="h5">โครงงาน</h2>
+                                        <h3 class="mb-1">345,678</h3>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-7 px-xl-0">
+                                    <div class="d-none d-sm-block">
+                                        <h2 class="h5">โครงงาน</h2>
+                                        <h3 class="mb-1">345k</h3>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- กล่องที่2 -->
+        <div class="col-12 col-sm-6 col-xl-3 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <div class="row d-block d-xl-flex align-items-center">
+                                <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                    <div class="icon icon-shape icon-md icon-shape-warning rounded mr-4 mr-sm-0"><span class="far fa-hourglass"></span></div>
+                                    <div class="d-sm-none">
+                                        <h2 class="h5">กำลังดำเนินการ</h2>
+                                        <h3 class="mb-1">345,678</h3>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-7 px-xl-0">
+                                    <div class="d-none d-sm-block">
+                                        <h2 class="h5">ดำเนินการ</h2>
+                                        <h3 class="mb-1">345k</h3>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!-- กล่องที่3 -->
+<div class="col-12 col-sm-6 col-xl-3 mb-4">
+    <div class="card border-light shadow-sm">
+        <div class="card-body">
+            <div class="row d-block d-xl-flex align-items-center">
+                <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                    <div class="icon icon-shape icon-md icon-shape-danger rounded mr-4 mr-sm-0"><span class="far fa-times-circle"></span></div>
+                    <div class="d-sm-none">
+                        <h2 class="h5">ยกเลิก</h2>
+                        <h3 class="mb-1">345,678</h3>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-7 px-xl-0">
+                    <div class="d-none d-sm-block">
+                        <h2 class="h5">ยกเลิก</h2>
+                        <h3 class="mb-1">345k</h3>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                <!-- กล่องที่4 -->
+                <div class="col-12 col-sm-6 col-xl-3 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <div class="row d-block d-xl-flex align-items-center">
+                                <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                    <div class="icon icon-shape icon-md icon-shape-success rounded mr-4 mr-sm-0"><span class="far fa-check-circle"></span></div>
+                                    <div class="d-sm-none">
+                                        <h2 class="h5">เสร็จสิ้น</h2>
+                                        <h3 class="mb-1">345,678</h3>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-7 px-xl-0">
+                                    <div class="d-none d-sm-block">
+                                        <h2 class="h5">เสร็จสิ้น</h2>
+                                        <h3 class="mb-1">345k</h3>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                
+                </div>
+<!-- ปิดยอดโครงงาน -->
+
+<p></p>
         <div class="row">
 
 

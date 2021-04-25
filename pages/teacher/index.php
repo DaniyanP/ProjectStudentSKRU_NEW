@@ -81,7 +81,7 @@ if (!$_SESSION["TeacherID"]){
 
                                                   echo "{
                                                   title:
-                                                      '[" . $row["appoint_status_name"]. "] " . $row["project_name"]. "',
+                                                      '#" . $row["appoint_id"]. " [" . $row["appoint_status_name"]. "] " . $row["project_name"]. "',
                                                       start: '" . $row["appoint_date_start"]. "',
                                                       end: '" . $row["appoint_date_end"]. "',
                                                       color: '" . $row["color_calendar"]. "',

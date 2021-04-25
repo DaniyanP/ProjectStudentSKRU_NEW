@@ -425,7 +425,7 @@ if (mysqli_query($con, $sql289)) {
     </script>";
 }
 
-mysqli_close($con);
+
 }
 
 
@@ -463,36 +463,36 @@ if (isset($_POST["StudentAdder"])) {
             
              VALUES
             ('$id_class', '$student_id') "; 
-        $result = mysqli_query($con, $sql);
+       
+       if (mysqli_query($con, $sql)) {
+
+        echo
+        "<script> 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'เพิ่มนักศึกษาเข้ากลุ่มเรียนเรียบร้อยแล้ว!',
+            showConfirmButton: false,
+            timer: 2000
+        }).then(()=> location = 'student.php?act=show&ID=$id_class')
+    </script>";
+
      
+    } else {
+      
+        echo "<script> 
+        Swal.fire(
+            'ไม่พบรหัสนักศึกษาในระบบ!  ',
+            'โปรดตรวจสอบรหัสนักศึกษาอีกครั้ง เพื่อความถูกต้อง',
+            'error'
+        ).then(()=> location = 'student.php?act=show&ID=$id_class')
+    </script>";
+    }
      
     }
         mysqli_close($con);
         
-        if($result){
-
-
-            "<script> 
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'เพิ่มนักศึกษาเข้ากลุ่มเรียนเรียบร้อยแล้ว!',
-                showConfirmButton: false,
-                timer: 2000
-            }).then(()=> location = 'student.php?act=show&ID=$id_class')
-        </script>";
-
-         
-        } else {
-          
-            echo "<script> 
-            Swal.fire(
-                'ไม่พบรหัสนักศึกษาในระบบ!  ',
-                'โปรดตรวจสอบรหัสนักศึกษาอีกครั้ง เพื่อความถูกต้อง',
-                'error'
-            ).then(()=> location = 'student.php?act=show&ID=$id_class')
-        </script>";
-        }
+       
 
 
 
