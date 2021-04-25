@@ -60,22 +60,11 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
     </script>
 
 
-    <script type="text/javascript">
-        function delete_teacher(teacher_id) {
-            if (confirm('คุณต้องการลบใช่ไหม')) {
-                window.location.href = 'teacher_del.php?&ID=' + teacher_id;
-            }
-        }
-
-
-        function setpass_teacher(teacher_id) {
-            if (confirm('คุณต้องการรีเซ็ตรหัสผ่านใช่ไหม')) {
-                window.location.href = 'teacher_setpass.php?&ID=' + teacher_id;
-            }
-        }
-    </script>
+  
 
     <?php include '../dateth.php';?>
+     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -259,7 +248,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
 
 
-                            <a type="button" href="javascript: setpass_teacher(' . $row["teacher_id"].')"
+                            <a type="button" href="index.php?Setpassword=req&ID=' . $row["teacher_id"].'"
                                         class="btn btn-success btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -279,7 +268,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                                         
                                     </a>
 
-                                    <a type="button" href="javascript: delete_teacher(' . $row["teacher_id"].')"
+                                    <a type="button" href="index.php?TeacherDelCF=req&ID=' . $row["teacher_id"].'"
                                         class="btn btn-danger btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -330,7 +319,167 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
 
+        if (isset($_GET["Setpassword"] )) {
+
+
+echo
+    "<script> 
+        Swal.fire({
+            icon: 'warning',
+            title: 'ต้องการรีเซ็ตรหัสรหัสผ่าน',
+            text: 'รหัสผ่านคือรหัสประจำตัว',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ใช่',
+            cancelButtonText: 'ไม่!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                location = 'index.php?SetPassTeacherID=req&ID={$_GET["ID"]}'
+            }else{
+                
+                location = 'index.php'
+            }
+        }); 
+</script>";
+
+}
+
+
+if (isset($_GET["SetPassTeacherID"])) {
+
+
+
+
+
+
+
+$teacher = $_GET["ID"];
+$setpassword = md5($teacher);
+
+  $sql = "UPDATE teacher SET
+
+teacher_password ='$setpassword'
+
+
+      WHERE teacher_id='$teacher' 
+      ";
+
+
+
+
+if (mysqli_query($con, $sql)) {
+echo
+    "<script> 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'รีเซ็ตรหัสผ่านอาจารย์เรียบร้อยแล้ว',
+            showConfirmButton: false,
+            timer: 2000  
+        }).then(()=> location = 'index.php')
+    </script>";
+//header('Location: index.php');
+} else {
+echo
+    "<script> 
+    Swal.fire({
+        icon: 'error',
+        title: 'รีเซ็ตรหัสผ่านไม่สำเร็จ', 
+    }).then(()=> location = 'index.php')
+</script>";
+}
+}
+
+
+
+
+//ลบอาจารย์
+if (isset($_GET["TeacherDelCF"] )) {
+
+
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ต้องการลบอาจารย์',
+                text: 'ยืนยันการลบ',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    location = 'index.php?DelTeacherC=req&ID={$_GET["ID"]}'
+                }else{
+                    
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+    
+    }
+    
+    
+    if (isset($_GET["DelTeacherC"])) {
+    
+    
+    
+    
+    
+    
+    
+   
+    $teacher_id = $_GET["ID"];
+
+    $sql1 = "DELETE FROM pr  WHERE pr_record='$teacher_id' ";
+    $result1 = mysqli_query($con, $sql1);
+    $sql2 = "DELETE FROM subject_project  WHERE subject_teacher='$teacher_id' ";
+    $result2 = mysqli_query($con, $sql2);
+    $sql3 = "DELETE FROM appoint  WHERE teacher_id='$teacher_id' ";
+    $result3 = mysqli_query($con, $sql3);
+    $sql4 = "DELETE FROM com05  WHERE teacher_id='$teacher_id' ";
+    $result4 = mysqli_query($con, $sql4);
+    $sql5 = "DELETE FROM project_has_adviser  WHERE pha_teacher_id='$teacher_id' ";
+    $result5 = mysqli_query($con, $sql5);
+    
+
+
+    $sql = "DELETE FROM teacher  WHERE teacher_id='$teacher_id' ";
+    
+    
+    
+    
+    if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ลบอาจารย์เรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+    } else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ลบอาจารย์ไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+    }
+    }
+mysqli_close($con);
+        ?>
 
         <?php include '../footer.php';?>
 

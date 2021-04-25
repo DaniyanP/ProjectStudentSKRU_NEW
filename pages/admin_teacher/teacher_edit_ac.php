@@ -2,7 +2,7 @@
 
 <?php include '../../conn.php';?> 
 <?php
-
+//
 
 
 $teacher_id  = $_POST['teacher_id'];

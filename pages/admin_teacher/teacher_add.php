@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+       <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -82,7 +84,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="teacher_add_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -129,7 +131,8 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="TeacherAdd">บันทึก</button>
+            <a type="button" class="btn btn-info" href="index.php">กลับ</a>
         </div>
         </div>
 
@@ -153,7 +156,59 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
 
+if (isset($_POST["TeacherAdd"])) {
+
+
+
+    
+$teacher_id  = $_POST['teacher_id'];
+$teacher_name  = $_POST['teacher_name'];
+$teacher_email  = $_POST['teacher_email'];
+$set_password = $teacher_id;
+$teacher_password = md5($set_password);
+
+
+
+		
+
+
+ $sql = "INSERT INTO teacher
+		(teacher_id, teacher_name, teacher_email, teacher_password)
+		
+ 		VALUES
+		('$teacher_id', '$teacher_name', '$teacher_email', '$teacher_password') "; 
+
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มข้อมูลอาจารย์เรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ไม่สามารถบันทึกได้ เนื่องจากอาจารย์ท่านนี้มีในระบบแล้ว', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+mysqli_close($con);
+        ?>
 
         <?php include '../footer.php';?>
 

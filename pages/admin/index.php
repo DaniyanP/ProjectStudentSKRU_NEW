@@ -64,18 +64,11 @@ $admin_id = $_SESSION["TeacherID"];
     </script>
 
 
-    <script type="text/javascript">
-        function delete_pr(pr_id) {
-            if (confirm('คุณต้องการลบใช่ไหม')) {
-                window.location.href = 'pr_del.php?&ID=' + pr_id;
-            }
-        }
-
-
-       
-    </script>
+    
 
     <?php include '../dateth.php';?>
+       <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -232,7 +225,7 @@ $admin_id = $_SESSION["TeacherID"];
                                         
                                     </a>
 
-                                    <a type="button" href="javascript: delete_pr(' . $row["pr_id"].')"
+                                    <a type="button" href="index.php?PRDel=req&ID=' . $row["pr_id"].'"
                                         class="btn btn-danger btn-xs"
                                        >
                                         <span class="icon icon-sm">
@@ -284,6 +277,77 @@ $admin_id = $_SESSION["TeacherID"];
         </div>
         </div>
 
+        <?php
+include '../../conn.php';
+
+
+    if (isset($_GET["PRDel"] )) {
+
+
+        echo
+            "<script> 
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ลบข้อมูลข่าวประชาสัมพันธ์?',
+                    text: 'เเน่ใจว่าต้องการลบ!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่',
+                    cancelButtonText: 'ไม่!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        location = 'index.php?PRCFdel=req&ID={$_GET["ID"]}'
+                    }else{
+                        
+                        location = 'index.php'
+                    }
+                }); 
+        </script>";
+    
+    }
+    
+    
+    if (isset($_GET["PRCFdel"])) {
+    
+        $pr_id = $_GET["ID"];
+
+        $sql = "DELETE FROM pr  WHERE pr_id='$pr_id' ";
+
+    
+         
+        
+        
+        
+    
+    
+    
+    if (mysqli_query($con, $sql)) {
+        echo
+            "<script> 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'ลบข้อมูลข่าวประชาสัมพันธ์เรียบร้อยแล้ว',
+                    showConfirmButton: false,
+                    timer: 2000  
+                }).then(()=> location = 'index.php')
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            Swal.fire({
+                icon: 'error',
+                title: 'ลบลบข้อมูลข่าวประชาสัมพันธ์ไม่สำเร็จ', 
+            }).then(()=> location = 'index.php')
+        </script>";
+    }
+    }
+
+mysqli_close($con);
+        ?>
 
 
         <?php include '../footer.php';?>

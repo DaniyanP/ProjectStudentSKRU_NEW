@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -103,7 +105,7 @@ $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_erro
 $row = mysqli_fetch_array($result);
 extract($row);
 ?>
-                <form action="pr_edit_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -143,7 +145,7 @@ extract($row);
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="PREditInfo">บันทึก</button>
             <a type="botton" class="btn btn-info" href="index.php">กลับ</a>
         </div>
         </div>
@@ -171,7 +173,49 @@ extract($row);
         </div>
 
 
+        <?php
+include '../../conn.php';
+if (isset($_POST["PREditInfo"])) {
 
+    $pr_header  = $_POST['pr_header'];
+$pr_content  = $_POST['pr_content'];
+$admin_id  = $_POST['admin_id'];
+$pr_id  = $_POST['pr_id'];
+
+  $sql = "UPDATE pr SET
+
+pr_header ='$pr_header',
+pr_content ='$pr_content'
+
+
+      WHERE pr_id='$pr_id' 
+      ";
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'แก้ไขข่าวประชาสัมพันธ์เรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'แก้ไขข่าวประชาสัมพันธ์ไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+    }
+mysqli_close($con);
+        ?>
         <?php include '../footer.php';?>
 
     </main>

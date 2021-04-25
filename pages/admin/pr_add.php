@@ -26,6 +26,8 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -83,7 +85,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             
-                <form action="pr_add_ac.php" method="post">
+                <form action="" method="post">
 
 
                     <div class="row">
@@ -123,7 +125,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                     
                     <div class="row">
                     <div class="mt-3">
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="submit" class="btn btn-primary" name="PRAdd">บันทึก</button>
             <a type="botton" class="btn btn-info" href="index.php">กลับ</a>
         </div>
         </div>
@@ -151,6 +153,50 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
         </div>
 
 
+
+        <?php
+include '../../conn.php';
+if (isset($_POST["PRAdd"])) {
+    $pr_header  = $_POST['pr_header'];
+    $pr_content  = $_POST['pr_content'];
+    $admin_id  = $_POST['admin_id'];
+    
+    
+    
+            
+    
+    
+     $sql = "INSERT INTO pr
+            (pr_header, pr_content, pr_record)
+            
+             VALUES
+            ('$pr_header', '$pr_content', '$admin_id') "; 
+
+if (mysqli_query($con, $sql)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เพิ่มข่าวประชาสัมพันธ์เรียบร้อยแล้ว',
+                showConfirmButton: false,
+                timer: 2000  
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'เพิ่มข่าวประชาสัมพันธ์ไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+    }
+mysqli_close($con);
+        ?>
 
         <?php include '../footer.php';?>
 
