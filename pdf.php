@@ -31,7 +31,8 @@ if (!$_SESSION["TeacherID"]){
 	com05.project_id, 
 	com05.score, 
 	appoint.teacher_id, 
-	teacher.teacher_name
+	teacher.teacher_name, 
+	score.score_score
 FROM
 	com05
 	INNER JOIN
@@ -43,6 +44,10 @@ FROM
 	ON 
 		
 		com05.teacher_id = teacher.teacher_id
+		INNER JOIN
+	score
+	ON 
+		com05.score = score.score_id
 WHERE
 	com05.project_id = '$project_id'
 ORDER BY
@@ -62,7 +67,7 @@ ORDER BY
 				<td style="border-right:1px solid #000;padding:3px;"  >'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['teacher_name'].'</td>
               
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['score'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['score_score'].'</td>
 			</tr>';
 			$i++;
 		}

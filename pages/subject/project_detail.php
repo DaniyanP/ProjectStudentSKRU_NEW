@@ -873,25 +873,44 @@ appoint.appoint_date_start
                     filee
                     INNER JOIN file_type ON filee.file_type = file_type.file_type_id
                     WHERE
-                    filee.project_id = '$id_ptojrct' and filee.file_apporve = 2
+                    filee.project_id = '$id_ptojrct' 
                     ORDER BY
                     file_type.file_type_id ASC";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<div class="btn-group mr-2 mb-2"> 
-                            <a href="' . $row["file_link"].'" type="button" class="btn btn-primary"><span class="' . $row["file_type_icon"].' mr-2"></span> ' . $row["file_type_name"].'</a>
-                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fas fa-angle-down dropdown-arrow"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="file_edit.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>แก้ไขไฟล์</a>
-                                <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
-                               
-                            </div>
-                        </div>';       
+
+
+                            if ($row["file_apporve"]==2) {
+                                echo '<div class="btn-group mr-2 mb-2"> 
+                                <a href="' . $row["file_link"].'" type="button" class="btn btn-primary"><span class="' . $row["file_type_icon"].' mr-2"></span> ' . $row["file_type_name"].'</a>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-angle-down dropdown-arrow"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="file_edit.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>แก้ไขไฟล์</a>
+                                    <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
+                                   
+                                </div>
+                            </div>'; 
+                            } else {
+                                echo '<div class="btn-group mr-2 mb-2"> 
+                                <a href="' . $row["file_link"].'" type="button" class="btn btn-danger"><span class="' . $row["file_type_icon"].' mr-2"></span> ' . $row["file_type_name"].'</a>
+                                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-angle-down dropdown-arrow"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="file_approve.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-edit mr-2"></span>ยืนยัน</a>
+                                    <a class="dropdown-item" href="file_del.php?act=edit&ID=' . $row["file_id"].'"><span class="fas fa-trash-alt mr-2"></span>ลบ</a>
+                                   
+                                </div>
+                            </div>'; 
+                            }
+                            
+                                  
                         }
                         }
                         $con->close();
