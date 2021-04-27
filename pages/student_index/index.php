@@ -66,7 +66,7 @@ if (!$_SESSION["UserID"]){
                 buttonIcons: false, // show the prev/next text
                 weekNumbers: false,
                 navLinks: true, // can click day/week names to navigate views
-                editable: true,
+                editable: false,
                 dayMaxEvents: true, // allow "more" link when too many events
                 events: [
                     
@@ -208,6 +208,8 @@ if (!$_SESSION["UserID"]){
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
                 <!--  <div id='top'>
+ 
+
 
                     Locales:
                     <select id='locale-selector'></select>
@@ -312,6 +314,125 @@ if (!$_SESSION["UserID"]){
 
             </div>
         </div>
+
+
+        <div class="card border-light shadow-sm mb-4">
+            <div class="card-body">
+            <div class="row">
+
+
+                    <div class="col-lg-12 col-sm-12">
+
+                     <h6>ตรวจสอบปฏิทินอาจารย์ที่ปรึกษาโครงงาน</h6>
+                     <style>
+    body {
+    
+    border-radius: 10px
+}
+
+.card {
+   
+    border: none;
+    border-radius: 10px;
+    background-color: #fff
+}
+
+.stats {
+    background: #f2f5f8 !important;
+    color: #000 !important
+}
+
+.articles {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number1 {
+    font-weight: 500
+}
+
+.followers {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number2 {
+    font-weight: 500
+}
+
+.rating {
+    font-size: 10px;
+    color: #a1aab9
+}
+
+.number3 {
+    font-weight: 500
+}
+</style>
+<div class="container">
+  <div class="row">
+                            <?php
+           include '../../conn.php';
+         
+               
+					$sql = "SELECT
+                    project_has_adviser.pha_project_id, 
+                    project_has_adviser.pha_teacher_id, 
+                    teacher.teacher_name, 
+                    teacher.teacher_email, 
+                    teacher.teacher_photo, 
+                    project_has_adviser.pha_type
+                FROM
+                    project_has_adviser
+                    INNER JOIN
+                    teacher
+                    ON 
+                        project_has_adviser.pha_teacher_id = teacher.teacher_id
+                WHERE
+                    project_has_adviser.pha_project_id = '$id_ptojrct'
+                ORDER BY
+                    project_has_adviser.pha_type ASC";
+					$result = $con->query($sql);
+					if ($result->num_rows > 0) {
+
+						while($row = $result->fetch_assoc()) {
+                            echo '
+                            
+                            <div class="col-lg-6 col-md-6">
+                            <div class="card p-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="image"> <img src="'. $row["teacher_photo"].'" class="rounded" width="155"> </div>
+                                    <div class="ml-3 w-100">
+                                        <h6 class="mb-0 mt-0">'. $row["teacher_name"].'</h6> <span>อีเมลล์ :'. $row["teacher_email"].'</span>
+                                        <br><span>'; ?> <?php if ($row["pha_type"]==1) {
+                                            echo "อาจารย์ที่ปรึกษาหลัก";
+                                        } else {
+                                            echo "อาจารย์ที่ปรึกษาร่วม";
+                                        } ?>
+                                         <?php echo' </span>
+                                        
+                                        <br><a href="teacher_booking.php?act=show&ID='. $row["pha_teacher_id"].'"><span>>>>ปฏิทินอาจารย์<<<</span></a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        ';       
+            }
+            }
+            $con->close();
+            ?> 
+            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                    </div>
+                    </div>
 
         <?php
 

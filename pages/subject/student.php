@@ -287,10 +287,14 @@ $id_section_room =$_REQUEST["ID"];
                                 <td>';
                                 
                                 if ($row["student_type"]==1) {
-                                    echo "ปกติ";
+                                    echo '<span class="icon icon-sm">
+                                    <span class="fas fa-toggle-on text-success"></span>
+                                </span>';
                                  }
                                  if ($row["student_type"]==2) {
-                                     echo "ผิดปกติ";
+                                    echo '<span class="icon icon-sm">
+                                    <span class="fas fa-toggle-off text-danger"></span>
+                                </span>';
                                   }
                                 echo '</td>
                               
