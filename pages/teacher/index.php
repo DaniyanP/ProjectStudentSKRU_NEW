@@ -276,7 +276,7 @@ appoint.appoint_id,
     project.project_name,
     appoint.appoint_date_start,
     appoint.appoint_date_end,
-    appoint.apooint_minute,
+  
     appoint.teacher_id,
     appoint.appoint_status 
     FROM appoint 
@@ -310,7 +310,7 @@ $result=$con->query($sql);
     $query_edit = mysqli_query($con, "SELECT
     appoint.appoint_id,
     appoint.appoint_date_start,
-    appoint.apooint_minute
+    appoint.appoint_date_end
     FROM
     appoint
     WHERE
@@ -320,7 +320,7 @@ $result=$con->query($sql);
        
         $newDate = date('Y-m-d\TH:i', strtotime($strDatetoHourMinute));
       
-   
+        $timesub=substr($row["appoint_date_end"],11,8);
       echo'<h4 class="modal-title">แก้ไขเวลาเข้าพบ #'. $row["appoint_id"].'</h4>
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
@@ -340,10 +340,10 @@ $result=$con->query($sql);
               (เริ่มต้น)</small>
       </div>
       <div class="mb-2">
-          <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที</label>
-          <input type="number" min="1" max="59" class="form-control" id="date_end" name="date_end"
-              placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="'. $row["apooint_minute"].'">
-          <small id="date_end-describ" class="form-text text-muted">กรอกจำนวนระยะเวลานาทีที่เข้าพบ</small>
+          <label for="date_end">เวลาสิ้นสุด</label>
+          <input type="time"  class="form-control" id="date_end" name="date_end"
+              placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="'. $timesub.'">
+          <small id="date_end-describ" class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
       </div>';
     }
    
@@ -468,14 +468,16 @@ if (isset($_POST["SubmitEditAppoint"])) {
     $date_start  = $_POST['date_start'];
     $date_end  = $_POST['date_end'];
     $set_status = 5;
-    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+
+    $datesub=substr($date_start,0,10);
+   /*  $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
     
       
       $sqlappointedit = "UPDATE appoint SET
     
     appoint_status ='$set_status',
     appoint_date_start ='$date_start',
-    appoint_date_end ='$appoint_end'
+    appoint_date_end ='$datesub $date_end'
     
     
     
@@ -528,7 +530,7 @@ appoint.appoint_id,
     project.project_name,
     appoint.appoint_date_start,
     appoint.appoint_date_end,
-    appoint.apooint_minute,
+   
     appoint.teacher_id,
     appoint.appoint_status FROM appoint INNER JOIN project ON appoint.project_id=project.project_id WHERE appoint.teacher_id='$id_teacher'AND appoint.appoint_status=1";
 $query2=mysqli_query($con, $sql2);

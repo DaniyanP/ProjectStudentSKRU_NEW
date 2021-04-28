@@ -227,13 +227,13 @@ if (!$_SESSION["TeacherID"]){
                                             $query_edit = mysqli_query($con, "SELECT
                                             appoint.appoint_id,
                                             appoint.appoint_date_start,
-                                            appoint.apooint_minute
+                                            appoint.appoint_date_end
                                             FROM
                                             appoint
                                             WHERE
                                             appoint.appoint_id = '$id'");
                                             while ($row = mysqli_fetch_array($query_edit)) { 
-
+                                                $timesub=substr($row["appoint_date_end"],11,8);
                                               
                                            
                                               echo'<h4 class="modal-title">แก้ไขเวลาเข้าพบ #'. $row["appoint_id"].'</h4>
@@ -255,10 +255,10 @@ if (!$_SESSION["TeacherID"]){
                                                       (เริ่มต้น)</small>
                                               </div>
                                               <div class="mb-2">
-                                                  <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที</label>
-                                                  <input type="number" min="1" max="59" class="form-control" id="date_end" name="date_end"
-                                                      placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="'. $row["apooint_minute"].'">
-                                                  <small id="date_end-describ" class="form-text text-muted">กรอกจำนวนระยะเวลานาทีที่เข้าพบ</small>
+                                                  <label for="date_end">เวลาสิ้นสุด</label>
+                                                  <input type="time"  class="form-control" id="date_end" name="date_end"
+                                                      placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="'. $timesub .'">
+                                                  <small id="date_end-describ" class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
                                               </div>';
                                             }
                                            
@@ -527,14 +527,14 @@ if (isset($_POST["SubmitEditAppoint"])) {
     $date_start  = $_POST['date_start'];
     $date_end  = $_POST['date_end'];
     $set_status = 5;
-    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
-    
+ 
+    $datesub=substr($date_start,0,10);
       
       $sqlappointedit = "UPDATE appoint SET
     
     appoint_status ='$set_status',
     appoint_date_start ='$date_start',
-    appoint_date_end ='$appoint_end'
+    appoint_date_end ='$datesub $date_end'
     
     
     

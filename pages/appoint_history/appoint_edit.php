@@ -32,9 +32,10 @@ appoint.appoint_id,
 appoint.project_id,
 appoint.appoint_date_start,
 appoint.appoint_comment,
+appoint.appoint_date_end,
 appoint.teacher_id,
 teacher.teacher_name,
-appoint.apooint_minute,
+
 appoint.appoint_status
 FROM
 appoint
@@ -44,6 +45,7 @@ appoint.appoint_id = '$appoint_idd' and appoint.project_id = '$get_project_id' a
 $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 if ($result->num_rows > 0) {
 $row = mysqli_fetch_array($result);
+$timesub=substr($row["appoint_date_end"],11,8);
 extract($row);?>
 <!DOCTYPE html>
 <html lang="en">
@@ -189,10 +191,10 @@ extract($row);?>
                             (เริ่มต้น)</small>
                     </div>
                     <div class="mb-2">
-                        <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที</label>
-                        <input type="number" min="1" max="59" class="form-control" id="date_end" name="date_end"
-                            placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="<?php echo $apooint_minute; ?>">
-                        <small id="date_end-describ" class="form-text text-muted">กรอกจำนวนระยะเวลานาทีที่เข้าพบ</small>
+                        <label for="date_end">เวลาสิ้นสุด</label>
+                        <input type="time"  class="form-control" id="date_end" name="date_end"
+                            placeholder="จำนวนนาที" aria-describedby="date_end-describ" value="<?php echo $timesub; ?>">
+                        <small id="date_end-describ" class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
                     </div>
 
 
@@ -201,7 +203,7 @@ extract($row);?>
                     <input type="text" class="form-control" id="record" name="record"
                         aria-describedby="date_end-describ" value="<?php echo  $_SESSION["UserID"]; ?>" hidden>
 
-                    <button class="btn btn-block btn-success" type="submit" name="SubmitEdit">บันทึก</button>
+                    <button class="btn   btn-success" type="submit" name="SubmitEdit">บันทึก</button>
 
 
 
@@ -226,15 +228,15 @@ $date_end  = $_POST['date_end'];
 
 $id_project = $_POST['id_project'];
 $record = $_POST['record'];
-$appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
 
+$datesub=substr($date_start,0,10);
 
   
 $sql288 = "UPDATE appoint SET
 
 appoint_date_start ='$date_start',
-appoint_date_end='$appoint_end',
-apooint_minute='$date_end',
+appoint_date_end='$datesub $date_end',
+
 appoint_comment='$present',
 teacher_id='$teacher'
 

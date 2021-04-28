@@ -286,11 +286,11 @@ if (!$_SESSION["UserID"]){
                                     class="form-text text-muted">เลือกวันที่และเวลาที่ต้องการเข้าพบ (เริ่มต้น)</small>
                             </div>
                             <div class="mb-2">
-                                <label for="date_end">ใช้เวลาในการเข้าพบกี่นาที  </label>
-                                <input type="number" min="1" max="59" class="form-control" id="date_end" name="date_end" placeholder="จำนวนนาที"
+                                <label for="date_end">เวลาสิ้นสุด  </label>
+                                <input type="time"  class="form-control" id="date_end" name="date_end" placeholder="จำนวนนาที"
                                     aria-describedby="date_end-describ" required>
                                 <small id="date_end-describ"
-                                    class="form-text text-muted">กรอกจำนวนระยะเวลานาทีที่เข้าพบ</small>
+                                    class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
                             </div>
 
 
@@ -398,7 +398,7 @@ if (!$_SESSION["UserID"]){
 						while($row = $result->fetch_assoc()) {
                             echo '
                             
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-12">
                             <div class="card p-3">
                                 <div class="d-flex align-items-center">
                                     <div class="image"> <img src="'. $row["teacher_photo"].'" class="rounded" width="155"> </div>
@@ -446,19 +446,25 @@ if (isset($_POST["SubmitInsert"])) {
     $present  = $_POST['present'];
     $teacher  = $_POST['teacher'];
     $date_start  = $_POST['date_start'];
+  
     $date_end  = $_POST['date_end'];
-    
+
+
+    $datesub=substr($date_start,0,10);
+    /* $appoint_end = 22 ; */
+
+
     $id_project = $_POST['id_project'];
     $record = $_POST['record'];
-    $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start)));
+    /* $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
     
     $sql444 ="INSERT INTO appoint
     
-      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `apooint_minute`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
+      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
     
         VALUES 
     
-        ('$id_project','$date_start','$appoint_end','$date_end','$present','$teacher','1','$record')";
+        ('$id_project','$date_start','$datesub $date_end','$present','$teacher','1','$record')";
 
 if (mysqli_query($con, $sql444)) {
     echo

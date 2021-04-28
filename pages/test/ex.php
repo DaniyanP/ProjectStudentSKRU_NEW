@@ -194,9 +194,34 @@
             padding: 0 5px;
         }
     </style>
+
+<script type="text/javascript">
+function Check() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.display = 'block';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'none';
+
+   }
+}
+
+function Checkno() {
+    if (document.getElementById('noCheck').checked) {
+        document.getElementById('ifYes').style.display = 'none';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'block';
+
+   }
+}
+
+</script>
+    
 </head>
 
 <body>
+
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-md-none">
         <a class="navbar-brand mr-lg-5" href="../../index.html">
@@ -257,10 +282,24 @@
 
                     <div class="col-md-4">
                         kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+<?php 
+$a="2012-02-29 00:11:31";
+$date=substr($a,0,10);
+$time=substr($a,11,8);
+print $date."---".$time;
+?>
 
 
+Two
+<input type="radio" onclick="Check();" value="yes" name="categor`enter code here`y" id="yesCheck"/>yes
+<input type="radio" onclick="Checkno();" value="no" name="categor`enter code here`y" id="noCheck"/>yes
+
+<br>
+<div id="ifYes" style="display:none" >
+Three<input type="radio" name="win" value="Three"/>
+Four<input type="radio" name="win" value="Four"/>
                     </div>
-
+ffffffffffffffff
                 </div>
 
             </div>
