@@ -291,15 +291,15 @@ print $date."---".$time;
 
 
 Two
-<input type="radio" onclick="Check();" value="yes" name="categor`enter code here`y" id="yesCheck"/>yes
-<input type="radio" onclick="Checkno();" value="no" name="categor`enter code here`y" id="noCheck"/>yes
+<input type="radio" onclick="Check();" value="yes" name="selectchoice" id="yesCheck"/>นัดพบ
+<input type="radio" onclick="Checkno();" value="no" name="selectchoice" id="noCheck"/>ไม่ต้องการนัดพบ
 
 <br>
 <div id="ifYes" style="display:none" >
 Three<input type="radio" name="win" value="Three"/>
 Four<input type="radio" name="win" value="Four"/>
                     </div>
-ffffffffffffffff
+
                 </div>
 
             </div>

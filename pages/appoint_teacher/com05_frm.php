@@ -35,6 +35,30 @@ $appoint_id = $_REQUEST["ID"];
     <?php include '../dateth.php';?>
     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<script type="text/javascript">
+function Check() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.display = 'block';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'none';
+
+   }
+}
+
+function Checkno() {
+    if (document.getElementById('noCheck').checked) {
+        document.getElementById('ifYes').style.display = 'none';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'block';
+
+   }
+}
+
+</script>
 </head>
 
 <body>
@@ -179,9 +203,75 @@ $row = mysqli_fetch_array($result);
 extract($row);
 ?>
                 <input type="text" name="project_id" id="project_id" value="<?php echo $p_id ?>" hidden>
-
                
+                <div class="mb-2">
+                <label for="selectchoice">นัดพบครั้งต่อไปหรือไม่  </label> <br>
+                <input required type="radio" onclick="Check();" value="yes" name="selectchoice" id="yesCheck"/>   นัดพบ <br>
+                <input required type="radio" onclick="Checkno();" value="no" name="selectchoice" id="noCheck"/>   ไม่ต้องการนัดพบ
+                </div>
+               
+<!-- นัดหมายครั้งต่อไป -->
+<div id="ifYes" style="display:none" >
 
+                            <div class="mb-2">
+                                <label for="date_start">วันที่และเวลาที่เข้าพบ (เริ่มต้น)</label>
+                                <input type="datetime-local" class="form-control" id="date_start" name="date_start"
+                                    aria-describedby="date_start-describ" min="<?php echo date('Y-m-d\TH:i',strtotime('+ 3 day',strtotime(date('Y-m-d\TH:i')))) ?>"   >
+                                <small id="date_start-describ"
+                                    class="form-text text-muted">เลือกวันที่และเวลาที่ต้องการเข้าพบ (เริ่มต้น)</small>
+                            </div>
+                            <div class="mb-2">
+                                <label for="date_end">เวลาสิ้นสุด  </label>
+                                <input type="time"  class="form-control" id="date_end" name="date_end" placeholder="จำนวนนาที"
+                                    aria-describedby="date_end-describ" >
+                                <small id="date_end-describ"
+                                    class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
+                            </div>
+
+<!-- นักศึกษารับทราบ -->
+<div class="mb-2">
+                                <label class="my-1 mr-2" for="student">นักศึกษารับทราบแล้ว</label>
+                                <select class="form-select" id="student" name="student" aria-label="Default select example" >
+                                   
+                                    <?php include '../../conn.php';?>
+                                    <?php
+                                    
+					$sql = "SELECT
+                    project_has_student.phs_project_id, 
+                    project_has_student.phs_student_id, 
+                    student.student_name
+                FROM
+                    project_has_student
+                    INNER JOIN
+                    student
+                    ON 
+                        project_has_student.phs_student_id = student.student_id
+                WHERE
+                    project_has_student.phs_project_id = $p_id
+                ORDER BY
+                    project_has_student.phs_student_id ASC";
+					$result = $con->query($sql);
+					if ($result->num_rows > 0) {
+
+						while($row = $result->fetch_assoc()) {
+                            echo '<option value="'. $row["phs_student_id"].'">'. $row["student_name"].'</option>';
+                            
+                          
+							 
+						}
+					}
+					$con->close();
+					?>
+                                    
+                                </select>
+                            </div>
+<!-- สิ้นสุดนักศึกษารับทราบ -->
+
+
+
+
+                            </div>
+<!-- สิ้นสุดนัดหมายครั้งต่อไป -->
                 <button class="btn btn-block btn-success" type="submit" name="ADDCOM05">บันทึก</button>
             </form>
                     
@@ -195,7 +285,7 @@ extract($row);
                                 
 <!-- ข้อมูลเริ่ม -->
 <?php
-            
+                 include '../../conn.php';
 					$sql = "SELECT
                     appoint.appoint_id, 
                     appoint.project_id, 
@@ -276,6 +366,31 @@ if (isset($_POST["ADDCOM05"])) {
     $set_status = 4;
     
     
+//นัดหมายครั้งถัดไป
+    $selectchoice = $_POST['selectchoice'];
+    $date_start = $_POST['date_start'];
+    $date_end = $_POST['date_end'];
+    $student_id = $_POST['student'];
+    $datesub=substr($date_start,0,10);
+    
+    if ($selectchoice=='yes') {
+        $add_appoint_next ="INSERT INTO appoint
+    
+      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
+    
+        VALUES 
+    
+        ('$project_id','$date_start','$datesub $date_end','$comment_assign','$teacher_id','2','$student_id')";
+
+$resultappoinr = mysqli_query($con, $add_appoint_next);
+    }
+
+
+    
+
+
+
+
     $sqlADDCOM1 ="INSERT INTO com05
     
       ( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`)
