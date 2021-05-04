@@ -278,7 +278,8 @@ appoint.appoint_id,
     appoint.appoint_date_end,
   
     appoint.teacher_id,
-    appoint.appoint_status 
+    appoint.appoint_status,
+    appoint.meet_link
     FROM appoint 
     INNER JOIN project ON appoint.project_id=project.project_id 
     WHERE appoint.teacher_id='$id_teacher'AND appoint.appoint_status=1 
@@ -298,7 +299,15 @@ $result=$con->query($sql);
 </br><p>
 <a class="btn btn-success btn-sm "type="button" href="index.php?CFR3=req&ID='.$row["appoint_id"].'"><span class="fas fa-check mr-2"></span>ยืนยัน</a>
 <a class="btn btn-danger btn-sm" type="button" href="index.php?deleteR=req&ID='.$row["appoint_id"].'"><span class="fas fa-ban mr-2" ></span>ยกเลิก</a>
-<a class="btn btn-warning btn-sm" type="button" data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span class="fas fa-random mr-2"></span>เลื่อน</a></p></li>
+<a class="btn btn-warning btn-sm" type="button" data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span class="fas fa-random mr-2"></span>เลื่อน</a>'; ?>
+
+
+<?php  if ($row["meet_link"]) {
+  echo' <img src="../../assets/img/meet_icon.png" alt="Image" style="width:40px;">';
+} ?>
+
+<?php
+echo'</p></li>
 
 <div class="modal fade" id="myModal'. $row["appoint_id"].'" role="dialog">
 <div class="modal-dialog">
@@ -364,150 +373,7 @@ $result=$con->query($sql);
         }
     } 
 
-    if (isset($_GET["deleteR"] )) {
-        echo
-            "<script> 
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'ยกเลิกการนัดพบ?',
-                    text: 'ท่านเเน่ใจว่า ยกเลิกการนัดพบ!',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'ใช่',
-                    cancelButtonText: 'ไม่!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location = 'index.php?deleteR2=req&ID={$_GET["ID"]}'
-                    }else{
-                        location = 'index.php'
-                    }
-                }); 
-        </script>";
-}
-
-
-if (isset($_GET["deleteR2"])) {
-   
-
-  
-    $sql288 = "UPDATE appoint SET
-
-    appoint_status = 3
     
-    
-    
-          WHERE appoint_id={$_GET["ID"]}";
-
-    if (mysqli_query($con, $sql288)) {
-        echo
-            "<script> 
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'ยกเลิกการนัดพบสำเร็จ!!',
-                    showConfirmButton: false,
-                    timer: 2000
-                }).then(()=> location = 'index.php')
-            </script>";
-        //header('Location: index.php');
-    } else {
-        echo
-            "<script> 
-            Swal.fire({
-                icon: 'error',
-                title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
-        </script>";
-    }
-  
-   
-}
-
-
-if (isset($_GET["CFR3"])) {
-   
-
-   
-    $sql288 = "UPDATE appoint SET
-
-    appoint_status = 2
-    
-    
-    
-          WHERE appoint_id={$_GET["ID"]}";
-
-    if (mysqli_query($con, $sql288)) {
-        echo
-            "<script> 
-                Swal.fire(
-                    'ยืนยันการนัดพบสำเร็จ!',
-                    'ท่านได้ยืนยันเรียบร้อยแล้ว',
-                    'success'
-                ).then(()=> location = 'index.php')
-            </script>";
-        //header('Location: index.php');
-    } else {
-        echo
-            "<script> 
-            Swal.fire({
-                icon: 'error',
-                title: 'ยืนยันการนัดพบไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
-        </script>";
-    }
-  
-   
-}
-    
-if (isset($_POST["SubmitEditAppoint"])) {
-    include '../../conn.php';
-
-   
-    $appoint_id = $_POST['appoint_id'];
-    $date_start  = $_POST['date_start'];
-    $date_end  = $_POST['date_end'];
-    $set_status = 5;
-
-    $datesub=substr($date_start,0,10);
-   /*  $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
-    
-      
-      $sqlappointedit = "UPDATE appoint SET
-    
-    appoint_status ='$set_status',
-    appoint_date_start ='$date_start',
-    appoint_date_end ='$datesub $date_end'
-    
-    
-    
-          WHERE appoint_id='$appoint_id' 
-          ";
-
-    if (mysqli_query($con, $sqlappointedit)) {
-        echo
-            "<script> 
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'เปลี่ยนแปลงการนัดหมายเรียบร้อยแล้ว!',
-                    showConfirmButton: false,
-                    timer: 2000
-                }).then(()=> location = 'index.php')
-            </script>";
-        //header('Location: index.php');
-    } else {
-        echo
-            "<script> 
-            Swal.fire({
-                icon: 'error',
-                title: 'แก้ไขการนัดพบไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
-        </script>";
-    }
-  
-   
-}
     ?></div>
     
                         </div>
@@ -559,7 +425,153 @@ $query2=mysqli_query($con, $sql2);
         </div>
         
 
+<?php
 
+if (isset($_GET["deleteR"] )) {
+    echo
+        "<script> 
+            Swal.fire({
+                icon: 'warning',
+                title: 'ยกเลิกการนัดพบ?',
+                text: 'ท่านเเน่ใจว่า ยกเลิกการนัดพบ!',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ใช่',
+                cancelButtonText: 'ไม่!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location = 'index.php?deleteR2=req&ID={$_GET["ID"]}'
+                }else{
+                    location = 'index.php'
+                }
+            }); 
+    </script>";
+}
+
+
+if (isset($_GET["deleteR2"])) {
+
+    include '../../conn.php';
+
+$sql288 = "UPDATE appoint SET
+
+appoint_status = 3
+
+
+
+      WHERE appoint_id={$_GET["ID"]}";
+
+if (mysqli_query($con, $sql288)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'ยกเลิกการนัดพบสำเร็จ!!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+
+if (isset($_GET["CFR3"])) {
+
+    include '../../conn.php';
+
+$sql288 = "UPDATE appoint SET
+
+appoint_status = 2
+
+
+
+      WHERE appoint_id={$_GET["ID"]}";
+
+if (mysqli_query($con, $sql288)) {
+    echo
+        "<script> 
+            Swal.fire(
+                'ยืนยันการนัดพบสำเร็จ!',
+                'ท่านได้ยืนยันเรียบร้อยแล้ว',
+                'success'
+            ).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'ยืนยันการนัดพบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+
+if (isset($_POST["SubmitEditAppoint"])) {
+include '../../conn.php';
+
+
+$appoint_id = $_POST['appoint_id'];
+$date_start  = $_POST['date_start'];
+$date_end  = $_POST['date_end'];
+$set_status = 5;
+
+$datesub=substr($date_start,0,10);
+/*  $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
+
+  
+  $sqlappointedit = "UPDATE appoint SET
+
+appoint_status ='$set_status',
+appoint_date_start ='$date_start',
+appoint_date_end ='$datesub $date_end'
+
+
+
+      WHERE appoint_id='$appoint_id' 
+      ";
+
+if (mysqli_query($con, $sqlappointedit)) {
+    echo
+        "<script> 
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'เปลี่ยนแปลงการนัดหมายเรียบร้อยแล้ว!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(()=> location = 'index.php')
+        </script>";
+    //header('Location: index.php');
+} else {
+    echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'แก้ไขการนัดพบไม่สำเร็จ', 
+        }).then(()=> location = 'index.php')
+    </script>";
+}
+
+
+}
+?>
         <?php include '../footer.php';?>
         
     </main>

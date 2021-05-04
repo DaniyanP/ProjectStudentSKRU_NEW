@@ -164,9 +164,9 @@
                             $strDate = $row["pr_date"];
                             echo '<tr>
                                 <td>'.DateThai($strDate).'</td>
-                                <td>'. $row["pr_header"].'</td>
+                                <td>'. mb_substr($row["pr_header"],0,80,'UTF-8').'</td>
                                 
-                                
+                               
                                
                             </tr>';
                                                    

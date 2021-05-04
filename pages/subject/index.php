@@ -26,7 +26,45 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
         <link type="text/css" href="../../css/volt.css" rel="stylesheet">
     
         <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-       
+        <!-- datatable CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
+
+<!-- นำเข้า  Javascript จาก  Jquery -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- นำเข้า  Javascript  จาก   dataTables -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
+</script>
+
+
+<!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "lengthChange": false,
+            
+        "ordering": true,
+        "info":     false,
+
+            
+            "oLanguage": {
+                "order": [[ 1, 'desc' ]],
+                "sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+                "sZeroRecords": "ไม่เจอข้อมูลที่ค้นหา",
+                "sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+                "sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+                "sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+                "sSearch": "ค้นหา :",
+                "oPaginate": {
+                    "sFirst": "เริ่มต้น",
+                    "sPrevious": "ก่อนหน้า",
+                    "sNext": "ถัดไป",
+                    "sLast": "สุดท้าย"
+                }
+            }
+        });
+    });
+</script>
+
    
        
        
@@ -102,8 +140,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                        
       
                         <div class="table-responsive">
-                            <table class="table table-centered table-nowrap mb-0 rounded">
-                                <thead class="thead-light">
+                        <table id="example" class="table table-striped table-bordered" width="100%"
+                    >
+                    <thead class="thead-dark">
                                     <tr>
                                         <!-- <th class="border-0">#</th> -->
                                         <th class="border-0">รหัสวิชา</th>
@@ -327,12 +366,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
 
 
-                                    <!-- End of Item -->
-    <tr><td class="border-0"></td></tr>
-    <tr><td class="border-0"></td></tr>
-    <tr><td class="border-0"></td></tr>
-    <tr><td class="border-0"></td></tr>
-    <tr><td class="border-0"></td></tr>
+                                    
                                    
                             
         
@@ -347,6 +381,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                             
     
                         </div>
+                        
                         
                     </div>
                 </div>
@@ -466,7 +501,10 @@ mysqli_close($con);
         <!-- Volt JS -->
         <script src="../../assets/js/volt.js"></script>
 
-    
+    <!-- Datatable JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
     
     
     </body>

@@ -33,13 +33,13 @@
             <li class="nav-item ">
                 <a href="../../pages/appoint_history" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-calendar-alt"></span></span>
-                    <span>ประวัติการนัดพบ</span>
+                    <span>ข้อมูลการนัดพบ</span>
                 </a>
             </li>
             <li class="nav-item ">
                 <a href="../../pages/score" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-star"></span></span>
-                    <span>ประวัติการเข้าพบ</span>
+                    <span>ข้อมูลการเข้าพบ</span>
                 </a>
             </li>
             <li class="nav-item ">
@@ -49,7 +49,12 @@
                 </a>
             </li>
 
-
+            <li class="nav-item ">
+                <a href="../../pages/student_dashboard" class="nav-link">
+                    <span class="sidebar-icon"><span class="fas fa-tachometer-alt"></span></span>
+                    <span>ภาพรวม</span>
+                </a>
+            </li>
 
             <!-- <li class="nav-item">
                     <span class="nav-link  d-flex justify-content-between align-items-center" data-toggle="collapse"

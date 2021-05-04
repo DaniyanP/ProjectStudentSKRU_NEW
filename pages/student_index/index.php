@@ -162,6 +162,29 @@ if (!$_SESSION["UserID"]){
 
     <!-- การลิ้ง sweetalert2 เเบบ cdn  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script type="text/javascript">
+function Check() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.display = 'block';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'none';
+
+   }
+}
+
+function Checkno() {
+    if (document.getElementById('noCheck').checked) {
+        document.getElementById('ifYes').style.display = 'none';
+    } 
+    else {
+        document.getElementById('ifYes').style.display = 'block';
+
+   }
+}
+
+</script>
 </head>
 
 <body>
@@ -292,6 +315,26 @@ if (!$_SESSION["UserID"]){
                                 <small id="date_end-describ"
                                     class="form-text text-muted">กรอกเวลาสิ้นสุดที่เข้าพบ</small>
                             </div>
+<!-- google meet -->
+                            <div class="mb-2">
+                <label for="selectchoice">ช่องทางเข้าพบ </label> <br>
+                <input required type="radio" onclick="Checkno();" value="teacher" name="selectchoice" id="noCheck"/>   เข้าหาอาจารย์ <br>
+                <input required type="radio" onclick="Check();" value="online" name="selectchoice" id="yesCheck"/>   Google Meet 
+                
+                </div>
+               
+
+<div id="ifYes" style="display:none" >
+
+                            <div class="mb-2">
+                                <label for="google_meet">URL Google Meet</label>
+                                <input type="url" class="form-control" id="google_meet" name="google_meet"
+                                    aria-describedby="date_start-describ"    >
+                                <small id="date_start-describ"
+                                    class="form-text text-muted">สร้างลิงค์ Google Meet ที่ <a href="https://meet.google.com/" target="_blank">https://meet.google.com/</a> </small>
+                            </div>  
+                            </div>
+<!-- end google meet -->
 
 
                             <input type="text" class="form-control" id="id_project" name="id_project"
@@ -411,7 +454,7 @@ if (!$_SESSION["UserID"]){
                                         } ?>
                                          <?php echo' </span>
                                         
-                                        <br><a href="teacher_booking.php?act=show&ID='. $row["pha_teacher_id"].'"><span>>>>ปฏิทินอาจารย์<<<</span></a>
+                                        <br><a href="teacher_booking.php?act=show&ID='. $row["pha_teacher_id"].'" type="button" class="btn btn-primary btn-sm"><span class="fas fa-calendar-day mr-2"></span>ปฏิทินอาจารย์</span></a>
                                         
                                     </div>
                                 </div>
@@ -448,8 +491,8 @@ if (isset($_POST["SubmitInsert"])) {
     $date_start  = $_POST['date_start'];
   
     $date_end  = $_POST['date_end'];
-
-
+    $selectchoice = $_POST['selectchoice'];
+    $google_meet = $_POST['google_meet'];
     $datesub=substr($date_start,0,10);
     /* $appoint_end = 22 ; */
 
@@ -457,14 +500,21 @@ if (isset($_POST["SubmitInsert"])) {
     $id_project = $_POST['id_project'];
     $record = $_POST['record'];
     /* $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
-    
+    if ($selectchoice == "teacher") {
+        $meet_link = "";
+    }
+    if ($selectchoice == "online") {
+        $meet_link = $google_meet;
+    }
+
+
     $sql444 ="INSERT INTO appoint
     
-      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
+      ( `project_id`, `appoint_date_start`, `appoint_date_end`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`, `meet_link`)
     
         VALUES 
     
-        ('$id_project','$date_start','$datesub $date_end','$present','$teacher','1','$record')";
+        ('$id_project','$date_start','$datesub $date_end','$present','$teacher','1','$record','$meet_link')";
 
 if (mysqli_query($con, $sql444)) {
     echo

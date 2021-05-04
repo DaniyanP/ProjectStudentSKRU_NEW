@@ -10,8 +10,25 @@ if (!$_SESSION["TeacherID"]){
 <?php 
 include '../../conn.php';
 $appoint_id = $_REQUEST["ID"];
+$tt_id =$_SESSION["TeacherID"];
 ?>
 
+<?php
+
+$sql = "SELECT
+appoint.appoint_id as a_id,
+appoint.project_id as p_id,
+appoint.teacher_id,
+appoint.appoint_status
+FROM
+appoint
+WHERE
+appoint.appoint_id = '$appoint_id' and teacher_id = '$tt_id' and appoint_status = 2 ";
+$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
+if ($result->num_rows > 0) {
+$row = mysqli_fetch_array($result);
+extract($row);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -189,19 +206,7 @@ $result2 = mysqli_query($con, $query2);
                 <input type="text" name="teacher_id" id="teacher_id" value="<?php echo $_SESSION["TeacherID"] ?>" hidden>
                
                
-                <?php
-
-$sql = "SELECT
-appoint.appoint_id as a_id,
-appoint.project_id as p_id
-FROM
-appoint
-WHERE
-appoint.appoint_id = '$appoint_id'";
-$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
-$row = mysqli_fetch_array($result);
-extract($row);
-?>
+                <!-- ///กกเ -->
                 <input type="text" name="project_id" id="project_id" value="<?php echo $p_id ?>" hidden>
                
                 <div class="mb-2">
@@ -297,7 +302,8 @@ extract($row);
                     appoint.appoint_comment, 
                     appoint.recorder, 
                     student.student_name, 
-                    appoint.appoint_recorder
+                    appoint.appoint_recorder,
+                    appoint.meet_link
                 FROM
                     appoint
                     INNER JOIN
@@ -329,7 +335,10 @@ extract($row);
            <p> รายละเอียด : ' . $row["appoint_comment"].'
            <p> นัดหมายโดย : ' . $row["student_name"].'
            <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
-        
+           if ($row["meet_link"]) {
+            
+            echo' <p>คลิ๊กไอคอนเพื่อเข้า Google Meet : <a href="'.$row["meet_link"].'" target="_blank"><img src="../../assets/img/meet_icon.png" alt="Image" style="width:40px;"></a>';
+         }
         
 
         
@@ -437,7 +446,12 @@ if ($result1) {
 
 mysqli_close($con);
 ?>
-
+<?php }else{
+    echo "<script type='text/javascript'>";
+    echo "alert('ไม่มีสิทธิ์ในการเข้าถึง');";
+    echo "window.location = history.back(1); ";
+    echo "</script>";
+} ?>
         <?php include '../footer.php';?>
         
     </main>

@@ -190,7 +190,7 @@ if (!$_SESSION["UserID"]){  //check session
                                 <td>'. $row["appoint_id"].'</td>
                                 <td> '.DateThai($strDate).' </td>
                                 <td>'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
-                                <td>'. mb_substr($row["appoint_comment"],0,50,'UTF-8').'</td>
+                                <td>'. mb_substr($row["appoint_comment"],0,40,'UTF-8').'</td>
                                 <td><h6><span class="badge bg-'. $row["appoint_status_class"].'">'. $row["appoint_status_name"].'</span></h6></td>';
                                 
                                 $t = $row["appoint_status"];

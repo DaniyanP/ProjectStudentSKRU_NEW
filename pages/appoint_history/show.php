@@ -108,7 +108,8 @@ if (!$_SESSION["UserID"]){
                     appoint_status.appoint_status_name, 
                     appoint.recorder, 
                     appoint.appoint_recorder,                     
-                    student.student_name
+                    student.student_name,
+                    appoint.meet_link
                 FROM
                     appoint
                     INNER JOIN
@@ -143,6 +144,11 @@ if (!$_SESSION["UserID"]){
            <p> รายละเอียด : ' . $row["appoint_comment"].'
            <p> นัดหมายโดย : ' . $row["student_name"].'
            <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
+
+           if ($row["meet_link"]) {
+            
+            echo' <p>คลิ๊กไอคอนเพื่อเข้า Google Meet : <a href="'.$row["meet_link"].'" target="_blank"><img src="../../assets/img/meet_icon.png" alt="Image" style="width:40px;"></a>';
+         }
         
         
 
