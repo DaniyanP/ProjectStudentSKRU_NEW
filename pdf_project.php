@@ -54,12 +54,12 @@ ORDER BY
 	if (mysqli_num_rows($result) > 0) {
 		$i = 1;
 		while($row = mysqli_fetch_assoc($result)) {
-			
+		
 			$content .= '<tr style="border:1px solid #000;">
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.$row['sp_project_id'].'</td>
 				
-				<td style="border-right:1px solid #000;padding:3px;"  >  '  .$row['project_name'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;word-wrap: break-word">'.$row['project_name'].'</td>
               
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['project_type_name'].'</td>
                 <td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['project_status_name'].'</td>
@@ -125,38 +125,18 @@ $head1 = '
 	body{
 		font-family: "Garuda";//เรียกใช้font Garuda สำหรับแสดงผล ภาษาไทย
 	}
+
 </style>
 
-<h3 style="text-align:center">รายชื่อโครงงานในรายวิชา</h3>
-
-<table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
-    <tr style="border:0px solid #000;padding:0px;">
-	<td  style="border-right:0px solid #000;padding:0px;"   width="15%"> รายวิชาโครงงาน </td><td  style="border-right:0px solid #000;padding:4px;" width="95%">';
+<h3 style="text-align:center">รายชื่อโครงงานในรายวิชา</h3>';
 	
 	
 $echoproject = "$subject_id2   $subject_name ( Sec $subject_sec )"; 
 $infoproject ="ภาคการเรียน $subject_semester ปีการศึกษา $subject_year    ทำการสอนวัน$day_name  เวลา $subject_st -  $subject_end น.";
-	$head2 = '</td>
-	</tr>
-
-	<tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"  >. </td>       
-    <td  style="border-right:0px solid #000;padding:4px;" >';
+$txtteacher = 'อาจารย์ผู้สอน : '.$teacher_name;
 	
-	
-	$head3 = '</td>
-	</tr>
-
-	<tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"   >อาจารย์ประจำวิชา</td>       
-    <td  style="border-right:0px solid #000;padding:4px;" >';
-	
-	
-	$head4 = '</td>
-	</tr>
-	</table>
-	
-<table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
+	$head4 = '
+	<table id="bg-table" width="100%" style="table-layout:fixed;border-collapse: collapse;font-size:12pt;margin-top:8px; word-wrap:break-word">
     <tr style="border:1px solid #000;padding:4px;">
     <td  style="border-right:1px solid #000;padding:4px;text-align:center;"   width="10%">ลำดับ</td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"   width="10%">รหัสโครงงาน</td>
@@ -177,12 +157,12 @@ $end = "</tbody>
 $mpdf->WriteHTML($head1);
 $mpdf->WriteHTML($echoproject);
 
-$mpdf->WriteHTML($head2);
+
 $mpdf->WriteHTML($infoproject);
 
-$mpdf->WriteHTML($head3);
 
-$mpdf->WriteHTML($teacher_name);
+
+$mpdf->WriteHTML($txtteacher);
 $mpdf->WriteHTML($head4);
 $mpdf->WriteHTML($content);
 

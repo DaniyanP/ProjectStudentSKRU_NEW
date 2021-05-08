@@ -161,8 +161,28 @@ $id_section_room =$_REQUEST["ID"];
                         </div>
 
                         <div class="col-lg-6 col-md-6">
+
+
+                        <div class="btn-group  ">
                             <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
                                 role="button">เพิ่มด้วย Excel</a>
+
+
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-angle-down dropdown-arrow"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="../../file_excell/Student_Add.xlsx"><span class="fas fa-file-excel mr-2"></span>ไฟล์ต้นแบบ</a>
+                                  
+                                   
+                                </div>
+                                </div>
+
+
+
                                 <a class="btn btn-info btn-sm " href="student_add_frm.php?act=show&ID=<?php echo $id_section_room ?>"
                                 role="button">เพิ่มนักศึกษา</a>
                                 <a class="btn btn-danger btn-sm " href="../../pdf_student.php?act=show&ID=<?php echo $id_section_room ?>"

@@ -61,6 +61,7 @@ ORDER BY
 			$strDate = $row["appoint_date_start"];
 			$strDatetoHourMinute = $row["appoint_date_start"];
 			$strDatetoHourMinute1 = $row["appoint_date_end"];
+			
 			$content .= '<tr style="border:1px solid #000;">
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.DateThai($strDate).' </td>
@@ -168,43 +169,24 @@ $result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_e
 $row2 = mysqli_fetch_array($result2);
 extract($row2);
 
-$echoproject = "$project_id   $project_name  ( $project_type_name )"; 
+			$warptxt = wordwrap($project_name,80,"<br/>",true);
+$echoproject = "$project_id   $warptxt  ( $project_type_name )"; 
 
 $head1 = '
 <style>
 	body{
 		font-family: "Garuda";//เรียกใช้font Garuda สำหรับแสดงผล ภาษาไทย
+		
 	}
+	
 </style>
 
-<h3 style="text-align:center">ประวัติการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h3>
+<h3 style="text-align:center">ประวัติการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h3>';
 
-<table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
-    <tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"   width="10%"> โครงงาน </td><td  style="border-right:0px solid #000;padding:4px;" width="90%">';
+$txtadviser = 'อาจารย์ที่ปรึกษาโครงงาน : '.$nameteacher;
+$txtstudent = 'ผู้จัดทำโครงงาน : '.$namestudent;
 	
-	
-	$head2 = '</td>
-	</tr>
-
-	<tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"   width="20%">ผู้จัดทำโครงงาน</td>       
-    <td  style="border-right:0px solid #000;padding:4px;" width="80%">';
-	
-	
-	$head3 = '</td>
-	</tr>
-
-	<tr style="border:0px solid #000;padding:4px;">
-	<td  style="border-right:0px solid #000;padding:4px;"   width="20%">อาจารย์ที่ปรึกษา</td>       
-    <td  style="border-right:0px solid #000;padding:4px;" width="80%">';
-	
-	
-	$head4 = '</td>
-	</tr>
-	</table>
-	
-<table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
+	$head4 = '<table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
     <tr style="border:1px solid #000;padding:4px;">
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"   width="10%">ครั้งที่</td>
        
@@ -222,14 +204,15 @@ $end = "</tbody>
 </table>";
 
 $mpdf->WriteHTML($head1);
+
 $mpdf->WriteHTML($echoproject);
 
-$mpdf->WriteHTML($head2);
-$mpdf->WriteHTML($namestudent);
 
-$mpdf->WriteHTML($head3);
+$mpdf->WriteHTML($txtstudent);
 
-$mpdf->WriteHTML($nameteacher);
+
+$mpdf->WriteHTML($txtadviser);
+
 $mpdf->WriteHTML($head4);
 $mpdf->WriteHTML($content);
 

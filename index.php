@@ -72,6 +72,8 @@
 </script>
 
 
+
+
 <?php include 'pages/dateth.php';?>
 </head>
 
@@ -100,7 +102,7 @@
                 </ul>
             </div>
             <div class="d-flex align-items-center ml-auto">
-                <a href="./login.php"  class="btn btn-secondary text-dark mr-md-3"><span class="fas fa-download mr-2"></span> เข้าสู่ระบบ</a>
+                <a href="./login.php"  class="btn btn-secondary text-dark mr-md-3"><span class="fas fa-user mr-2"></span> เข้าสู่ระบบ</a>
                <!--  <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/quick-start/" target="_blank" class="btn btn-outline-soft d-none d-lg-block"><span class="fas fa-book mr-2"></span> Docs v1.2</a> -->
                 <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -112,8 +114,55 @@
     <main>
 
         <div class="preloader bg-soft flex-column justify-content-center align-items-center">
-    <img class="loader-element animate__animated animate__jackInTheBox" src="./assets/img/brand/light.svg" height="60" alt="Volt logo">
+    <img class="loader-element animate__animated animate__jackInTheBox" src="./assets/img/brand/skru.png" height="60" alt="Volt logo">
 </div>
+
+
+
+
+<!-- login -->
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-title text-center">
+          <h4>Login</h4>
+        </div>
+        <div class="d-flex flex-column text-center">
+          <form>
+            <div class="form-group">
+              <input type="email" class="form-control" id="email1"placeholder="Your email address...">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="password1" placeholder="Your password...">
+            </div>
+            <button type="button" class="btn btn-info btn-block btn-round">Login</button>
+          </form>
+          
+         
+         
+            
+            
+          
+        </div>
+      </div>
+    </div>
+      <div class="modal-footer d-flex justify-content-center">
+        
+      </div>
+  </div>
+</div>
+
+<!--end login -->
+
+
+
 
         <!-- Hero -->
         <section class="section-header pb-9 pb-lg-12 bg-primary  ">

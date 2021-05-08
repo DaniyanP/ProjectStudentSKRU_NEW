@@ -166,8 +166,23 @@ $id_section_room =$_REQUEST["ID"];
                         </div>
 
                         <div class="col-lg-7 col-md-7">
+
+                        <div class="btn-group  ">
                             <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
-                                role="button">เพิ่มด้วย Excel</a>
+                                role="button">เพิ่ม Excel</a>
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-angle-down dropdown-arrow"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="../../file_excell/Project_Add.xlsx"><span class="fas fa-file-excel mr-2"></span>ไฟล์ต้นแบบ</a>
+                                  
+                                   
+                                </div>
+                                </div>
+
                                 <a class="btn btn-info btn-sm " href="subject_has_project_frm.php?act=show&ID=<?php echo $id_section_room ?>"
                                 role="button">เพิ่มโครงงานใหม่</a>
                                 <a  class="btn btn-dark btn-sm " href="project_has_adviser_frm.php?&ID=<?php echo $id_section_room ?>" role="button">บันทึกอาจารย์ที่ปรึกษา</a>

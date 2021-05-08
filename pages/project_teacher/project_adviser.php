@@ -528,7 +528,10 @@ appoint.project_id = '$id_ptojrct'
 ORDER BY
 appoint.appoint_id DESC";
 					$result = $con->query($sql);
-					if ($result->num_rows > 0) {
+
+                    
+
+					if (!empty($result) && $result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
                             $strDate = $row["appoint_date_start"];
@@ -591,6 +594,8 @@ appoint.appoint_id DESC";
                                         
                                            
                                     }
+
+                             
                                     
                                     $con->close();
                                     ?> 

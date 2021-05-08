@@ -12,18 +12,27 @@ include '../../conn.php';
         $objReader	= PHPExcel_IOFactory::createReader($file_type);
         $objPHPExcel = $objReader->load($file_directory . $new_file_name);
         $sheet_data	= $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-
         foreach ($sheet_data as $row)
         {
             if(!empty($row['A']))
             {
+
+
+                
                 
                 $set_password = $row['A'];
                 $password = md5($set_password);
                 $checkemail = mysqli_query($con,'SELECT * FROM `teacher` WHERE teacher_id = "'.$row['A'].'"  ');
-                if(mysqli_num_rows($checkemail) == '0')
+                
+                
+                if($row['D'] == '1' && mysqli_num_rows($checkemail) == '0')
                 {
-                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password) VALUES ("'.$row['A'].'","'.$row['B'].'","'.$row['C'].'","'.$password.'") ');
+                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type) VALUES ("'.$row['A'].'","'.$row['B'].'","'.$row['C'].'","'.$password.'","'.$row['D'].'") ');
+                }
+
+                if($row['D'] == '2' && mysqli_num_rows($checkemail) == '0')
+                {
+                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type) VALUES ("'.$row['A'].'","'.$row['B'].'","'.$row['C'].'","'.$password.'","'.$row['D'].'") ');
                 }
             }
         }

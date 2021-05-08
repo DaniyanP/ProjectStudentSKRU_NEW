@@ -6,7 +6,7 @@
 
 
 $teacher_id = $_REQUEST["teacher_id"];
-$teacher_name = $_REQUEST["teacher_name"];
+
 $teacher_email = $_REQUEST["teacher_email"];
 $teacher_photo = $_REQUEST["teacher_photo"];
 
@@ -14,7 +14,7 @@ $teacher_photo = $_REQUEST["teacher_photo"];
   
   $sql = "UPDATE teacher SET
 
-teacher_name ='$teacher_name',
+
 teacher_email ='$teacher_email',
 teacher_photo ='$teacher_photo'
 

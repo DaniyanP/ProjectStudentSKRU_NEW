@@ -109,12 +109,7 @@ extract($row);
                             
 
                         <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        <label for="teacher_name">ชื่อ - นามสกุล </label>
-                                        <input class="form-control" id="teacher_name" name="teacher_name" type="text" placeholder="กรอกชื่อ-นามสกุล" value="<?php echo $teacher_name?>" required>
-                                    </div>
-                                </div>
+                                
 
                             
                             
@@ -148,7 +143,7 @@ extract($row);
 
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="password">รหัสผ่าน</label>
+                                        <label for="password">รหัสผ่านใหม่</label>
                                         <input class="form-control" id="password" type="password" name="password" placeholder="กรอกรหัสผ่าน"   required>
                                         
                                     </div>
@@ -181,7 +176,7 @@ extract($row);
                                 <div class="card-body pb-5">
                                     <img src="<?php echo $teacher_photo ?>" class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
                                     <h4 class="h4"><?php echo $teacher_name ?></h4>
-                                    <h5 class="font-weight-normal">#<?php echo $teacher_id ?></h5>
+                                   <!--  <h5 class="font-weight-normal">#<?php echo $teacher_id ?></h5> -->
                                     <p class="text-gray mb-4"><?php echo $teacher_email ?></p>
                                     <!-- <a class="btn btn-sm btn-primary mr-2" href="#"><span class="fas fa-user-plus mr-1"></span> Connect</a>
                                     <a class="btn btn-sm btn-secondary" href="#">Send Message</a> -->

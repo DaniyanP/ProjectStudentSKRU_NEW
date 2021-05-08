@@ -20,6 +20,8 @@
 	if (mysqli_num_rows($result) > 0) {
 		$i = 1;
 		while($row = mysqli_fetch_assoc($result)) {
+
+			
 			$content .= '<tr style="border:1px solid #000;">
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.$row['code'].'</td>

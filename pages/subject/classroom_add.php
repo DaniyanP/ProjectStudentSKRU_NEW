@@ -291,7 +291,7 @@ if (mysqli_query($con, $sql)) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'เพิ่มข้อมูลโครงงานเรียบร้อย',
+                title: 'เพิ่มข้อมูลกลุ่มเรียนเรียบร้อย',
                 showConfirmButton: false,
                 timer: 2000  
             }).then(()=> location = 'index.php')
@@ -302,7 +302,7 @@ if (mysqli_query($con, $sql)) {
         "<script> 
         Swal.fire({
             icon: 'error',
-            title: 'มีรหัสโครงงานนี้อยู่แล้ว', 
+            title: 'มีรหัสกลุ่มเรียนนี้อยู่แล้ว', 
         }).then(()=> location = 'index.php')
     </script>";
 }

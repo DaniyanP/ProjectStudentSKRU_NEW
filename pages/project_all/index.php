@@ -233,7 +233,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                          
                             echo '<tr>
                                 <td>'. $row["project_id"].'</td>
-                                <td>'. mb_substr($row["project_name"],0,50,'UTF-8').'</td>
+                                <td>'. mb_substr($row["project_name"],0,60,'UTF-8').'</td>
                                 <td>'. $row["project_type_name"].'</td>
                                 
                                 <td><h6><span class="badge bg-'. $row["project_status_class"].'">'. $row["project_status_name"].'</span></h6></td>

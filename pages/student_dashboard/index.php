@@ -452,8 +452,7 @@ $con->close();
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            $text = $row["subject_name"];
-                          $warptxt = wordwrap($text,40,"<br/>",true);
+                         
                             echo '<tr>
                            
 
@@ -461,7 +460,7 @@ $con->close();
                             <td>' . $row["subject_semester"].'/' . $row["subject_year"].'</td>                           
                             <td>' . $row["subject_classroom"].'</td>
                             <td>' . $row["subject_id2"].'</td>
-                            <td>' . $warptxt.'</td>
+                            <td>' . $row["subject_name"].'</td>
                             <td>' . $row["teacher_name"].'</td>
 
                            
