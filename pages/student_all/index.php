@@ -354,6 +354,9 @@ if (isset($_GET["deleteR3"])) {
     $sql2 = "DELETE FROM subject_hash_student  WHERE ss_student_id={$_GET["ID"]} ";
     $result2 = mysqli_query($con, $sql2);
 
+    $sql4 = "DELETE FROM com05  WHERE student_id={$_GET["ID"]} ";
+    $result4 = mysqli_query($con, $sql4);
+
     $sql3 = "DELETE FROM appoint  WHERE recorder={$_GET["ID"]} ";
     $result3 = mysqli_query($con, $sql3);
 

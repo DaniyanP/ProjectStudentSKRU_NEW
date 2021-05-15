@@ -19,7 +19,8 @@ $sql = "SELECT
 appoint.appoint_id as a_id,
 appoint.project_id as p_id,
 appoint.teacher_id,
-appoint.appoint_status
+appoint.appoint_status,
+appoint.recorder
 FROM
 appoint
 WHERE
@@ -204,8 +205,8 @@ $result2 = mysqli_query($con, $query2);
                 <input type="text" name="appoint_id" id="appoint_id" value="<?php echo $appoint_id ?>" hidden>
                 
                 <input type="text" name="teacher_id" id="teacher_id" value="<?php echo $_SESSION["TeacherID"] ?>" hidden>
-               
-               
+                <input type="text" name="recorder" id="recorder" value="<?php echo $recorder ?>" hidden>
+                
                 <!-- ///กกเ -->
                 <input type="text" name="project_id" id="project_id" value="<?php echo $p_id ?>" hidden>
                
@@ -368,6 +369,7 @@ if (isset($_POST["ADDCOM05"])) {
     $project_id  = $_POST['project_id'];
     $comment_teacher  = $_POST['comment_teacher'];
     $comment_assign  = $_POST['comment_assign'];
+    $recorder  = $_POST['recorder'];
     
     $score  = $_POST['score'];
     $meet_check  = $_POST['meet_check'];
@@ -402,11 +404,11 @@ $resultappoinr = mysqli_query($con, $add_appoint_next);
 
     $sqlADDCOM1 ="INSERT INTO com05
     
-      ( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`)
+      ( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`, `student_id`)
     
         VALUES 
     
-        ('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id')";
+        ('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id','$recorder')";
 
 $result1 = mysqli_query($con, $sqlADDCOM1);
 

@@ -66,7 +66,7 @@ $teacher_id = $_REQUEST["ID"];?>
                         </nav>
                     </div>
                     <!-- Navbar links -->
-                    <?php include '../navbar_te.php';?>
+                    <?php include '../navbar_admin.php';?>
                 </div>
             </div>
         </nav>

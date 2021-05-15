@@ -106,7 +106,7 @@ $admin_id = $_SESSION["TeacherID"];
                         </nav>
                     </div>
                     <!-- Navbar links -->
-                    <?php include '../navbar_te.php';?>
+                    <?php include '../navbar_admin.php';?>
                 </div>
             </div>
         </nav>
@@ -135,7 +135,7 @@ $admin_id = $_SESSION["TeacherID"];
                         </div>
 
                         <div class="col-lg-6 col-md-6">
-                           ------
+                           <!-- ------ -->
 
                         </div>
                     </div>

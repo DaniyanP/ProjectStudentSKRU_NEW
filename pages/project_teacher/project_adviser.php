@@ -509,7 +509,7 @@ com05.project_id
 appoint.project_id,
 appoint.appoint_date_start,
 appoint.appoint_date_end,
-appoint.apooint_minute,
+
 appoint.appoint_comment,
 appoint.teacher_id,
 appoint.appoint_status,
@@ -558,8 +558,7 @@ appoint.appoint_id DESC";
                                             $ider = $row["appoint_id"]; 
                                             $query2 = mysqli_query($con, "SELECT
                                             appoint.appoint_id,
-                                            appoint.appoint_date_start,
-                                            appoint.apooint_minute
+                                            appoint.appoint_date_start
                                             FROM
                                             appoint
                                             INNER JOIN project ON appoint.project_id = project.project_id

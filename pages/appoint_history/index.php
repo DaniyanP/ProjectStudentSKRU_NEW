@@ -353,11 +353,7 @@ if (!$_SESSION["UserID"]){  //check session
                         include '../../conn.php';
 
                         // คำสั่ง sql ในการลบข้อมูล ตาราง tbl_products โดยจะลบข้อมูลสินค้า p_id ที่ส่งมา
-                        $sql288 = "UPDATE appoint SET
-                    
-                        appoint_status = 3
-                        
-                        
+                        $sql288 = "DELETE FROM appoint
                         
                               WHERE appoint_id={$_GET["ID"]}";
                     

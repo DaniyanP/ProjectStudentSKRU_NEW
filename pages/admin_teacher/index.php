@@ -102,7 +102,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                         </nav>
                     </div>
                     <!-- Navbar links -->
-                    <?php include '../navbar_te.php';?>
+                    <?php include '../navbar_admin.php';?>
                 </div>
             </div>
         </nav>

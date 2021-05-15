@@ -79,13 +79,28 @@ if (!$_SESSION["TeacherID"]){
 
                                               while ($row = $result->fetch_assoc()) {
 
-                                                  echo "{
-                                                  title:
-                                                      '#" . $row["appoint_id"]. " [" . $row["appoint_status_name"]. "] " . $row["project_name"]. "',
-                                                      start: '" . $row["appoint_date_start"]. "',
-                                                      end: '" . $row["appoint_date_end"]. "',
-                                                      color: '" . $row["color_calendar"]. "',
-                                              },";
+                                                if ($row["appoint_status"]==2) {
+                                                    echo "{
+                                                        title:
+                                                            '#" . $row["appoint_id"]. " [" . $row["appoint_status_name"]. "] " . $row["project_name"]. "',
+                                                            start: '" . $row["appoint_date_start"]. "',
+                                                            end: '" . $row["appoint_date_end"]. "',
+                                                            color: '" . $row["color_calendar"]. "',                                                      
+                                                            url: '../appoint_teacher/com05_frm.php?act=show&ID=" . $row["appoint_id"]. "',
+                                                    },";
+                                                }
+                                                if ($row["appoint_status"]!=2) {
+                                                    echo "{
+                                                        title:
+                                                            '#" . $row["appoint_id"]. " [" . $row["appoint_status_name"]. "] " . $row["project_name"]. "',
+                                                            start: '" . $row["appoint_date_start"]. "',
+                                                            end: '" . $row["appoint_date_end"]. "',
+                                                            color: '" . $row["color_calendar"]. "',                                                      
+                                                            url: '../appoint_teacher/show.php?act=show&ID=" . $row["appoint_id"]. "',
+                                                    },";
+                                                }
+
+                                                 
 
                                           }
                                       }
@@ -423,6 +438,7 @@ $query2=mysqli_query($con, $sql2);
                
             </div>
         </div>
+        
         
 
 <?php

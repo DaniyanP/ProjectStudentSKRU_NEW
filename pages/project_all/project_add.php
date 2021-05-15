@@ -74,7 +74,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
             <div class="d-flex justify-content-between w-100 flex-wrap">
                 <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">เพิ่มข้อมูลรายวิชาที่สอน</h1>
+                    <h1 class="h4">เพิ่มข้อมูลโครงงาน</h1>
 
                 </div>
 
@@ -193,7 +193,7 @@ if (mysqli_query($con, $sql)) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'เพิ่มข้อมูลกลุ่มเรียนเรียบร้อยแล้ว',
+                title: 'เพิ่มข้อมูลโครงงานเรียบร้อยแล้ว',
                 showConfirmButton: false,
                 timer: 2000  
             }).then(()=> location = 'index.php')
@@ -204,8 +204,8 @@ if (mysqli_query($con, $sql)) {
         "<script> 
         Swal.fire({
             icon: 'error',
-            title: 'เพิ่มข้อมูลกลุ่มเรียนไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+            title: 'รหัสโครงงานนี้อยู่ในระบบแล้วข้อมูลโครงงาน', 
+        })
     </script>";
 }
 

@@ -391,7 +391,7 @@ $con->close();
                     ON 
                         project.project_status = project_status.project_status_id
                 WHERE
-                    project_has_adviser.pha_teacher_id = 99001
+                    project_has_adviser.pha_teacher_id = '$TeacherID'
                 ORDER BY
                     project_has_adviser.pha_key DESC
                     ";
