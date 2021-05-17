@@ -295,7 +295,9 @@ appoint.appoint_id,
 	student.student_name,
     appoint.teacher_id,
     appoint.appoint_status,
-    appoint.meet_link
+    appoint.meet_link,
+                    student.student_title, 
+	                student.student_lastname
     FROM appoint 
     INNER JOIN project ON appoint.project_id=project.project_id 
     INNER JOIN student ON appoint.recorder = student.student_id
@@ -311,7 +313,8 @@ $result=$con->query($sql);
             $strDate=$row["appoint_date_start"];
             $strDatetoHourMinute=$row["appoint_date_start"];
             $strDatetoHourMinute1=$row["appoint_date_end"];
-            echo'<li class="list-group-item list-group-item-action"><b><a href="../appoint_teacher/show.php?act=show&ID='. $row["appoint_id"].'">[[ #'. $row["appoint_id"].' ]] </b> '. $row["student_name"].'</a>
+            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
+            echo'<li class="list-group-item list-group-item-action"><b><a href="../appoint_teacher/show.php?act=show&ID='. $row["appoint_id"].'">[[ #'. $row["appoint_id"].' ]] </b> '. $namestudent.'</a>
 <br>'. mb_substr($row["project_name"], 0, 70, 'UTF-8').' 
 </br>'.DateThai($strDate).' เวลา '. HourMinute($strDatetoHourMinute).'- '. HourMinute1($strDatetoHourMinute1).' น. <p>
 <a class="btn btn-success btn-sm "type="button" href="index.php?CFR3=req&ID='.$row["appoint_id"].'"><span class="fas fa-check mr-2"></span>ยืนยัน</a>
@@ -347,7 +350,7 @@ echo'</p></li>
         $newDate = date('Y-m-d\TH:i', strtotime($strDatetoHourMinute));
       
         $timesub=substr($row["appoint_date_end"],11,8);
-      echo'<h4 class="modal-title">แก้ไขเวลาเข้าพบ #'. $row["appoint_id"].'</h4>
+      echo'<h4 class="modal-title">แก้ไขเวลาเข้าพบ</h4>
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">

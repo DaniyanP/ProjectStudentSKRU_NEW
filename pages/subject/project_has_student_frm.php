@@ -36,7 +36,9 @@ $query2 = "SELECT
 subject_hash_student.ss_id, 
 subject_hash_student.ss_subject_id, 
 subject_hash_student.ss_student_id as stuID , 
-student.student_name as stuNAME
+student.student_name as stuNAME,
+                    student.student_title as stutitle, 
+	                student.student_lastname as stulastname
 FROM
 subject_hash_student
 INNER JOIN
@@ -84,7 +86,7 @@ $(document).ready(function(){
     tr = tr + "<td><select class='form-select' name='txtProjectID"+rows+"' id='txtProjectID"+rows+"'><option selected>---เลือกโครงงาน---</option>                        <?php foreach($result3 as $results3){?>
     <option value='<?php echo $results3["ss_project_id"];?>'>      <?php echo $results3['ss_project_name']; ?></option><?php } ?></td>";
     tr = tr + "<td><select class='form-select' name='txtstuID"+rows+"' id='txtstuID"+rows+"'><option selected>---เลือกนักศึกษา---</option>                        <?php foreach($result2 as $results2){?>
-    <option value='<?php echo $results2["stuID"];?>'> <?php echo $results2["stuID"];?>     <?php echo $results2['stuNAME']; ?></option><?php } ?></td>";
+    <option value='<?php echo $results2["stuID"];?>'><?php echo $results2['stuID']; ?>      <?php echo $results2['stutitle'].$results2['stuNAME'].'&nbsp;&nbsp;'.$results2['stulastname'];?></option><?php } ?></td>";
 						
                        
                         

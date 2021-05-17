@@ -245,7 +245,9 @@ $result2 = mysqli_query($con, $query2);
 					$sql = "SELECT
                     project_has_student.phs_project_id, 
                     project_has_student.phs_student_id, 
-                    student.student_name
+                    student.student_name,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     project_has_student
                     INNER JOIN
@@ -260,7 +262,8 @@ $result2 = mysqli_query($con, $query2);
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<option value="'. $row["phs_student_id"].'">'. $row["student_name"].'</option>';
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
+                            echo '<option value="'. $row["phs_student_id"].'">'. $namestudent.'</option>';
                             
                           
 							 
@@ -304,7 +307,9 @@ $result2 = mysqli_query($con, $query2);
                     appoint.recorder, 
                     student.student_name, 
                     appoint.appoint_recorder,
-                    appoint.meet_link
+                    appoint.meet_link,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     appoint
                     INNER JOIN
@@ -329,12 +334,13 @@ $result2 = mysqli_query($con, $query2);
                             $strDatetoHourMinute = $row["appoint_date_start"];
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $strDateTime = $row["appoint_recorder"];
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'    
            <p> โครงงาน : ' . $row["project_name"].'
            <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
-           <p> อาจารย์ที่ปรึกษาโครงงาน : ' . $row["teacher_name"].'
+            
            <p> รายละเอียด : ' . $row["appoint_comment"].'
-           <p> นัดหมายโดย : ' . $row["student_name"].'
+           <p> นัดหมายโดย : ' . $namestudent.'
            <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
            if ($row["meet_link"]) {
             

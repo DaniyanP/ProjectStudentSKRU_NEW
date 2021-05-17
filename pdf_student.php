@@ -29,7 +29,9 @@ if (!$_SESSION["TeacherID"]){
 	student.student_name, 
 	major.student_major_name, 
 	student.student_phone, 
-	student.student_type
+	student.student_type,
+                    student.student_title, 
+	                student.student_lastname
 FROM
 	subject_hash_student
 	INNER JOIN
@@ -55,7 +57,7 @@ ORDER BY
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.$row['ss_student_id'].'</td>
 				
-				<td style="border-right:1px solid #000;padding:3px;"  >  '  .$row['student_name'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;"  >  '  .$row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"].'</td>
               
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['student_major_name'].'</td>
                 <td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['student_phone'].'</td>

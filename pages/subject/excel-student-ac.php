@@ -24,7 +24,7 @@ include '../../conn.php';
                 $checkemail2 = mysqli_query($con,'SELECT * FROM `student` WHERE student_id = "'.$row2['A'].'" ');
                 if(mysqli_num_rows($checkemail2) == '0')
                 {
-                    mysqli_query($con,'INSERT INTO `student` (student_id,student_name,student_major,student_password,student_email) VALUES ("'.$row2['A'].'","'.$row2['B'].'" ,"'.$row2['C'].'","'.$setpassword.'","'.$row2['A'].'@parichat.skru.ac.th" ) ');
+                    mysqli_query($con,'INSERT INTO `student` (student_id,student_name,student_major,student_password,student_email,student_title,student_lastname) VALUES ("'.$row2['A'].'","'.$row2['C'].'" ,"'.$row2['E'].'","'.$setpassword.'","'.$row2['A'].'@parichat.skru.ac.th","'.$row2['B'].'" ,"'.$row2['D'].'" ) ');
                 }
                 
             }
@@ -46,7 +46,7 @@ include '../../conn.php';
         $updatemsg = "File Successfully Imported!";
         $updatemsgtype = 1;
         echo "<script>";
-      echo "alert('เพิ่มนักศึกษาสำเร็จ');";
+ 
       echo "window.location = history.back(1); ";
       echo "</script>";
     }

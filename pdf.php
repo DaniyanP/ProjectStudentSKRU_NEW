@@ -98,7 +98,7 @@ ORDER BY
 		$i = 1;
 		while($row3 = mysqli_fetch_assoc($result3)) {
 			
-			$namestudent .= ' '.$row3['student_name'].' ,';
+			$namestudent .= ' '.$row3['student_title'].$row3['student_name']."&nbsp;&nbsp;".$row3['student_lastname'].' ,';
 			$i++;
 		}
 	}

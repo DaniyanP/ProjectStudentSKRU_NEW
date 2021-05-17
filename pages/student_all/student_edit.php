@@ -98,7 +98,10 @@ student.student_major,
 student.student_phone,
 student.student_email,
 student.student_type,
-major.student_major_name
+major.student_major_name,
+                    student.student_title, 
+	                student.student_lastname
+
 FROM
 student
 INNER JOIN major ON student.student_major = major.student_major_id
@@ -123,11 +126,27 @@ extract($row);
                             </div>
                         </div>
 
-                        <div class="col-md-9 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="form-group">
-                                <label for="student_name">ชื่อ - นามสกุล</label>
+                                <label for="student_title">คำนำหน้า</label>
+                                <input class="form-control" id="student_title" name="student_title" type="text"
+                                    placeholder="กรอกคำนำหน้า" required value="<?php echo $student_title ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="student_name">ชื่อ</label>
                                 <input class="form-control" id="student_name" name="student_name" type="text"
-                                    placeholder="กรอกชื่อ - นามสกุล" required value="<?php echo $student_name ?>">
+                                    placeholder="กรอกชื่อ" required value="<?php echo $student_name ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="student_lastname">นามสกุล</label>
+                                <input class="form-control" id="student_lastname" name="student_lastname" type="text"
+                                    placeholder="กรอกนามสกุล" required value="<?php echo $student_lastname ?>">
                             </div>
                         </div>
 
@@ -255,7 +274,8 @@ if (isset($_POST["StudenEdit"])) {
     $student_email  = $_POST['student_email'];
     $student_phone  = $_POST['student_phone'];
     $student_type = $_POST['student_type'];
-    
+    $student_lastname  = $_POST['student_lastname'];
+    $student_title  = $_POST['student_title'];
     
       $sql = "UPDATE student SET
     
@@ -264,7 +284,9 @@ if (isset($_POST["StudenEdit"])) {
     student_major='$student_major',
     student_email='$student_email',
     student_phone='$student_phone',
-    student_type='$student_type'
+    student_type='$student_type',
+    student_lastname='$student_lastname',
+    student_title='$student_title'
     
     
     

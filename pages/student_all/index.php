@@ -222,7 +222,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                     student.student_major,
                     student.student_phone,
                     major.student_major_name,
-                    student.student_email
+                    student.student_email,
+                    student.student_title, 
+	                student.student_lastname
                     FROM
                     student
                     INNER JOIN major ON student.student_major = major.student_major_id;
@@ -231,10 +233,10 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                         
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '<tr>
                                 <td>'. $row["student_id"].'</td>
-                                <td>'. $row["student_name"].'</td>
+                                <td>'. $namestudent.'</td>
                                 
                                 
                                

@@ -258,7 +258,7 @@ $id_section_room =$_REQUEST["ID"];
                             <th>ชื่อ - สกุล</th>
                             <th>สาขา</th>
                             <th>เบอร์ติดต่อ</th>
-                            <th>สถานะ</th>
+                            <th>สถานะการใช้งาน</th>
                             <th>เพิ่มเติม</th>
 
 
@@ -277,7 +277,9 @@ $id_section_room =$_REQUEST["ID"];
                     student.student_name, 
                     major.student_major_name, 
                     student.student_phone, 
-	                student.student_type
+	                student.student_type,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     subject_hash_student
                     INNER JOIN
@@ -297,10 +299,10 @@ $id_section_room =$_REQUEST["ID"];
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                         
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '<tr>
                                 <td>'. $row["ss_student_id"].'</td>
-                                <td>'. $row["student_name"].'</td>
+                                <td>'. $namestudent.'</td>
                                 <td>'. $row["student_major_name"].'</td>
                                 <td>'. $row["student_phone"].'</td>
                                 

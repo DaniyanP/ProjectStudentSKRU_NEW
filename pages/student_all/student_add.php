@@ -90,19 +90,46 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
                     <div class="row">
 
-                        <div class="col-md-3 mb-3">
+                    <div class="col-md-3 mb-3">
                             <div class="form-group">
                                 <label for="student_id">รหัสนักศึกษา</label>
+                                
                                 <input class="form-control" id="student_id" name="student_id" type="number"
                                     placeholder="กรอกรหัสนักศึกษา" required autofocus>
                             </div>
                         </div>
 
-                        <div class="col-md-9 mb-3">
+
+                        <div class="col-md-3 mb-3">
                             <div class="form-group">
-                                <label for="student_name">ชื่อ - นามสกุล</label>
+                                <label for="student_title">คำนำหน้า</label>
+                                <select class="form-select" id="student_title" name="student_title" aria-label="Default select example">
+                                                 <option selected>คำนำหน้า</option>
+                                                 <option value="นาย">นาย</option>
+                                                 <option value="นางสาว">นางสาว</option>
+                                                
+                                
+                    </select>
+
+
+                                
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="student_name">ชื่อ</label>
                                 <input class="form-control" id="student_name" name="student_name" type="text"
-                                    placeholder="กรอกชื่อ - นามสกุล" required>
+                                    placeholder="กรอกชื่อ" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="student_lastname">นามสกุล</label>
+                                <input class="form-control" id="student_lastname" name="student_lastname" type="text"
+                                    placeholder="กรอกนามสกุล" required>
                             </div>
                         </div>
 
@@ -193,7 +220,9 @@ $result2 = mysqli_query($con, $query2);
  if (isset($_POST["StudentAdd"])) {
 
     $student_id  = $_POST['student_id'];
-$student_name  = $_POST['student_name'];
+    $student_title  = $_POST['student_title'];
+    $student_name  = $_POST['student_name'];
+    $student_lastname  = $_POST['student_lastname'];
 $student_major  = $_POST['student_major'];
 $student_email  = $_POST['student_email'];
 $student_phone  = $_POST['student_phone'];
@@ -205,10 +234,10 @@ $student_password = md5($set_password);
 		
 
  $sql = "INSERT INTO student
-		(student_id, student_name, student_major, student_phone, student_email, student_password)
+		(student_id, student_name, student_major, student_phone, student_email, student_password, student_title, student_lastname)
 		
  		VALUES
-		('$student_id', '$student_name', '$student_major', '$student_phone', '$student_email', '$student_password') "; 
+		('$student_id', '$student_name', '$student_major', '$student_phone', '$student_email', '$student_password', '$student_title', '$student_lastname') "; 
 
     if (mysqli_query($con, $sql)) {
         echo

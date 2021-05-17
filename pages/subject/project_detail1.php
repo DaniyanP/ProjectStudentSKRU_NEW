@@ -176,8 +176,9 @@ if(mysqli_num_rows($result44)==1){
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             
-                            echo '' . $row["student_id"].' ' . $row["student_name"].',  ';       
+                            echo '' . $row["student_id"].' ' . $namestudent.',  ';       
             }
             }
             $con->close();
@@ -527,7 +528,7 @@ com05.project_id
 
                                             <tr>
 
-                                                <td>#</td>
+                                              
                                                 <td>วันที่เข้าพบ</td>
                                                 <td>เวลา</td>
                                                 <td>นัดพบอาจารย์</td>
@@ -548,7 +549,7 @@ com05.project_id
 appoint.project_id,
 appoint.appoint_date_start,
 appoint.appoint_date_end,
-appoint.apooint_minute,
+ 
 appoint.appoint_comment,
 appoint.teacher_id,
 appoint.appoint_status,
@@ -575,7 +576,7 @@ appoint.appoint_id DESC";
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $newDate = date('Y-m-d\TH:i', strtotime($strDatetoHourMinute));
                             echo '<tr>                                                
-                                            <td>' . $row["appoint_id"].'</td>
+                                            
                                                 <td>'.DateThai($strDate).'</td>
                                                 <td>'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
                                                 <td>' . $row["teacher_name"].'</td>
@@ -594,8 +595,8 @@ appoint.appoint_id DESC";
                                             $ider = $row["appoint_id"]; 
                                             $query2 = mysqli_query($con, "SELECT
                                             appoint.appoint_id,
-                                            appoint.appoint_date_start,
-                                            appoint.apooint_minute
+                                            appoint.appoint_date_start 
+                                             
                                             FROM
                                             appoint
                                             INNER JOIN project ON appoint.project_id = project.project_id
@@ -647,7 +648,7 @@ appoint.appoint_id DESC";
 
                                             <tr>
 
-                                                <td>#</td>
+                                                 
                                                 <td>วันที่เข้าพบ</td>
                                                 <td>นัดพบอาจารย์</td>
                                                 <td>ตรงต่อเวลา</td>
@@ -692,7 +693,7 @@ appoint.appoint_date_start
                             
                             echo '<tr>
 
-                                                <td>' . $row["com05_id"].'</td>
+                                                
                                                 <td>'.DateThai($strDate).'</td>
                                                 <td>' . $row["teacher_name"].'</td>
                                                 <td>' . $row["meet_check_name"].'</td>
@@ -830,7 +831,9 @@ appoint.appoint_date_start
                     major.student_major_name, 
                     student.student_phone, 
                     student.student_email, 
-                    student.student_photo
+                    student.student_photo,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     project_has_student
                     INNER JOIN
@@ -849,6 +852,7 @@ appoint.appoint_date_start
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '
                             
                             <div class="col-lg-6 col-md-6">
@@ -856,7 +860,7 @@ appoint.appoint_date_start
                                 <div class="d-flex align-items-center">
                                     <div class="image"> <img src="'. $row["student_photo"].'" class="rounded" width="155"> </div>
                                     <div class="ml-3 w-100">
-                                        <h6 class="mb-0 mt-0">'. $row["student_name"].'</h6> <span>รหัสนักศึกษา :'. $row["phs_student_id"].'</span>
+                                        <h6 class="mb-0 mt-0">'. $namestudent.'</h6> <span>รหัสนักศึกษา :'. $row["phs_student_id"].'</span>
                                         <br><span>สาขาวิชา'. $row["student_major_name"].'</span>
                                         <br><span>เบอร์ติดต่อ :'. $row["student_phone"].'</span>
                                         <br><span>อีเมลล์ :'. $row["student_email"].'</span>
