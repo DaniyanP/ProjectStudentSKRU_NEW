@@ -75,6 +75,13 @@
 </li>
 
 <li class="nav-item ">
+<a href="../../pages/file_cf" class="nav-link">
+    <span class="sidebar-icon"><span class="fas fa-folder-open"></span></span>
+    <span>ตรวจสอบไฟล์เอกสาร</span>
+</a>
+</li>
+
+<li class="nav-item ">
 <a href="../../pages/student_all" class="nav-link">
     <span class="sidebar-icon"><span class="fas fa-graduation-cap"></span></span>
     <span>จัดการข้อมูลนักศึกษา</span>

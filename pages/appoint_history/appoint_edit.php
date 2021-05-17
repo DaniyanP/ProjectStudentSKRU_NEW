@@ -203,9 +203,9 @@ extract($row);?>
                     <input type="text" class="form-control" id="record" name="record"
                         aria-describedby="date_end-describ" value="<?php echo  $_SESSION["UserID"]; ?>" hidden>
 
-                    <button class="btn   btn-success" type="submit" name="SubmitEdit">บันทึก</button>
+                    
 
-
+                    <button type="submit" class="btn btn-primary" name="SubmitEdit">บันทึก</button>
 
 
 
@@ -217,6 +217,7 @@ extract($row);?>
         </div>
         <?php
          if (isset($_POST["SubmitEdit"])) {
+             
                         include '../../conn.php';
 
                         // คำสั่ง sql ในการลบข้อมูล ตาราง tbl_products โดยจะลบข้อมูลสินค้า p_id ที่ส่งมา
@@ -231,7 +232,39 @@ $record = $_POST['record'];
 
 $datesub=substr($date_start,0,10);
 
-  
+
+
+$c_end ="$datesub $date_end";
+
+$time_st = substr($date_start,11,8);
+$time_en = substr($c_end,11,8);
+
+if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00' || $time_st > $time_en ) {
+ 
+ if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00') {
+     echo
+     "<script> 
+     Swal.fire({
+         icon: 'error',
+         title: 'นอกเวลาทำการ', 
+         text: 'เลือกเวลาเข้าพบระหว่าง 08:00 - 17.00 น.',
+     }).then(() => {window.history.back()}); 
+ </script>";
+ }
+ 
+ if ($time_st > $time_en) {
+     echo
+     "<script> 
+     Swal.fire({
+         icon: 'error',
+         title: 'เวลาเข้าพบไม่สอดคล้อง', 
+         text: 'เวลาสิ้นสุดต้องมากกว่าเวลาเริ่มต้น',
+     }).then(() => {window.history.back()}); 
+ </script>";
+ }
+ 
+ 
+} else {
 $sql288 = "UPDATE appoint SET
 
 appoint_date_start ='$date_start',
@@ -267,7 +300,7 @@ teacher_id='$teacher'
                             </script>";
                         }
                       
-                       
+                    } 
                     }
                     ?>
 

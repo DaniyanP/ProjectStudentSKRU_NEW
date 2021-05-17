@@ -504,8 +504,7 @@ if (isset($_POST["SubmitInsert"])) {
     $google_meet = $_POST['google_meet'];
     $datesub=substr($date_start,0,10);
     /* $appoint_end = 22 ; */
-
-
+    
     $id_project = $_POST['id_project'];
     $record = $_POST['record'];
     /* $appoint_end = date('Y-m-d H:i:s',strtotime('+'.$date_end.' minutes',strtotime($date_start))); */
@@ -515,7 +514,41 @@ if (isset($_POST["SubmitInsert"])) {
     if ($selectchoice == "online") {
         $meet_link = $google_meet;
     }
+    $c_end ="$datesub $date_end";
 
+   $time_st = substr($date_start,11,8);
+   $time_en = substr($c_end,11,8);
+
+   if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00' || $time_st > $time_en ) {
+    
+    if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00') {
+        echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'นอกเวลาทำการ', 
+            text: 'เลือกเวลาเข้าพบระหว่าง 08:00 - 17.00 น.',
+        }).then(() => {window.history.back()}); 
+    </script>";
+    }
+    
+    if ($time_st > $time_en) {
+        echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'เวลาเข้าพบไม่สอดคล้อง', 
+            text: 'เวลาสิ้นสุดต้องมากกว่าเวลาเริ่มต้น',
+        }).then(() => {window.history.back()}); 
+    </script>";
+    }
+    
+    
+   } else {
+        
+   
+
+//st
 
     $sql444 ="INSERT INTO appoint
     
@@ -543,10 +576,20 @@ if (mysqli_query($con, $sql444)) {
             icon: 'error',
             title: 'บันทึกข้อมูลไม่สำเร็จ', 
             text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
-        }) 
+        }).then(() => {window.history.back()}); 
     </script>";
 }
+
+
+
+
+
+
 mysqli_close($con);
+//end
+
+
+}
 }
 
 ?>
