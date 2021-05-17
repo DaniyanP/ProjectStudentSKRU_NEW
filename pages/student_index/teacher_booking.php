@@ -276,7 +276,9 @@ if (!$_SESSION["UserID"]){
                         
 					$sqlnameteacher = "SELECT
                     teacher.teacher_id, 
-                    teacher.teacher_name as nametecher
+                    teacher.teacher_name as nametecher,
+                    teacher.teacher_title as titletecher,
+                    teacher.teacher_lastname as lastnametecher
                 FROM
                     teacher
                 WHERE
@@ -286,8 +288,10 @@ if (!$_SESSION["UserID"]){
 					
                     $result = mysqli_query($con, $sqlnameteacher) or die ("Error in query: $sqlnameteacher " . mysqli_error());
                     $row = mysqli_fetch_array($result);
+                    
                     extract($row);
-                    echo $nametecher;
+                    $teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;
+                    echo $teachern;
                     $con->close();
                     ?>
 

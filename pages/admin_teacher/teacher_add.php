@@ -97,11 +97,35 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                             </div>
                         </div>
 
-                        <div class="col-md-9 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="form-group">
-                                <label for="teacher_name">ชื่อ - นามสกุล</label>
+                                <label for="teacher_title">คำนำหน้า</label>
+                                <select class="form-select" id="teacher_title" name="teacher_title" aria-label="Default select example">
+                                                 <option selected>คำนำหน้า</option>
+                                                 <option value="อ.">อ.</option>
+                                                 <option value="ผศ.">ผศ.</option>
+                                                 <option value="อ.ดร.">อ.ดร.</option>
+                                                 <option value="ผศ.ดร.">ผศ.ดร.</option>
+                                                 
+                                                
+                                
+                    </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="teacher_name">ชื่อ</label>
                                 <input class="form-control" id="teacher_name" name="teacher_name" type="text"
-                                    placeholder="กรอกชื่อ - นามสกุล" required>
+                                    placeholder="กรอกชื่อ" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="teacher_lastname">นามสกุล</label>
+                                <input class="form-control" id="teacher_lastname" name="teacher_lastname" type="text"
+                                    placeholder="กรอกนามสกุล" required>
                             </div>
                         </div>
 
@@ -169,17 +193,18 @@ $teacher_name  = $_POST['teacher_name'];
 $teacher_email  = $_POST['teacher_email'];
 $set_password = $teacher_id;
 $teacher_password = md5($set_password);
-
+$teacher_title  = $_POST['teacher_title'];
+$teacher_lastname  = $_POST['teacher_lastname'];
 
 
 		
 
 
  $sql = "INSERT INTO teacher
-		(teacher_id, teacher_name, teacher_email, teacher_password)
+		(teacher_id, teacher_name, teacher_email, teacher_password, teacher_title, teacher_lastname)
 		
  		VALUES
-		('$teacher_id', '$teacher_name', '$teacher_email', '$teacher_password') "; 
+		('$teacher_id', '$teacher_name', '$teacher_email', '$teacher_password', '$teacher_title', '$teacher_lastname') "; 
 
 
 if (mysqli_query($con, $sql)) {

@@ -92,10 +92,13 @@ subject_project.subject_semester,
 subject_project.subject_year, 
 subject_project.subject_sec, 
 subject_day.day_name, 
-teacher.teacher_name, 
+ 
 subject_project.subject_time_start, 
 subject_project.subject_time_end, 
-subject_project.subject_key
+subject_project.subject_key, 
+                    teacher.teacher_name as nametecher,
+                    teacher.teacher_title as titletecher,
+                    teacher.teacher_lastname as lastnametecher
 FROM
 subject_project
 INNER JOIN
@@ -111,11 +114,12 @@ subject_project.subject_key = '$id_section_room' ";
 $result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
 $row2 = mysqli_fetch_array($result2);
 extract($row2);
+
 $strDatetoHourMinute = $subject_time_start;
 $strDatetoHourMinute1 = $subject_time_end;
 $subject_st = HourMinute($strDatetoHourMinute);
 $subject_end = HourMinute($strDatetoHourMinute1);
-
+$teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;
 
 
 $head1 = '
@@ -180,7 +184,7 @@ $mpdf->WriteHTML($infoproject);
 
 $mpdf->WriteHTML($head3);
 
-$mpdf->WriteHTML($teacher_name);
+$mpdf->WriteHTML($teachern);
 $mpdf->WriteHTML($head4);
 $mpdf->WriteHTML($content);
 

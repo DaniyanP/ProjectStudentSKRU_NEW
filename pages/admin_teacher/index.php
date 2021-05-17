@@ -148,7 +148,7 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
-                           ------
+                         <!--   ------ -->
 
                         </div>
                     </div>
@@ -239,7 +239,9 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
                     teacher.teacher_password,
                     teacher.teacher_photo,
                     teacher.teacher_type,
-                    teacher_type.teacher_type_name
+                    teacher_type.teacher_type_name,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                     FROM
                     teacher
                     INNER JOIN teacher_type ON teacher.teacher_type = teacher_type.teacher_type_id
@@ -250,10 +252,10 @@ if ($_SESSION["Teacherlevel"]=="3"){?>
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                         
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             echo '<tr>
                                 <td>'. $row["teacher_id"].'</td>
-                                <td>'. $row["teacher_name"].'</td>
+                                <td>'. $teachern.'</td>
                                 
                                 <td>'. $row["teacher_email"].'</td>
                                 <td>'. $row["teacher_type_name"].'</td>

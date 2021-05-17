@@ -96,7 +96,9 @@ teacher.teacher_name,
 teacher.teacher_email,
 teacher.teacher_password,
 teacher.teacher_photo,
-teacher.teacher_type
+teacher.teacher_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 teacher
 WHERE
@@ -119,13 +121,30 @@ extract($row);
                             </div>
                         </div>
 
-                        <div class="col-md-9 mb-3">
+                        <div class="col-md-3 mb-3">
                             <div class="form-group">
-                                <label for="teacher_name">ชื่อ - นามสกุล</label>
-                                <input class="form-control" id="teacher_name" name="teacher_name" type="text"
-                                    placeholder="กรอกชื่อ - นามสกุล" required value="<?php echo $teacher_name ?>">
+                                <label for="teacher_title">คำนำหน้า</label>
+                                <input class="form-control" id="teacher_title" name="teacher_title" type="text"
+                                    placeholder="กรอกคำนำหน้า" required value="<?php echo $teacher_title ?>">
                             </div>
                         </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="teacher_name">ชื่อ</label>
+                                <input class="form-control" id="teacher_name" name="teacher_name" type="text"
+                                    placeholder="กรอกชื่อ" required value="<?php echo $teacher_name ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="teacher_lastname">นามสกุล</label>
+                                <input class="form-control" id="teacher_lastname" name="teacher_lastname" type="text"
+                                    placeholder="กรอกนามสกุล" required value="<?php echo $teacher_lastname ?>">
+                            </div>
+                        </div>
+
 
 
                     </div>
@@ -217,13 +236,16 @@ if (isset($_POST["TeacherEditInfo"])) {
     $teacher_id  = $_POST['teacher_id'];
     $teacher_name  = $_POST['teacher_name'];
     $teacher_email  = $_POST['teacher_email'];
-    
+    $teacher_title  = $_POST['teacher_title'];
+    $teacher_lastname  = $_POST['teacher_lastname'];
     $teacher_type = $_POST['teacher_type'];
       $sql = "UPDATE teacher SET
     
     teacher_name ='$teacher_name',
     teacher_email ='$teacher_email',
-    teacher_type ='$teacher_type'
+    teacher_type ='$teacher_type',
+    teacher_title ='$teacher_title',
+    teacher_lastname ='$teacher_lastname'
     
     
           WHERE teacher_id='$teacher_id' 
@@ -248,7 +270,7 @@ if (mysqli_query($con, $sql)) {
         Swal.fire({
             icon: 'error',
             title: 'แก้ไขข้อมูลอาจารย์ไม่สำเร็จ', 
-        }).then(() => {window.history.back()});
+        }).then(()=> location = 'index.php')
     </script>";
 }
 

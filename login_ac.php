@@ -66,9 +66,9 @@ session_start();
                     if(mysqli_num_rows($result)==1){
   
                         $row = mysqli_fetch_array($result);
-  
+
                         $_SESSION["TeacherID"] = $row["teacher_id"];
-                        $_SESSION["TeacherName"] = $row["teacher_name"];
+                        $_SESSION["TeacherName"] = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                         $_SESSION["TeacherPhoto"] = $row["teacher_photo"];
                         $_SESSION["Teacherlevel"] = $row["teacher_type"];
                       

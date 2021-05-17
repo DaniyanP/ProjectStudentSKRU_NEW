@@ -169,7 +169,9 @@ if (!$_SESSION["UserID"]){
 	project_has_adviser.pha_project_id, 
 	project_has_adviser.pha_teacher_id, 
 	teacher.teacher_name, 
-	project_has_adviser.pha_type
+	project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 	project_has_adviser
 	INNER JOIN
@@ -184,7 +186,8 @@ ORDER BY
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<ul>' . $row["teacher_name"].'   ';
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
+                            echo '<ul>' . $teachern.'   ';
                             
                             if ($row["pha_type"]==1) {
                                echo "( อาจารย์ที่ปรึกษาหลัก )";

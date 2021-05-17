@@ -433,7 +433,9 @@ $con->close();
                     subject_project.subject_name, 
                     subject_project.subject_semester, 
                     subject_project.subject_year, 
-                    teacher.teacher_name
+                    teacher.teacher_name,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                 FROM
                     subject_hash_student
                     INNER JOIN
@@ -452,7 +454,7 @@ $con->close();
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                         
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             echo '<tr>
                            
 
@@ -461,7 +463,7 @@ $con->close();
                             <td>' . $row["subject_classroom"].'</td>
                             <td>' . $row["subject_id2"].'</td>
                             <td>' . $row["subject_name"].'</td>
-                            <td>' . $row["teacher_name"].'</td>
+                            <td>' . $teachern.'</td>
 
                            
                         </tr>';       

@@ -35,7 +35,9 @@ $class_id1 = $_REQUEST["ID"];
 $query2 = "SELECT
 teacher.teacher_id as t_id, 
 teacher.teacher_name as t_name,
-teacher.teacher_type
+teacher.teacher_type,
+                    teacher.teacher_title as t_title,
+                    teacher.teacher_lastname as t_lastname
 FROM
 teacher
 where teacher_type NOT IN ('3')
@@ -76,7 +78,7 @@ $(document).ready(function(){
     tr = tr + "<td><select class='form-select' name='txtProjectID"+rows+"' id='txtProjectID"+rows+"'><option selected>---เลือกโครงงาน---</option>                        <?php foreach($result3 as $results3){?>
     <option value='<?php echo $results3["ss_project_id"];?>'>      <?php echo $results3['ss_project_name']; ?></option><?php } ?></td>";
     tr = tr + "<td><select class='form-select' name='txtTeacherID"+rows+"' id='txtTeacherID"+rows+"'><option selected>---เลือกอาจารย์---</option>                        <?php foreach($result2 as $results2){?>
-    <option value='<?php echo $results2["t_id"];?>'>      <?php echo $results2['t_name']; ?></option><?php } ?></td>";
+    <option value='<?php echo $results2["t_id"];?>'>      <?php echo $results2['t_title'].$results2['t_name'].'&nbsp;&nbsp;'.$results2['t_lastname']; ?></option><?php } ?></td>";
 						/* tr = tr + "<td><input type='text' name='txtTeacherID"+rows+"' id='txtTeacherID"+rows+"' size='10'></td>"; */
 						/* tr = tr + "<td><input type='text' name='txtProjectID"+rows+"' id='txtProjectID"+rows+"' size='15'></td>"; */
 						

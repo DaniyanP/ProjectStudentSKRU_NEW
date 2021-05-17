@@ -32,7 +32,9 @@ if (!$_SESSION["TeacherID"]){
 	com05.score, 
 	appoint.teacher_id, 
 	teacher.teacher_name, 
-	score.score_score
+	score.score_score,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 	com05
 	INNER JOIN
@@ -61,12 +63,12 @@ ORDER BY
 			$strDate = $row["appoint_date_start"];
 			$strDatetoHourMinute = $row["appoint_date_start"];
 			$strDatetoHourMinute1 = $row["appoint_date_end"];
-			
+			$teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
 			$content .= '<tr style="border:1px solid #000;">
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.DateThai($strDate).' </td>
 				<td style="border-right:1px solid #000;padding:3px;"  >'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['teacher_name'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$teachern.'</td>
               
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['score_score'].'</td>
 			</tr>';
@@ -108,7 +110,9 @@ ORDER BY
 	project_has_adviser.pha_project_id, 
 	project_has_adviser.pha_teacher_id, 
 	teacher.teacher_name, 
-	project_has_adviser.pha_type
+	project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 	project_has_adviser
 	INNER JOIN
@@ -127,7 +131,8 @@ ORDER BY
 		$i = 1;
 		while($row4 = mysqli_fetch_assoc($result4)) {
 			
-			$nameteacher .= ' '.$row4['teacher_name'].' ,';
+		 
+			$nameteacher .= ' '.$row4['teacher_title'].$row4['teacher_name']."&nbsp;&nbsp;".$row4['teacher_lastname'].' ,';
 			$i++;
 		}
 	}

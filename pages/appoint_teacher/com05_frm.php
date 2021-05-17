@@ -335,12 +335,13 @@ $result2 = mysqli_query($con, $query2);
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $strDateTime = $row["appoint_recorder"];
                             $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
-                            echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'    
+                            echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'   
+                            <p> นัดหมายโดย : ' . $namestudent.' 
            <p> โครงงาน : ' . $row["project_name"].'
            <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
             
            <p> รายละเอียด : ' . $row["appoint_comment"].'
-           <p> นัดหมายโดย : ' . $namestudent.'
+          
            <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
            if ($row["meet_link"]) {
             

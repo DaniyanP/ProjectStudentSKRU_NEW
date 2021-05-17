@@ -193,7 +193,9 @@ if(mysqli_num_rows($result44)==1){
 	project_has_adviser.pha_project_id, 
 	project_has_adviser.pha_teacher_id, 
 	teacher.teacher_name, 
-	project_has_adviser.pha_type
+	project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 	project_has_adviser
 	INNER JOIN
@@ -208,7 +210,8 @@ ORDER BY
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '' . $row["teacher_name"].'   ';
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
+                            echo '' . $teachern.'   ';
                             
                             /* if ($row["pha_type"]==1) {
                                echo "( อาจารย์ที่ปรึกษาหลัก )";
@@ -557,7 +560,9 @@ appoint.recorder,
 teacher.teacher_name,
 appoint_status.appoint_status_name,
 appoint_status.appoint_status_class,
-                    appoint.project_id
+                    appoint.project_id,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 appoint
 INNER JOIN project ON appoint.project_id = project.project_id
@@ -571,6 +576,7 @@ appoint.appoint_id DESC";
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             $strDate = $row["appoint_date_start"];
                             $strDatetoHourMinute = $row["appoint_date_start"];
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
@@ -579,7 +585,7 @@ appoint.appoint_id DESC";
                                             
                                                 <td>'.DateThai($strDate).'</td>
                                                 <td>'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
-                                                <td>' . $row["teacher_name"].'</td>
+                                                <td>' . $teachern.'</td>
                                                 <td><h6><span class="badge bg-'. $row["appoint_status_class"].'">'. $row["appoint_status_name"].'</span></h6></td>
                                                 <td><a class="btn btn-warning btn-sm" type="button"
                                                 data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span class="fas fa-eye mr-2"
@@ -614,7 +620,7 @@ appoint.appoint_id DESC";
                                             
                                                
                                             <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
-                                            <p> อาจารย์ที่ปรึกษาโครงงาน : ' . $row["teacher_name"].'
+                                            <p> อาจารย์ที่ปรึกษาโครงงาน : ' . $teachern.'
                                             <p> รายละเอียด : ' . $row["appoint_comment"].'
                                            
                                             
@@ -673,7 +679,9 @@ appoint.appoint_id DESC";
                     score.score_score,
                     meet_check.meet_check_name,
                     teacher.teacher_name,
-appoint.appoint_date_start
+appoint.appoint_date_start,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                     FROM
                     com05
                     INNER JOIN appoint ON com05.appoint_id = appoint.appoint_id
@@ -690,12 +698,12 @@ appoint.appoint_date_start
 
 						while($row = $result->fetch_assoc()) {
                             $strDate = $row["appoint_date_start"];
-                            
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             echo '<tr>
 
                                                 
                                                 <td>'.DateThai($strDate).'</td>
-                                                <td>' . $row["teacher_name"].'</td>
+                                                <td>' . $teachern.'</td>
                                                 <td>' . $row["meet_check_name"].'</td>
                                                 <td>' . $row["score_score"].'</td>
                                                 <td><a class="btn btn-warning btn-sm" type="button"

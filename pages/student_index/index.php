@@ -80,7 +80,9 @@ if (!$_SESSION["UserID"]){
                     teacher.teacher_name,
                     appoint.appoint_status,
                     appoint_status.appoint_status_name,
-                    appoint_status.color_calendar
+                    appoint_status.color_calendar,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                     FROM 
                     appoint
                     INNER JOIN teacher ON appoint.teacher_id = teacher.teacher_id
@@ -92,11 +94,11 @@ if (!$_SESSION["UserID"]){
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                    
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."  ".$row["teacher_lastname"];
                     echo"
                     
                     {
-                        title: '" . $row["teacher_name"]. " [" . $row["appoint_status_name"]. "]',
+                        title: '" . $teachern. " [" . $row["appoint_status_name"]. "]',
                         start: '" . $row["appoint_date_start"]. "',
                         end: '" . $row["appoint_date_end"]. "',
                         color: '" . $row["color_calendar"]. "',
@@ -274,7 +276,10 @@ function Checkno() {
                     project_has_adviser.pha_project_id, 
                     project_has_adviser.pha_teacher_id, 
                     teacher.teacher_name, 
-                    project_has_adviser.pha_type
+                    project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
+	
                 FROM
                     project_has_adviser
                     INNER JOIN
@@ -289,7 +294,8 @@ function Checkno() {
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<option value="'. $row["pha_teacher_id"].'">'. $row["teacher_name"].'</option>';
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
+                            echo '<option value="'. $row["pha_teacher_id"].'">'. $teachern.'</option>';
                             
                           
 							 
@@ -424,7 +430,9 @@ function Checkno() {
                     teacher.teacher_name, 
                     teacher.teacher_email, 
                     teacher.teacher_photo, 
-                    project_has_adviser.pha_type
+                    project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                 FROM
                     project_has_adviser
                     INNER JOIN
@@ -439,6 +447,7 @@ function Checkno() {
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             echo '
                             
                             <div class="col-lg-6 col-md-12">
@@ -446,7 +455,7 @@ function Checkno() {
                                 <div class="d-flex align-items-center">
                                     <div class="image"> <img src="'. $row["teacher_photo"].'" class="rounded" width="155"> </div>
                                     <div class="ml-3 w-100">
-                                        <h6 class="mb-0 mt-0">'. $row["teacher_name"].'</h6> <span>อีเมลล์ :'. $row["teacher_email"].'</span>
+                                        <h6 class="mb-0 mt-0">'. $teachern.'</h6> <span>อีเมลล์ :'. $row["teacher_email"].'</span>
                                         <br><span>'; ?> <?php if ($row["pha_type"]==1) {
                                             echo "อาจารย์ที่ปรึกษาหลัก";
                                         } else {

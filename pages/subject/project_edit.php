@@ -273,7 +273,9 @@ extract($row);
                     project_has_adviser.pha_project_id, 
                     project_has_adviser.pha_teacher_id, 
                     teacher.teacher_name, 
-                    project_has_adviser.pha_type
+                    project_has_adviser.pha_type,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
                 FROM
                     project_has_adviser
                     INNER JOIN
@@ -289,8 +291,9 @@ extract($row);
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                             echo '<tr>
-    <td>' . $row["teacher_name"].'</td>
+    <td>' . $teachern.'</td>
     <td>';
 
     if ($row["pha_type"] == 1 ) {
@@ -319,7 +322,10 @@ extract($row);
 	project_has_adviser.pha_project_id, 
 	project_has_adviser.pha_teacher_id, 
 	project_has_adviser.pha_type, 
-	teacher.teacher_name
+	teacher.teacher_name,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
+
 FROM
 	project_has_adviser
 	INNER JOIN
@@ -332,7 +338,7 @@ WHERE
         
       
    
-      echo'<h4 class="modal-title">แก้ไขอาจารย์ที่ปรึกษาโครงงาน '. $row["pha_key"].'</h4>
+      echo'<h4 class="modal-title">แก้ไขอาจารย์ที่ปรึกษาโครงงาน</h4>
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
@@ -355,7 +361,10 @@ WHERE
                                     $id_teacher_adviser = $row["pha_teacher_id"];
                                     $query_adviser = "SELECT
                                     teacher.teacher_id as t_id, 
-                                    teacher.teacher_name as t_name
+                                    teacher.teacher_name as t_name,
+                    teacher.teacher_title as t_title,
+                    teacher.teacher_lastname as t_lastname
+
                                 FROM
                                     teacher
                                 ORDER BY
@@ -368,9 +377,9 @@ WHERE
                                                  
                                                  foreach( $result_adviser as $results33){
                                             if( $results33["t_id"] == $id_teacher_adviser ){
-                                               echo' <option value="'.$results33["t_id"].'" selected="true">'.$results33["t_name"].'</option>';
+                                               echo' <option value="'.$results33["t_id"].'" selected="true">'.$results33["t_title"].$results33["t_name"]."&nbsp;&nbsp;".$results33["t_lastname"].'</option>';
                                             }else{
-                                                echo' <option value="'.$results33["t_id"].'" >'.$results33["t_name"].'</option>';
+                                                echo' <option value="'.$results33["t_id"].'" >'.$results33["t_title"].$results33["t_name"]."&nbsp;&nbsp;".$results33["t_lastname"].'</option>';
                                             }
                                         }
                                         
@@ -452,7 +461,9 @@ $con->close();
                     project_has_student.phs_key, 
                     project_has_student.phs_project_id, 
                     project_has_student.phs_student_id, 
-                    student.student_name
+                    student.student_name,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     project_has_student
                     INNER JOIN
@@ -467,9 +478,10 @@ $con->close();
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '<tr>
     <td>' . $row["phs_student_id"].'</td>
-    <td>' . $row["student_name"].'</td>
+    <td>' . $namestudent.'</td>
     <td><a type="button" href="project_edit.php?DelStudentProject=req&ID=' . $row["phs_key"].'&Project_id=' . $project_idd.'&IDRoom=' . $class_idd.'" class="btn btn-danger btn-sm">
     <span class="icon icon-sm"><span class="fas fa-trash-alt icon-dark"></span>
     </span></a></td>                             

@@ -136,7 +136,9 @@ com05.comment_teacher,
 com05.comment_assign,
 com05.score,
 com05.meet_check,
-meet_check.meet_check_name
+meet_check.meet_check_name,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname
 FROM
 com05
 INNER JOIN appoint ON com05.appoint_id = appoint.appoint_id
@@ -152,6 +154,7 @@ $row = mysqli_fetch_array($result);
 extract($row);
 ?>
 <?php 
+
 $strDate = $appoint_date_start;
 $strDatetoHourMinute = $appoint_date_start;
 $strDatetoHourMinute1 = $appoint_date_end;
@@ -159,7 +162,7 @@ $strDatetoHourMinute1 = $appoint_date_end;
             <p><b>หมายเลข COM-05</b> : <?php echo $com05_id; ?></p>
            <p>โครงงาน : <?php echo $project_name; ?></p>
             <p>วันเวลาที่เข้าพบ : <?php  echo DateThai($strDate)?>  เวลา <?php  echo HourMinute($strDatetoHourMinute)?> - <?php  echo HourMinute1($strDatetoHourMinute1)?> น.</p>
-            <p>อาจารย์ที่ปรึกษาโครงงาน : <?php echo $teacher_name; ?></p>
+            <p>อาจารย์ที่ปรึกษาโครงงาน : <?php echo $teacher_title.$teacher_name.'  '.$teacher_lastname; ?></p>
             <hr>
             <p><b>ตอนที่ 1 ส่วนของนักศึกษา</b></p>
             <p>สิ่งที่นำเสนอ</p>

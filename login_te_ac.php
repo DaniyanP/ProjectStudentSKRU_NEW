@@ -16,22 +16,22 @@ session_start();
                       $row = mysqli_fetch_array($result);
 
                       $_SESSION["TeacherID"] = $row["teacher_id"];
-                      $_SESSION["TeacherName"] = $row["teacher_name"];
+                      $_SESSION["TeacherName"] = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
                       $_SESSION["TeacherPhoto"] = $row["teacher_photo"];
                       $_SESSION["Teacherlevel"] = $row["teacher_type"];
                     
 
                      
 
-                     if ($_SESSION["Teacherlevel"]==1){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
+                     if ($_SESSION["Teacherlevel"]==1){    
 
                         Header("Location: pages/teacher");
 
-                       } if ($_SESSION["Teacherlevel"]==2){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
+                       } if ($_SESSION["Teacherlevel"]==2){    
 
                         Header("Location: pages/teacher");
 
-                       }if ($_SESSION["Teacherlevel"]==3){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
+                       }if ($_SESSION["Teacherlevel"]==3){   
 
                         Header("Location: pages/Admin");
 
@@ -49,7 +49,7 @@ session_start();
         }else{
 
 
-             Header("Location: login_te.php"); //user & password incorrect back to login again
+             Header("Location: login_te.php");  
 
         }
 ?>

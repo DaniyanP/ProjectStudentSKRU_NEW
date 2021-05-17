@@ -46,7 +46,12 @@ com05.comment_teacher,
 com05.comment_assign,
 com05.score,
 com05.meet_check,
-meet_check.meet_check_name
+meet_check.meet_check_name,
+                    teacher.teacher_title,
+                    teacher.teacher_lastname, 
+                    teacher.teacher_name as nametecher,
+                    teacher.teacher_title as titletecher,
+                    teacher.teacher_lastname as lastnametecher
 FROM
 com05
 INNER JOIN appoint ON com05.appoint_id = appoint.appoint_id
@@ -60,7 +65,9 @@ com05.com05_id = '$appoint_idd' and  com05.project_id = '$get_project_id' ";
 $result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 if ($result->num_rows > 0) {
 $row = mysqli_fetch_array($result);
-extract($row);?>
+ 
+extract($row);
+$teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +167,7 @@ $strDatetoHourMinute1 = $appoint_date_end;
             <p><b>หมายเลข COM-05</b> : <?php echo $com05_id; ?></p>
            <p>โครงงาน : <?php echo $project_name; ?></p>
             <p>วันเวลาที่เข้าพบ : <?php  echo DateThai($strDate)?>  เวลา <?php  echo HourMinute($strDatetoHourMinute)?> - <?php  echo HourMinute1($strDatetoHourMinute1)?> น.</p>
-            <p>อาจารย์ที่ปรึกษาโครงงาน : <?php echo $teacher_name; ?></p>
+            <p>อาจารย์ที่ปรึกษาโครงงาน : <?php echo $teachern; ?></p>
             <hr>
             <p><b>ตอนที่ 1 ส่วนของนักศึกษา</b></p>
             <p>สิ่งที่นำเสนอ</p>

@@ -25,21 +25,21 @@ include '../../conn.php';
                 $checkemail = mysqli_query($con,'SELECT * FROM `teacher` WHERE teacher_id = "'.$row['A'].'"  ');
                 
                 
-                if($row['D'] == '1' && mysqli_num_rows($checkemail) == '0')
+                if($row['F'] == '1' && mysqli_num_rows($checkemail) == '0')
                 {
-                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type) VALUES ("'.$row['A'].'","'.$row['B'].'","'.$row['C'].'","'.$password.'","'.$row['D'].'") ');
+                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type,teacher_title,teacher_lastname) VALUES ("'.$row['A'].'","'.$row['C'].'","'.$row['E'].'","'.$password.'","'.$row['F'].'","'.$row['B'].'","'.$row['D'].'") ');
                 }
 
-                if($row['D'] == '2' && mysqli_num_rows($checkemail) == '0')
+                if($row['F'] == '2' && mysqli_num_rows($checkemail) == '0')
                 {
-                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type) VALUES ("'.$row['A'].'","'.$row['B'].'","'.$row['C'].'","'.$password.'","'.$row['D'].'") ');
+                    mysqli_query($con,'INSERT INTO `teacher` (teacher_id,teacher_name,teacher_email,teacher_password,teacher_type,teacher_title,teacher_lastname) VALUES ("'.$row['A'].'","'.$row['C'].'","'.$row['E'].'","'.$password.'","'.$row['F'].'","'.$row['B'].'","'.$row['D'].'") ');
                 }
             }
         }
         $updatemsg = "File Successfully Imported!";
         $updatemsgtype = 1;
         echo "<script>";
-      echo "alert('เพิ่มข้อมูลสำเร็จ');";
+      /* echo "alert('เพิ่มข้อมูลสำเร็จ');"; */
       echo "window.location ='index.php'; ";
       echo "</script>";
     }
