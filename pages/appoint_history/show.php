@@ -109,7 +109,9 @@ if (!$_SESSION["UserID"]){
                     appoint.recorder, 
                     appoint.appoint_recorder,                     
                     student.student_name,
-                    appoint.meet_link
+                    appoint.meet_link,
+                    student.student_title, 
+	                student.student_lastname
                 FROM
                     appoint
                     INNER JOIN
@@ -138,11 +140,12 @@ if (!$_SESSION["UserID"]){
                             $strDatetoHourMinute = $row["appoint_date_start"];
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $strDateTime = $row["appoint_recorder"];
+                            $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'    สถานะ: ' . $row["appoint_status_name"].'
            <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
            <p> อาจารย์ที่ปรึกษา : ' . $row["teacher_name"].'
            <p> รายละเอียด : ' . $row["appoint_comment"].'
-           <p> นัดหมายโดย : ' . $row["student_name"].'
+           <p> นัดหมายโดย : ' . $namestudent.'
            <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
 
            if ($row["meet_link"]) {

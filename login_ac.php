@@ -9,7 +9,9 @@ session_start();
                   project.project_name,project_has_student.phs_key, 
                   student.student_id,student.student_name, 
                   student.student_type,student.student_password, 
-	                student.student_photo,project.project_status
+	                student.student_photo,project.project_status,
+                  student.student_title, 
+	                student.student_lastname
                   FROM  student                 
                   INNER JOIN  project_has_student  ON  student.student_id = project_has_student.phs_student_id
                   INNER JOIN  project              ON  project_has_student.phs_project_id = project.project_id
@@ -21,7 +23,7 @@ session_start();
                   if(mysqli_num_rows($result)==1){
                       $row = mysqli_fetch_array($result);
                       $_SESSION["UserID"] = $row["student_id"];
-                      $_SESSION["User"] = $row["student_name"];
+                      $_SESSION["User"] = $row["student_title"].$row["student_name"]."  ".$row["student_lastname"];
                       $_SESSION["ProjectID"] = $row["phs_project_id"];
                       $_SESSION["Userlevel"] = $row["student_type"];
                       $_SESSION["UserIMG"] = $row["student_photo"];

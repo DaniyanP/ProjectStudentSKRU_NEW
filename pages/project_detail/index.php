@@ -152,7 +152,7 @@ if (!$_SESSION["UserID"]){
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<ul>' . $row["student_id"].' ' . $row["student_name"].'</ul>';       
+                            echo '<ul>' . $row["student_id"].' ' . $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"].'</ul>';       
             }
             }
             $con->close();

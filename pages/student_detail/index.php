@@ -95,7 +95,9 @@ major.student_major_name,
 student.student_phone,
 student.student_email,
 student.student_password,
-student.student_photo
+student.student_photo,
+                    student.student_title, 
+	                student.student_lastname
 FROM
 student
 INNER JOIN major ON student.student_major = major.student_major_id
@@ -177,7 +179,7 @@ extract($row);
                                 <div class="profile-cover rounded-top" data-background="../../assets/img/cover.jpg"></div>
                                 <div class="card-body pb-5">
                                     <img src="<?php echo $student_photo ?>" class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
-                                    <h4 class="h4"><?php echo $student_name ?></h4>
+                                    <h4 class="h4"><?php echo $student_title.$student_name."&nbsp;&nbsp;".$student_lastname ?></h4>
                                     <h5 class="font-weight-normal"><?php echo $student_major_name ?></h5>
                                     <p class="text-gray mb-4"><?php echo $student_id ?></p>
                                     <!-- <a class="btn btn-sm btn-primary mr-2" href="#"><span class="fas fa-user-plus mr-1"></span> Connect</a>
