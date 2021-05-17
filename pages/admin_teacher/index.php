@@ -481,7 +481,7 @@ if (isset($_GET["TeacherDelCF"] )) {
         Swal.fire({
             icon: 'error',
             title: 'ลบอาจารย์ไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
     }
     }

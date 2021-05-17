@@ -217,7 +217,7 @@ $result2 = mysqli_query($con, $query2);
                         title: 'บันทึกไม่สำเร็จ เนื่องจากนักศึกษาอยู่ในกลุ่มเรียนนี้แล้ว!',
                         showConfirmButton: false,
                         timer: 2000
-                    }).then(()=> location = 'student.php?act=show&ID=$id_class')
+                    }).then(() => {window.history.back()});
                 </script>";
 
 
@@ -249,7 +249,7 @@ $result2 = mysqli_query($con, $query2);
             Swal.fire({
                 icon: 'error',
                 title: 'บันทึกไม่สำเร็จ กรอกข้อมูลให้ครบ', 
-            }).then(()=> location = 'window.location = history.back(1);')
+            }).then(() => {window.history.back()});
         </script>";
         }
     }

@@ -335,7 +335,7 @@ meet_check ='$meet_check'
             Swal.fire({
                 icon: 'error',
                 title: 'แก้ไขการเข้าพบไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
+            }).then(() => {window.history.back()});
         </script>";
     }
   

@@ -325,7 +325,7 @@ subject_time_end='$subject_time_end'
             Swal.fire({
                 icon: 'error',
                 title: 'แก้ไขข้อมูลกลุ่มเรียนไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
+            }).then(() => {window.history.back()});
         </script>";
     }
   

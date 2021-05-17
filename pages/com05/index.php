@@ -288,7 +288,7 @@ if (mysqli_query($con, $sqldelcom05)) {
         Swal.fire({
             icon: 'error',
             title: 'ลบข้อมูลการเข้าพบไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
 }
 

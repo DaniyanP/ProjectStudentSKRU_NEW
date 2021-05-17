@@ -206,7 +206,7 @@ if (isset($_POST["SujectAddProject"])) {
                     Swal.fire({
                         icon: 'error',
                         title: 'บันทึกไม่สำเร็จ เนื่องจากโครงงานนี้อยู่ในกลุ่มเรียนนี้แล้ว', 
-                    }).then(()=> location = 'project.php?act=show&ID=$id_class')
+                    }).then(() => {window.history.back()});
                 </script>";
 
                    
@@ -270,7 +270,7 @@ if (isset($_POST["SujectAddProject"])) {
             Swal.fire({
                 icon: 'error',
                 title: 'เพิ่มข้อมูลไม่สำเร็จ', 
-            }).then(()=> location = 'project.php?act=show&ID=$id_class')
+            }).then(() => {window.history.back()});
         </script>";
         }
     }

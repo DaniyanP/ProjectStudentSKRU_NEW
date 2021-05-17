@@ -200,7 +200,7 @@ if (mysqli_query($con, $sql)) {
         Swal.fire({
             icon: 'error',
             title: 'ไม่สามารถบันทึกได้ เนื่องจากอาจารย์ท่านนี้มีในระบบแล้ว', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
 }
 

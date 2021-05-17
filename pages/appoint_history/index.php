@@ -373,7 +373,7 @@ if (!$_SESSION["UserID"]){  //check session
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'ยกเลิกการนัดพบไม่สำเร็จ', 
-                                }).then(()=> location = 'index.php')
+                                }).then(() => {window.history.back()});
                             </script>";
                         }
                       

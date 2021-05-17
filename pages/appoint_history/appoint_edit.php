@@ -263,7 +263,7 @@ teacher_id='$teacher'
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'แก้ไขการนัดพบไม่สำเร็จ', 
-                                }).then(()=> location = 'index.php')
+                                }).then(() => {window.history.back()});
                             </script>";
                         }
                       

@@ -385,7 +385,7 @@ if (mysqli_query($con, $sql)) {
         Swal.fire({
             icon: 'error',
             title: 'ลบนักศึกษาไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
 }
 }

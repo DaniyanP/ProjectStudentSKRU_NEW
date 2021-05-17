@@ -184,7 +184,7 @@ if (mysqli_query($con, $sql)) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'เพิ่มผู้ดูแลระบบเรียนเรียบร้อยแล้ว',
+                title: 'เพิ่มผู้ดูแลระบบเรียบร้อยแล้ว',
                 showConfirmButton: false,
                 timer: 2000  
             }).then(()=> location = 'index.php')
@@ -195,8 +195,8 @@ if (mysqli_query($con, $sql)) {
         "<script> 
         Swal.fire({
             icon: 'error',
-            title: 'ไม่สามารถบันทึกได้ เนื่องจากรหัสประจำตัวแอดมินมีในระบบแล้ว', 
-        }).then(()=> location = 'index.php')
+            title: 'ไม่สามารถบันทึกได้ เนื่องจากรหัสประจำตัวผู้ดูแลระบบมีในระบบแล้ว', 
+        }).ข้อมูลนักศึกษา
     </script>";
 }
 

@@ -147,6 +147,19 @@ if (!$_SESSION["UserID"]){
                         <input type="text" name="project_id" id="project_id"
                             value="<?php echo  $_SESSION["ProjectID"]; ?>" hidden>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="passconfirm">รหัสยืนยันจากอาจารย์ประจำวิชา</label>
+                                <input class="form-control" id="passconfirm" name="passconfirm" type="text"
+                                    placeholder="กรอกรหัสยืนยันจากอาจารย์ประจำวิชา" required>
+                            </div>
+                        </div>
+                         
+                    </div>
+
+
                     <div class="mt-3">
                                 <button type="submit" class="btn btn-primary" name="SubmitInsertFile">บันทึก</button>
                             </div>
@@ -165,43 +178,75 @@ if (isset($_POST["SubmitInsertFile"])) {
 $filee_url  = $_POST['filee_url'];
 $project_id  = $_POST['project_id'];
 
+$passconfirm = $_POST['passconfirm'];
+	
+$checkpass = mysqli_query($con,'SELECT
+subject_project.status_file, 
+subject_project.subject_key, 
+	subject_project.subject_teacher
+FROM
+subject_project
+WHERE
+subject_project.status_file = 2
+AND
+subject_project.subject_key = "'.$passconfirm.'" ');
+$row = mysqli_fetch_array($checkpass);
 
 
-$sqladdfile ="INSERT INTO filee
+                if(mysqli_num_rows($checkpass) == '1')
+                {
+                    $teacher_req = $row["subject_teacher"];
+                    $sqladdfile ="INSERT INTO filee
 
-  ( `project_id`, `file_type`, `file_link`)
+                    ( `project_id`, `file_type`, `file_link`, `teacher_id`)
+                  
+                      VALUES 
+                  
+                      ('$project_id','$filee','$filee_url','$teacher_req')";
+                  
+                  
+                  
+                  
+                  
+                  
+                      if (mysqli_query($con, $sqladdfile)) {
+                          echo
+                              "<script> 
+                              Swal.fire({
+                                  position: 'center',
+                                  icon: 'success',
+                                  title: 'เพิ่มไฟล์เรียบร้อยแล้ว',
+                                  text: 'โปรดรออาจารย์ประจำวิชาทำการยืนยันไฟล์!',
+                                  
+                              }).then(()=> location = 'index.php')
+                          </script>";
+                      } else {
+                          echo
+                              "<script> 
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'บันทึกไฟล์ไม่สำเร็จ', 
+                                  text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
+                              }).then(() => {window.history.back()});
+                          </script>";
+                      }
+                  
+                      mysqli_close($con);
+                }
+                if(mysqli_num_rows($checkpass) == '0')
+                {
+                    echo
+                              "<script> 
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'เพิ่มไฟล์ไม่สำเร็จ', 
+                                  text: 'รหัสยืนยันผิดพลาดหรืออาจารย์ปิดการรับไฟล์แล้ว',
+                                  
+                                }).then(() => {window.history.back()});
+                          </script>";
+                }
 
-    VALUES 
 
-    ('$project_id','$filee','$filee_url')";
-
-
-
-
-
-
-    if (mysqli_query($con, $sqladdfile)) {
-        echo
-            "<script> 
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'เพิ่มไฟล์เรียบร้อยแล้ว',
-                text: 'โปรดรออาจารย์ประจำวิชาทำการยืนยันไฟล์!',
-                
-            }).then(()=> location = 'index.php')
-        </script>";
-    } else {
-        echo
-            "<script> 
-            Swal.fire({
-                icon: 'error',
-                title: 'บันทึกไฟล์ไม่สำเร็จ', 
-                text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
-            }) 
-        </script>";
-    }
-    mysqli_close($con);
     }
     
     ?>

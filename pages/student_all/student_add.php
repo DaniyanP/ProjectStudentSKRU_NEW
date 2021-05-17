@@ -228,7 +228,7 @@ $student_password = md5($set_password);
             Swal.fire({
                 icon: 'error',
                 title: 'ไม่สามารถบันทึกได้ เนื่องจากรหัสนักศึกษามีในระบบแล้ว', 
-            })
+            }).then(() => {window.history.back()});
         </script>";
     }
 

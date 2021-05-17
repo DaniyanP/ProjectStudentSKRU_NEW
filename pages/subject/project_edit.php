@@ -544,7 +544,7 @@ project_status = '$project_status'
             Swal.fire({
                 icon: 'error',
                 title: 'แก้ไขข้อมูลโครงงานไม่สำเร็จ', 
-            }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+            }).then(() => {window.history.back()});
         </script>";
     }
   
@@ -606,7 +606,7 @@ if (isset($_POST["ProjectEditAdivser"])) {
                 Swal.fire({
                     icon: 'error',
                     title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
-                }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+                }).then(() => {window.history.back()});
             </script>";
             }
         }
@@ -634,7 +634,7 @@ if (isset($_POST["ProjectEditAdivser"])) {
                 Swal.fire({
                     icon: 'error',
                     title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
-                }).then(()=> location = 'project_edit.php?act=show&ID=$project_id&IDR=$class_idd')
+                }).then(() => {window.history.back()});
             </script>";
             }
     } 
@@ -694,7 +694,7 @@ if (isset($_GET["deleteR2"])) {
             Swal.fire({
                 icon: 'error',
                 title: 'ลบอาจารย์ที่ปรึกษาไม่สำเร็จ', 
-            }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+            }).then(() => {window.history.back()});
         </script>";
     }
   
@@ -755,7 +755,7 @@ if (mysqli_query($con, $sql289)) {
         Swal.fire({
             icon: 'error',
             title: 'ลบนักศึกษาไม่สำเร็จ', 
-        }).then(()=> location = 'project_edit.php?act=show&ID={$_GET["IDPro"]}&IDR={$_GET["IDR11"]}')
+        }).then(() => {window.history.back()});
     </script>";
 }
 

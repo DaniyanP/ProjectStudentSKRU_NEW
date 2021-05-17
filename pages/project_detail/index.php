@@ -98,6 +98,10 @@ if (!$_SESSION["UserID"]){
             </div>
         </div>
 
+        <div class="row">
+                <div class="col-12 col-xl-6">
+                
+
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
             <?php
@@ -202,6 +206,18 @@ ORDER BY
 
 
 
+                 
+
+                
+           
+                </div>
+        </div>
+
+      <!--   /s -->
+      </div>
+                <div class="col-12 col-xl-6">
+                <div class="card border-light shadow-sm mb-4">
+                <div class="card-body">
                 <p>ไฟล์เอกสารที่เกี่ยวข้อง : </p>
                 <div class="btn-group mr-2 mb-2">
 <a class="btn btn-warning" type="button" href="file_add.php"><span class="fas fa-plus mr-2"> เพิ่มเอกสาร</a>
@@ -259,13 +275,20 @@ if ($row["file_apporve"]==1) {
                         }
                         }
                         $con->close();
-                        ?> 
-
-                
-           
+                        ?>
+<p></p>
+                    </br>คำอธิบายเอกสาร
+<ul>
+   
+    <li> COM-04 ขออนุญาตดำเนินงานโครงงาน</li>
+    <li>COM-04-3 เอกสารการนำเสนอและขอสอบเค้าโครงโครงงาน ฉบับสมบูรณ์</li>
+</ul>
+                        
+                        
+                </div>
+                </div>
                 </div>
         </div>
-        
 
 <?php
 if (isset($_GET["deleteFile"] )) {
@@ -316,6 +339,10 @@ if (mysqli_query($con, $sql2881)) {
         }).then(()=> location = 'index.php')
     </script>";
 }
+
+
+
+
 
 mysqli_close($con);
 }

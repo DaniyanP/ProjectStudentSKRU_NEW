@@ -205,7 +205,7 @@ if (mysqli_query($con, $sql)) {
         Swal.fire({
             icon: 'error',
             title: 'รหัสโครงงานนี้อยู่ในระบบแล้วข้อมูลโครงงาน', 
-        })
+        }).then(() => {window.history.back()});
     </script>";
 }
 

@@ -289,7 +289,7 @@ if (mysqli_query($con, $sql)) {
         Swal.fire({
             icon: 'error',
             title: 'แก้ไขข้อมูลนักศึกษาไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
 }
 

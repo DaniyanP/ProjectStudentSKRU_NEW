@@ -299,8 +299,8 @@ $result2 = mysqli_query($con, $query2);
         "<script> 
         Swal.fire({
             icon: 'error',
-            title: 'แก้ไขสถานะอาจารย์ที่ปรึกษาไม่สำเร็จ', 
-        }).then(()=> location = 'student.php?act=show&ID=$classID')
+            title: 'แก้ไขข้อมูลนักศึกษาไม่สำเร็จ', 
+        }).then(() => {window.history.back()});
     </script>";
     }
 

@@ -8,7 +8,8 @@
                     src="<?php echo  $_SESSION["UserIMG"]; ?>">
                     <!-- ../../assets/img/team/profile-picture-3.jpg -->
                 <div class="media-body ml-2 text-dark align-items-center d-none d-lg-block">
-                    <span class="mb-0 font-small font-weight-bold"><?php echo  $_SESSION["User"]; ?></span>
+                    <span class="mb-0 font-small font-weight-bold"><?php echo  $_SESSION["User"]; ?> (<?php echo  $_SESSION["UserID"]; ?>)</span>
+                     
                 </div>
             </div>
         </a>

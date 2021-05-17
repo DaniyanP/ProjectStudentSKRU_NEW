@@ -236,7 +236,7 @@ project_type ='$project_type'
             Swal.fire({
                 icon: 'error',
                 title: 'แก้ไขข้อมูลโครงงานไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
+            }).then(() => {window.history.back()});
         </script>";
     }
 }

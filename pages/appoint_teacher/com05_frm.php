@@ -439,7 +439,7 @@ if ($result1) {
         Swal.fire({
             icon: 'error',
             title: บันทึกการเข้าพบไม่สำเร็จ', 
-        }).then(()=> location = 'index.php')
+        }).then(() => {window.history.back()});
     </script>";
 }
 

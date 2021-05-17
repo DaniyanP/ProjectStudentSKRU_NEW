@@ -246,7 +246,7 @@ file_link='$filee_url'
                 icon: 'error',
                 title: 'บันทึกไฟล์ไม่สำเร็จ', 
                 text: 'โปรดตรวจสอบความถูกต้องของข้อมูล!',
-            }) 
+            }).then(() => {window.history.back()});
         </script>";
     }
     mysqli_close($con);
