@@ -101,7 +101,9 @@ subject_project.subject_day,
 subject_project.subject_teacher,
 subject_project.subject_record,
 subject_project.subject_time_end,
-subject_project.subject_time_start
+subject_project.subject_time_start,
+subject_project.status_regis, 
+	subject_project.status_file
 FROM
 subject_project
 WHERE
@@ -244,6 +246,58 @@ extract($row);
 
                     </div>
 
+
+                    <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                            <label for="status_regis">เปิดรับโครงงาน</label>
+                                <select class="form-select" id="status_regis" name="status_regis" aria-label="Default select example">
+                        <option selected>---สถานะรับโครงงาน---</option>
+                        
+
+<?php
+                                            if( $status_regis == 1 ){
+                                               echo' <option value="1" selected="true">ปิด</option>';
+                                               echo' <option value="2" >เปิด</option>';
+                                            }else{
+                                                echo' <option value="2" selected="true">เปิด</option>';
+                                                echo' <option value="1" >ปิด</option>';
+                                            }
+                                        
+                                       ?>
+
+                    </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 mb-3">
+                            <div class="form-group">
+                            <label for="status_file">เปิดรับไฟล์เอกสารที่เกี่ยวข้อง</label>
+                                <select class="form-select" id="status_file" name="status_file" aria-label="Default select example">
+                        <option selected>---สถานะเปิดรับไฟล์เอกสารที่เกี่ยวข้อง---</option>
+                        
+
+<?php
+                                            if( $status_file == 1 ){
+                                               echo' <option value="1" selected="true">ปิด</option>';
+                                               echo' <option value="2" >เปิด</option>';
+                                            }else{
+                                                echo' <option value="2" selected="true">เปิด</option>';
+                                                echo' <option value="1" >ปิด</option>';
+                                            }
+                                        
+                                       ?>
+
+                    </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
                     <div class="mt-3">
                         <button type="submit" class="btn btn-primary" name="SubmitEditClassroom">บันทึก</button>
                    
@@ -287,8 +341,8 @@ $subject_day  = $_POST['subject_day'];
 $subject_time_start  = $_POST['subject_time_start'];
 $subject_time_end  = $_POST['subject_time_end'];
 
-
-  
+$status_regis  = $_POST['status_regis'];
+$status_file  = $_POST['status_file'];
   $sqleditclassroom = "UPDATE subject_project SET
 
 
@@ -300,7 +354,9 @@ subject_year='$subject_year',
 subject_sec='$subject_sec',
 subject_day='$subject_day',
 subject_time_start='$subject_time_start',
-subject_time_end='$subject_time_end'
+subject_time_end='$subject_time_end',
+status_regis='$status_regis',
+status_file='$status_file'
 
 
 

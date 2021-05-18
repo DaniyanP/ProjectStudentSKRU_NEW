@@ -210,7 +210,7 @@ $result2 = mysqli_query($con, $query2);
                             <div class="form-group">
                                 <label for="student_type">สถานะการใช้งาน</label>
                                 <select class="form-select" id="student_type" name="student_type" aria-label="Default select example">
-                        <option selected>---สถานะการใใช้งาน---</option>
+                        <option selected>---สถานะการใช้งาน---</option>
                         
 
 <?php

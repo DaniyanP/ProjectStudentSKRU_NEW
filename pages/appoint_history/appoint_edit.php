@@ -265,6 +265,9 @@ if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < 
  
  
 } else {
+
+
+    
 $sql288 = "UPDATE appoint SET
 
 appoint_date_start ='$date_start',
@@ -300,7 +303,10 @@ teacher_id='$teacher'
                             </script>";
                         }
                       
-                    } 
+                    }
+                    
+                    
+
                     }
                     ?>
 

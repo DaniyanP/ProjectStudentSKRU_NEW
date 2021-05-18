@@ -75,16 +75,15 @@ session_start();
   
                        
   
-                       if ($_SESSION["Teacherlevel"]==1){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
+                       if ($_SESSION["Teacherlevel"]==1){    
   
                           Header("Location: pages/teacher");
   
-                         } if ($_SESSION["Teacherlevel"]==2){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
-  
+                         } if ($_SESSION["Teacherlevel"]==2){    
                           Header("Location: pages/teacher");
   
-                         }if ($_SESSION["Teacherlevel"]==3){   //ถ้าเป็น member ให้กระโดดไปหน้า user_page.php
-  
+                         }if ($_SESSION["Teacherlevel"]==3){   
+                          $_SESSION["Addminlevel"] = "admin";
                           Header("Location: pages/Admin");
   
                          }

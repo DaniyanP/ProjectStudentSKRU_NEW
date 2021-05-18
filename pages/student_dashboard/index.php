@@ -365,13 +365,13 @@ $con->close();
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            $text = $row["project_name"];
-                          $warptxt = wordwrap($text,80,"<br/>",true);
+                           /*  $text = $row["project_name"];
+                          $warptxt = wordwrap($text,80,"<br/>",true); */
                             echo '<tr>
                             <td scope="row"></td>
 
                            
-                            <td>' . $warptxt.'</td>
+                            <td>' . $row["project_name"].'</td>
                             <td>' . $row["project_type_name"].'</td>
                             <td>' . $row["project_status_name"].'</td>
                            

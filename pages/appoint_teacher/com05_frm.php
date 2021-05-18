@@ -377,7 +377,7 @@ if (isset($_POST["ADDCOM05"])) {
     $comment_teacher  = $_POST['comment_teacher'];
     $comment_assign  = $_POST['comment_assign'];
     $recorder  = $_POST['recorder'];
-    
+    $teacher = $_SESSION["TeacherID"];
     $score  = $_POST['score'];
     $meet_check  = $_POST['meet_check'];
     $teacher_id  = $_POST['teacher_id'];
@@ -390,8 +390,81 @@ if (isset($_POST["ADDCOM05"])) {
     $date_end = $_POST['date_end'];
     $student_id = $_POST['student'];
     $datesub=substr($date_start,0,10);
-    
+
     if ($selectchoice=='yes') {
+
+        
+        $c_end ="$datesub $date_end";
+        $time_st = substr($date_start,11,8);
+        $time_en = substr($c_end,11,8);
+        
+        if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00' || $time_st > $time_en ) {
+         
+         if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < '08:00') {
+             echo
+             "<script> 
+             Swal.fire({
+                 icon: 'error',
+                 title: 'นอกเวลาทำการ', 
+                 text: 'เลือกเวลาเข้าพบระหว่าง 08:00 - 17.00 น.',
+             }).then(() => {window.history.back()}); 
+         </script>";
+         }
+         
+         if ($time_st > $time_en) {
+             echo
+             "<script> 
+             Swal.fire({
+                 icon: 'error',
+                 title: 'เวลาเข้าพบไม่สอดคล้อง', 
+                 text: 'เวลาสิ้นสุดต้องมากกว่าเวลาเริ่มต้น',
+             }).then(() => {window.history.back()}); 
+         </script>";
+         }
+         
+         
+        } else {
+             
+         $sqlc = "SELECT
+         appoint.appoint_date_start, 
+         appoint.appoint_date_end, 
+         appoint.teacher_id, 
+         appoint.appoint_status, 
+         appoint.appoint_id, 
+         DATE(appoint.appoint_date_start) AS datest,
+         TIME(appoint.appoint_date_start) AS datest1
+         FROM
+         appoint
+         WHERE
+         appoint.teacher_id = '$teacher' AND
+         DATE(appoint.appoint_date_start) = '$datesub' AND
+          
+         (
+             appoint.appoint_status = 1 OR
+                 appoint.appoint_status = 2 OR
+                 appoint.appoint_status = 4 OR
+                 appoint.appoint_status = 5 OR
+                 appoint.appoint_status = 6 
+            
+         )AND  (
+         (appoint_date_start BETWEEN '$date_start' AND '$c_end') 
+         OR (appoint_date_end BETWEEN '$date_start' AND '$c_end')OR 
+        ('$date_start' BETWEEN appoint_date_start  AND appoint_date_end)
+        OR 
+        ('$c_end' BETWEEN  appoint_date_start  AND appoint_date_end ))
+        ";
+        $resultc = $con->query($sqlc);
+                             if ($resultc->num_rows > 0) {
+        
+        echo
+             "<script> 
+             Swal.fire({
+                 icon: 'error',
+                 title: 'เข้าพบไม่ได้', 
+                 text: 'เนื่องจากอาจารย์มีการนัดพบอื่นแล้ว เลือกเวลาใหม่',
+             }).then(() => {window.history.back()}); 
+         </script>";
+        }else {
         $add_appoint_next ="INSERT INTO appoint
     
       ( `project_id`, `appoint_date_start`, `appoint_date_end`, `appoint_comment`, `teacher_id`, `appoint_status`, `recorder`)
@@ -401,21 +474,15 @@ if (isset($_POST["ADDCOM05"])) {
         ('$project_id','$date_start','$datesub $date_end','$comment_assign','$teacher_id','2','$student_id')";
 
 $resultappoinr = mysqli_query($con, $add_appoint_next);
-    }
 
-
+///
+$sqlADDCOM1 ="INSERT INTO com05
     
+( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`, `student_id`)
 
+  VALUES 
 
-
-
-    $sqlADDCOM1 ="INSERT INTO com05
-    
-      ( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`, `student_id`)
-    
-        VALUES 
-    
-        ('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id','$recorder')";
+  ('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id','$recorder')";
 
 $result1 = mysqli_query($con, $sqlADDCOM1);
 
@@ -423,34 +490,94 @@ $result1 = mysqli_query($con, $sqlADDCOM1);
 
 
 if ($result1) {
-    $sql2 ="UPDATE appoint SET
+$sql2 ="UPDATE appoint SET
 
-    appoint_status ='$set_status' WHERE appoint_id='$appoint_id'";
-    
-    $result2 = mysqli_query($con, $sql2);
+appoint_status ='$set_status' WHERE appoint_id='$appoint_id'";
 
-    echo
-        "<script> 
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'บันทึกการเข้าพบเรียบร้อยแล้ว!',
-            showConfirmButton: false,
-            timer: 2000
-        }).then(()=> location = 'index.php')
-    </script>";
-    //header('Location: index.php');
+$result2 = mysqli_query($con, $sql2);
+
+echo
+  "<script> 
+  Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'บันทึกการเข้าพบเรียบร้อยแล้ว!',
+      showConfirmButton: false,
+      timer: 2000
+  }).then(()=> location = 'index.php')
+</script>";
+//header('Location: index.php');
 } else {
-    echo
-        "<script> 
-        Swal.fire({
-            icon: 'error',
-            title: บันทึกการเข้าพบไม่สำเร็จ', 
-        }).then(() => {window.history.back()});
-    </script>";
+echo
+  "<script> 
+  Swal.fire({
+      icon: 'error',
+      title: บันทึกการเข้าพบไม่สำเร็จ', 
+  }).then(() => {window.history.back()});
+</script>";
+}
+///
+   
+}
 }
 
 
+}
+
+
+if ($selectchoice=='no') {
+
+    ///
+$sqlADDCOM1 ="INSERT INTO com05
+
+( `appoint_id`, `project_id`, `comment_teacher`, `comment_assign`, `score`, `meet_check`, `teacher_id`, `student_id`)
+
+VALUES 
+
+('$appoint_id','$project_id','$comment_teacher','$comment_assign','$score','$meet_check','$teacher_id','$recorder')";
+
+$result1 = mysqli_query($con, $sqlADDCOM1);
+
+
+
+
+if ($result1) {
+$sql2 ="UPDATE appoint SET
+
+appoint_status ='$set_status' WHERE appoint_id='$appoint_id'";
+
+$result2 = mysqli_query($con, $sql2);
+
+echo
+"<script> 
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'บันทึกการเข้าพบเรียบร้อยแล้ว!',
+  showConfirmButton: false,
+  timer: 2000
+}).then(()=> location = 'index.php')
+</script>";
+//header('Location: index.php');
+} else {
+echo
+"<script> 
+Swal.fire({
+  icon: 'error',
+  title: บันทึกการเข้าพบไม่สำเร็จ', 
+}).then(() => {window.history.back()});
+</script>";
+}
+///
+
+}
+
+
+
+
+
+
+///
 }
 
 mysqli_close($con);

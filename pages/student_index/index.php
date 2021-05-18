@@ -514,8 +514,8 @@ if (isset($_POST["SubmitInsert"])) {
     if ($selectchoice == "online") {
         $meet_link = $google_meet;
     }
+    
     $c_end ="$datesub $date_end";
-
    $time_st = substr($date_start,11,8);
    $time_en = substr($c_end,11,8);
 
@@ -546,9 +546,50 @@ if (isset($_POST["SubmitInsert"])) {
     
    } else {
         
-   
+    $sqlc = "SELECT
+    appoint.appoint_date_start, 
+    appoint.appoint_date_end, 
+    appoint.teacher_id, 
+    appoint.appoint_status, 
+    appoint.appoint_id, 
+    DATE(appoint.appoint_date_start) AS datest,
+    TIME(appoint.appoint_date_start) AS datest1
+    FROM
+    appoint
+    WHERE
+    appoint.teacher_id = '$teacher' AND
+    DATE(appoint.appoint_date_start) = '$datesub' AND
+     
+    (
+        appoint.appoint_status = 1 OR
+            appoint.appoint_status = 2 OR
+            appoint.appoint_status = 4 OR
+            appoint.appoint_status = 5 OR
+            appoint.appoint_status = 6 
+       
+    )AND  (
+    (appoint_date_start BETWEEN '$date_start' AND '$c_end') 
+    OR (appoint_date_end BETWEEN '$date_start' AND '$c_end')OR 
+('$date_start' BETWEEN appoint_date_start  AND appoint_date_end)
+OR 
+('$c_end' BETWEEN  appoint_date_start  AND appoint_date_end ))
+";
+$resultc = $con->query($sqlc);
+                        if ($resultc->num_rows > 0) {
 
-//st
+echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'เข้าพบไม่ได้', 
+            text: 'เนื่องจากอาจารย์มีการนัดพบอื่นแล้ว เลือกเวลาใหม่',
+        }).then(() => {window.history.back()}); 
+    </script>";
+}else {
+    
+
+
+    //st
 
     $sql444 ="INSERT INTO appoint
     
@@ -581,7 +622,7 @@ if (mysqli_query($con, $sql444)) {
 }
 
 
-
+}
 
 
 

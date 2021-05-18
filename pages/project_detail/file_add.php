@@ -162,6 +162,7 @@ if (!$_SESSION["UserID"]){
 
                     <div class="mt-3">
                                 <button type="submit" class="btn btn-primary" name="SubmitInsertFile">บันทึก</button>
+                                <a type="button" class="btn btn-info" href="index.php">กลับ</a>
                             </div>
                 </form>
             </div>
