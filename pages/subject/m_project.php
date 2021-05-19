@@ -124,8 +124,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
     
                 <div class="d-flex justify-content-between w-100 flex-wrap">
                     <div class="mb-3 mb-lg-0">
-                        <h1 class="h4">ข้อมูลรายวิชาที่สอน</h1>
-                        
+                        <h1 class="h4">จัดการข้อมูลแบบรวดเร็ว</h1>
+                        <p class="mb-0">อาจารย์สามารถเพิ่มโครงงาน เพิ่มนักศึกษา เพิ่มอาจารย์ที่ปรึกษา บันทึกกลุ่มโครงงาน บันทึกการลงทะเบียน โดยการ Importไฟล์Excell แค่ไฟล์เดียว</p>
                     </div>
                     
                 </div>
@@ -133,13 +133,58 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
     
             <div class="card border-light shadow-sm mb-4" >
                     <div class="card-body">
-                    <a  class="btn btn-primary btn-sm mr-2" type="button" href="classroom_add.php">
+                   <!--  <a  class="btn btn-primary btn-sm mr-2" type="button" href="classroom_add.php">
                         <span class="fas fa-plus mr-2"></span>เพิ่มกลุ่มเรียน</a>
 
                         <a  class="btn btn-warning btn-sm mr-2" type="button" href="m_project.php">
-                        <span class="far fa-paper-plane mr-2"></span>จัดการข้อมูลแบบรวดเร็ว</a>
+                        <span class="far fa-paper-plane mr-2"></span>จัดการข้อมูลแบบรวดเร็ว</a> -->
                        
-      
+                        <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
+                                role="button"><i class="fas fa-file-excel"></i>   Import Excel</a>
+
+               <!-- Modal -->
+               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">เพิ่มไฟล์ Excel</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <!-- frm_add str -->
+                                <form method="post" action="excel-addfast.php" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                               
+                                <div class="col-md-6">
+                                    <input name="result_file" required="" type="file" accept=".xls, .xlsx">
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>                           
+
+
+                            <!-- frm_add end -->
+
+                        </div>
+                        <div class="modal-footer">
+                           
+                            <button type="submit" name="upload_excel" class="btn btn-primary">อัพโหลด</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ฟอร์มเพิ่มไฟล์ สิ้นสุด -->
+
+
                         <div class="table-responsive">
                         <table id="example" class="table table-striped table-bordered" width="100%"
                     >
@@ -149,12 +194,12 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         <th class="border-0">รหัสวิชา</th>
                                         <th class="border-0">ภาคการเรียน</th>
                                         <th class="border-0">กลุ่มเรียน</th>
-                                        <th class="border-0">นักศึกษา</th>
-                                        <th class="border-0">โครงงาน</th>
-                                        <th class="border-0">ดำเนินการ</th>
-                                        <th class="border-0">เสร็จสิ้น</th>
-                                        <th class="border-0">ยกเลิก</th>
-                                        <th class="border-0">จัดการ</th>
+                                        <th class="border-0">รหัสยืนยัน</th>
+                                        <th class="border-0">รับโครงงาน</th>
+                                        <th class="border-0">จัดการไฟล์เอกสาร</th>
+                                        <th class="border-0">ไฟล์ Export</th>
+                                        <th class="border-0">ล้างข้อมูล</th>
+                                        
     
                                     </tr>
                                 </thead>
@@ -179,7 +224,9 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                     subject_project.subject_teacher,
                     subject_project.subject_record,
                     subject_project.subject_day, 
-	subject_day.day_name
+	subject_day.day_name,
+    subject_project.status_regis, 
+	subject_project.status_file
                     FROM
                     subject_project
                     INNER JOIN	subject_day ON subject_project.subject_day = subject_day.day_id
@@ -201,164 +248,44 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         <td >
                                         ' . $row["subject_sec"].'
                                         </td>
-                                        <td>';
+                                        <td >
+                                        ' . $row["subject_key"].'
+                                        </td>
+                                        <td >'; ?>
+<?php
+if ($row["status_regis"]==1) {
+    echo'<a class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-danger" href="m_project.php?keyregis=' . $row["subject_key"].'&ID=' . $row["status_regis"].'"><i class="fas fa-toggle-off fa-2x"></i></a>';
+}
+if ($row["status_regis"]==2) {
+    echo'<a class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-success" href="m_project.php?keyregis=' . $row["subject_key"].'&ID=' . $row["status_regis"].'"><i class="fas fa-toggle-on fa-2x"></i></a>';
+}                                      
+                                          ?>
                                         
-                                        $row_id = $row["subject_key"];
-                                        $query01 = "SELECT
-                                        Count(subject_hash_student.ss_id) as student_total,
-                                        subject_hash_student.ss_subject_id,
-                                        subject_hash_student.ss_student_id
-                                        FROM
-                                        subject_hash_student
-                                        WHERE
-                                        subject_hash_student.ss_subject_id = '$row_id'
-                                        GROUP BY
-                                        
-                                        subject_hash_student.ss_subject_id";
-                                        $result01 = $con->query($query01);
-                                        $count_student = $result01->fetch_assoc();
-                                        if($result01->num_rows > 0){
-                                            echo $count_student["student_total"];
-                                        }else{
-                                            echo '0';
+                                       <?php echo'</td>
+                                        <td >'; ?>
+                                        <?php
+                                        if ($row["status_file"]==1) {
+                                            echo'<a class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-danger" href="m_project.php?keyfile=' . $row["subject_key"].'&ID=' . $row["status_file"].'"><i class="fas fa-toggle-off fa-2x"></i></a>';
                                         }
-                                        
-
-                                        echo '</td>
-                                        <td>';
-                                        
-                                        $row_id = $row["subject_key"];
-                                        $query02 = "SELECT
-                                        subject_hash_project.sp_subject_id, 
-                                        subject_hash_project.sp_project_id, 
-                                        project.project_status
-                                    FROM
-                                        subject_hash_project
-                                        INNER JOIN
-                                        project
-                                        ON 
-                                            subject_hash_project.sp_project_id = project.project_id
-                                        WHERE
-                                        subject_hash_project.sp_subject_id = '$row_id' ";
-                                        $result02 = $con->query($query02);
-                                        $count_project = $result02->fetch_assoc();
-                                        if($result02->num_rows > 0){
-                                            echo $result02->num_rows;
-                                        }else{
-                                            echo '0';
-                                        }
-                                        
-
-                                        echo '</td>
-                                        <td>';
-                                        
-                                        
-                                        $row_id = $row["subject_key"];
-                                        $query033 = "SELECT
-                                        subject_hash_project.sp_subject_id, 
-                                        subject_hash_project.sp_project_id, 
-                                        project.project_status
-                                    FROM
-                                        subject_hash_project
-                                        INNER JOIN
-                                        project
-                                        ON 
-                                            subject_hash_project.sp_project_id = project.project_id
-                                        WHERE
-                                        subject_hash_project.sp_subject_id = '$row_id' and project.project_status = 1";
-                                        $result033 = $con->query($query033);
-                                        $count_project33 = $result033->fetch_assoc();
-                                        if($result033->num_rows > 0){
-                                            echo $result033->num_rows;
-                                        }else{
-                                            echo '0';
-                                        }
-
-                                        echo '</td>
-                                        <td>';
-                                        
-                                        
-                                        $row_id = $row["subject_key"];
-                                        $query033 = "SELECT
-                                        subject_hash_project.sp_subject_id, 
-                                        subject_hash_project.sp_project_id, 
-                                        project.project_status
-                                    FROM
-                                        subject_hash_project
-                                        INNER JOIN
-                                        project
-                                        ON 
-                                            subject_hash_project.sp_project_id = project.project_id
-                                        WHERE
-                                        subject_hash_project.sp_subject_id = '$row_id' and project.project_status = 2";
-                                        $result033 = $con->query($query033);
-                                        $count_project33 = $result033->fetch_assoc();
-                                        if($result033->num_rows > 0){
-                                            echo $result033->num_rows;
-                                        }else{
-                                            echo '0';
-                                        }
-
-                                        echo '</td>
-                                        <td>';
-                                        
-                                        
-                                        $row_id = $row["subject_key"];
-                                        $query033 = "SELECT
-                                        subject_hash_project.sp_subject_id, 
-                                        subject_hash_project.sp_project_id, 
-                                        project.project_status
-                                    FROM
-                                        subject_hash_project
-                                        INNER JOIN
-                                        project
-                                        ON 
-                                            subject_hash_project.sp_project_id = project.project_id
-                                        WHERE
-                                        subject_hash_project.sp_subject_id = '$row_id' and project.project_status = 3";
-                                        $result033 = $con->query($query033);
-                                        $count_project33 = $result033->fetch_assoc();
-                                        if($result033->num_rows > 0){
-                                            echo $result033->num_rows;
-                                        }else{
-                                            echo '0';
-                                        }
-
-                                        echo '</td>
-                                        
-                                        <td>
-                                        <div class="btn-group">
-                                            <button
-                                                class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="icon icon-sm">
-                                                    <span class="fas fa-ellipsis-h icon-dark"></span>
-                                                </span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-
-                                         
-
-                                            <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="student.php?act=show&ID='. $row["subject_key"].'"><span
-                                            class="fas fa-eye mr-2"></span>รายชื่อนักศึกษา</a>
-                                            <a class="dropdown-item" href="project.php?act=show&ID='. $row["subject_key"].'"><span
-                                                        class="fas fa-eye mr-2"></span>โครงงาน</a>
-                                                       
-
-                                                       
-                                                                                                            
-
-                                                        
-
-
-                                                <a class="dropdown-item" href="classroom_edit.php?act=edit&ID=' . $row["subject_key"].'"><span
-                                                        class="fas fa-edit mr-2"></span>แก้ไข</a>'; ?>
-                                                <a class="dropdown-item text-danger" href="index.php?ClassRoomDEL=req&ID=<?php echo $row["subject_key"]; ?>"><span
-                                                        class="fas fa-trash-alt mr-2"></span>ลบ</a>
-                                       <?php     echo'</div>                                       
-                                        </div>                                 
-                                    </td>
+                                        if ($row["status_file"]==2) {
+                                            echo'<a class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-success" href="m_project.php?keyfile=' . $row["subject_key"].'&ID=' . $row["status_file"].'"><i class="fas fa-toggle-on fa-2x"></i></a>';
+                                        }                                      
+                                                                                  ?>
+                                                                                
+                                                                               <?php echo'
+                                          </td>
+                                          <td >
+                                          <a class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-success" href="export.php?key=' . $row["subject_key"].'"><i class="fas fa-file-excel"></i>  ' . $row["subject_key"].'.xlsx</a>
+                                            </td>
+                                            <td >
+                                            '; ?>
+                                            <a
+                                                
+                                             class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-danger" href="m_project.php?projectDEL=req&ID=<?php echo $row["subject_key"]; ?>"><span
+                                                    class="fas fa-trash-alt mr-2"></span> 
+                                                    </a>
+                                   <?php     echo'
+                                                </td>
                                     </tr>';       
                                 }
                                 }
@@ -389,13 +316,13 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
             
                 <?php
 include '../../conn.php';
-if (isset($_GET["ClassRoomDEL"] )) {
+if (isset($_GET["projectDEL"] )) {
         echo
             "<script> 
                 Swal.fire({
                     icon: 'warning',
-                    title: 'ลบกลุ่มเรียนนี้ออกหรือไม่?',
-                    text: 'หากลบแล้วไม่สามารถเรียกคืนได้!',
+                    title: 'ต้องการล้างค่าข้อมูล?',
+                    text: 'หากล้างแล้วไม่สามารถเรียกคืนได้!',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -403,29 +330,25 @@ if (isset($_GET["ClassRoomDEL"] )) {
                     cancelButtonText: 'ไม่!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location = 'index.php?ClassRoomDELID=req&ID={$_GET["ID"]}'
+                        location = 'm_project.php?ProjectDELID=req&ID={$_GET["ID"]}'
                     }else{
-                        location = 'index.php'
+                        location = 'm_project.php'
                     }
                 }); 
         </script>";
 }
 
 
-if (isset($_GET["ClassRoomDELID"])) {
+if (isset($_GET["ProjectDELID"])) {
    
 
     
     $subject_id = $_GET["ID"];
 
-    $sql2 = "DELETE FROM subject_hash_project  WHERE sp_subject_id='$subject_id' ";
-    $result2 = mysqli_query($con, $sql2);
     
-    $sql3 = "DELETE FROM subject_hash_student  WHERE ss_subject_id='$subject_id' ";
-    $result3 = mysqli_query($con, $sql3);
     
       
-      $sql111 = "DELETE FROM subject_project  WHERE subject_key='$subject_id' ";
+      $sql111 = "DELETE FROM regis_project  WHERE subject_id='$subject_id' ";
 
     
         
@@ -436,10 +359,10 @@ if (isset($_GET["ClassRoomDELID"])) {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'ลบข้อมูลกลุ่มเรียนเรียบร้อย!',
+                    title: 'ล้างค่าเรียบร้อย!',
                     showConfirmButton: false,
                     timer: 2000
-                }).then(()=> location = 'index.php')
+                }).then(()=> location = 'm_project.php')
             </script>";
         //header('Location: index.php');
     } else {
@@ -447,8 +370,8 @@ if (isset($_GET["ClassRoomDELID"])) {
             "<script> 
             Swal.fire({
                 icon: 'error',
-                title: 'ลบข้อมูลกลุ่มเรียนไม่สำเร็จ', 
-            }).then(()=> location = 'index.php')
+                title: 'ล้างค่าไม่สำเร็จ', 
+            }).then(()=> location = 'm_project.php')
         </script>";
     }
   
@@ -456,7 +379,93 @@ if (isset($_GET["ClassRoomDELID"])) {
 }
 
 
+if (isset($_GET["keyregis"])) {
+   
 
+    $keyregis = $_GET["keyregis"];
+    $status = $_GET["ID"];
+
+    if ($status == 1) {
+        $sql111 = "UPDATE subject_project SET
+
+status_regis = 2
+                  WHERE subject_key='$keyregis'";
+    }
+    
+    if ($status == 2) {
+        $sql111 = "UPDATE subject_project SET
+
+status_regis = 1
+            
+            
+            
+            
+                  WHERE subject_key='$keyregis'";
+    }
+     
+
+    
+        
+
+    if (mysqli_query($con,$sql111 )) {
+        echo
+            "<script> 
+            window.location ='m_project.php';
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            window.location = 'm_project.php';
+        </script>";
+    }
+  
+   
+}
+
+if (isset($_GET["keyfile"])) {
+   
+
+    $keyregis = $_GET["keyfile"];
+    $status = $_GET["ID"];
+
+    if ($status == 1) {
+        $sql111 = "UPDATE subject_project SET
+
+status_file = 2
+                  WHERE subject_key='$keyregis'";
+    }
+    
+    if ($status == 2) {
+        $sql111 = "UPDATE subject_project SET
+
+status_file = 1
+            
+            
+            
+            
+                  WHERE subject_key='$keyregis'";
+    }
+     
+
+    
+        
+
+    if (mysqli_query($con,$sql111 )) {
+        echo
+            "<script> 
+            window.location ='m_project.php';
+            </script>";
+        //header('Location: index.php');
+    } else {
+        echo
+            "<script> 
+            window.location = 'm_project.php';
+        </script>";
+    }
+  
+   
+}
 mysqli_close($con);
     ?>
     

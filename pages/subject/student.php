@@ -212,7 +212,7 @@ $id_section_room =$_REQUEST["ID"];
                             <div class="row">
                                
                                 <div class="col-md-6">
-                                    <input name="result_file" required="" type="file">
+                                    <input name="result_file" required="" type="file" accept=".xls, .xlsx">
                                     <input name="id_room" type="text" value="<?php echo $id_section_room ?>" hidden>
                                 </div>
                             </div>
