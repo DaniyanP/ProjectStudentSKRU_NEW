@@ -51,7 +51,12 @@ meet_check.meet_check_name,
                     teacher.teacher_lastname, 
                     teacher.teacher_name as nametecher,
                     teacher.teacher_title as titletecher,
-                    teacher.teacher_lastname as lastnametecher
+                    teacher.teacher_lastname as lastnametecher,
+                    student.student_photo, 
+	teacher.teacher_photo,
+                    student.student_title as student_title, 
+	                student.student_lastname as student_lastname, 
+	                student.student_name as student_name
 FROM
 com05
 INNER JOIN appoint ON com05.appoint_id = appoint.appoint_id
@@ -67,7 +72,8 @@ if ($result->num_rows > 0) {
 $row = mysqli_fetch_array($result);
  
 extract($row);
-$teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;?>
+$teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;
+$namestudent =  $student_title . $student_name ."&nbsp;&nbsp;".$student_lastname ; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -103,6 +109,104 @@ $teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;?>
             content: counter(row-num);
         }
     </style>
+<style>
+                        
+body{
+    margin-top:20px;
+    background:#eee;
+}	
+
+.profile .panel-profile {
+    border: none;
+    margin-bottom: 0;
+    box-shadow: none;
+}
+
+.profile .panel-heading {
+    color: #585f69;
+    background: #fff;
+    padding: 7px 15px;
+    border-bottom: solid 3px #f7f7f7;
+}
+
+.overflow-h {
+    overflow: hidden;
+}
+
+.panel-heading {
+    color: #fff;
+    padding: 5px 15px;
+}
+
+.profile .panel-title {
+    font-size: 16px;
+}
+
+.profile .profile-blog {
+    padding: 20px;
+    background: #fff;
+}
+
+.profile .blog-border {
+    border: 1px solid #f0f0f0;
+}
+
+.profile .profile-blog img {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+
+.rounded-x {
+    border-radius: 50% !important;
+}
+
+.profile .name-location {
+    overflow: hidden;
+}
+
+.profile .name-location strong {
+    color: #555;
+    display: block;
+    font-size: 16px;
+}
+
+.profile .name-location span a {
+    color: #555;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.share-list {
+    margin-bottom: 0;
+}
+
+
+.list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none;
+}
+
+.list-inline li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size:11px;
+}
+
+.share-list li i {
+    color: #72c02c;
+    margin-right: 5px;
+}                
+</style>
+
+
+ 
+
 </head>
 
 <body>
@@ -144,46 +248,128 @@ $teachern = $titletecher.$nametecher."&nbsp;&nbsp;".$lastnametecher;?>
             </div>
         </nav>
 
-        <div class="py-0">
+         
 
-            <div class="d-flex justify-content-between w-100 flex-wrap">
-                <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">ข้อมูลประวัติการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h1>
-                    <!-- <p class="mb-0">อธิบายหัวข้อ
-                    </p> -->
-                </div>
 
-            </div>
-        </div>
-
-        <div class="card border-light shadow-sm mb-4">
-            <div class="card-body">
-       
-<?php 
+        <?php 
 $strDate = $appoint_date_start;
 $strDatetoHourMinute = $appoint_date_start;
 $strDatetoHourMinute1 = $appoint_date_end;
 ?>
-            <p><b>หมายเลข COM-05</b> : <?php echo $com05_id; ?></p>
-           <p>โครงงาน : <?php echo $project_name; ?></p>
-            <p>วันเวลาที่เข้าพบ : <?php  echo DateThai($strDate)?>  เวลา <?php  echo HourMinute($strDatetoHourMinute)?> - <?php  echo HourMinute1($strDatetoHourMinute1)?> น.</p>
-            <p>อาจารย์ที่ปรึกษาโครงงาน : <?php echo $teachern; ?></p>
-            <hr>
-            <p><b>ตอนที่ 1 ส่วนของนักศึกษา</b></p>
-            <p>สิ่งที่นำเสนอ</p>
-            <ul><?php echo $appoint_comment; ?></ul>
-            <hr>
-            <p><b>ตอนที่ 2 ส่วนของอาจารย์ที่ปรึกษา</b></p>
-            <p>ความเห็นของอาจารย์ที่ปรึกษา</p>
-            <ul><?php echo $comment_teacher; ?></ul>
-            <p>งานที่อาจารย์ที่ปรึกษามอบหมายครั้งต่อไป</p>
-            <ul><?php echo $comment_assign; ?></ul>
-            <p>คะแนนความก้าวหน้า : <?php echo $score; ?> คะแนน </p>
-            <p>การตรงต่อเวลา : <?php echo $meet_check_name; ?> </p>
-                
 
-            </div>
+<!-- ทดสอบ CSS -->
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container profile">
+    <div class="col-md-12">
+        <div class="panel panel-profile">
+        <div class="panel-heading overflow-h">
+            <h2 class="panel-title heading-sm pull-left"><i class="fa fa-tasks mr-2"></i>ข้อมูลประวัติการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</h2>
+            <a href="#" class="btn-u btn-brd btn-brd-hover btn-u-dark btn-u-xs pull-right"> </a>
         </div>
+        <div class="panel-body">
+            <div class="row">
+
+
+            <div class="col-sm-6">
+                    <div class="profile-blog blog-border">
+                    <p><b>โครงงาน :</b> <?php echo $project_name; ?></p>
+            <p><b>วันเวลาที่เข้าพบ :</b> <?php  echo DateThai($strDate)?>  เวลา <?php  echo HourMinute($strDatetoHourMinute)?> - <?php  echo HourMinute1($strDatetoHourMinute1)?> น.</p>
+                         
+
+            <div class="row">
+<div class="col-sm-6">
+    <center>
+<h2 style="color: #0a817a">   <?php echo $score; ?></h2>
+<p>คะแนน</center>
+</div> 
+<div class="col-sm-6">
+<center>
+<h2 style="color:#0a817a"><?php echo $meet_check_name; ?></h2>
+<p>การตรงต่อเวลา</center>
+</div> 
+</div> 
+
+
+                    </div> 
+                </div>    
+
+                <div class="col-sm-6">
+                    <div class="profile-blog blog-border">
+                        <img class="rounded-x" src="<?php echo $student_photo; ?>" alt="">
+                        <div class="name-location">
+                            <strong><?php echo $namestudent; ?></strong>
+                            <span><i class="fa fa-map-marker mr-2"></i><a href="#">นักศึกษานัดพบ</a> <a href="#"> </a></span>
+                        </div>
+                        <hr>
+                        <div class="clearfix margin-bottom-20"></div>    
+                        <p> <b>สิ่งที่นำเสนอ</b></p>
+                        <p><?php echo $appoint_comment; ?></p>
+                      
+                    </div>
+                </div>        
+    
+                  
+            </div>
+
+            <div class="row">
+
+
+            <div class="col-sm-6">
+                    <div class="profile-blog blog-border">
+                        <img class="rounded-x" src="<?php echo $teacher_photo; ?>" alt="">
+                        <div class="name-location">
+                            <strong><?php echo $teachern; ?></strong>
+                            <span><i class="fa fa-map-marker mr-2"></i><a href="#">อาจารย์ที่ปรึกษาโครงงาน</a> <a href="#"> </a></span>
+                        </div>     <hr>
+                        <div class="clearfix margin-bottom-20"></div> 
+                        <p> <b>ความเห็นของอาจารย์ที่ปรึกษา</b></p>   
+                        <p><?php echo $comment_teacher; ?></p>
+                        
+                    </div> 
+                </div> 
+
+
+                
+                <div class="col-sm-6">
+                    <div class="profile-blog blog-border">
+                        <img class="rounded-x" src="<?php echo $teacher_photo; ?>" alt="">
+                        <div class="name-location">
+                            <strong><?php echo $teachern; ?></strong>
+                            <span><i class="fa fa-map-marker mr-2"></i><a href="#">อาจารย์ที่ปรึกษาโครงงาน</a> <a href="#"> </a></span>
+                        </div>     <hr>
+                        <div class="clearfix margin-bottom-20"></div>   
+                        <p> <b>งานที่อาจารย์ที่ปรึกษามอบหมายครั้งต่อไป</b></p> 
+                        <p><?php echo $comment_assign; ?></p>
+                         
+                    </div>
+                </div>        
+    
+               
+            </div>
+
+            
+        </div>        
+    </div>    
+    </div>
+</div>                
+
+<!-- ทดสอบ CSS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <?php }else{
     echo "<script type='text/javascript'>";

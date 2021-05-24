@@ -151,7 +151,9 @@ extract($row);?>
                                     project_has_adviser.pha_project_id, 
                                     project_has_adviser.pha_teacher_id as techerID, 
                                     teacher.teacher_name as techerNAME, 
-                                    project_has_adviser.pha_type
+                                    project_has_adviser.pha_type,
+                    teacher.teacher_title as teacher_title,
+                    teacher.teacher_lastname as teacher_lastname
                                 FROM
                                     project_has_adviser
                                     INNER JOIN
@@ -170,9 +172,9 @@ extract($row);?>
                                                  
                                                  <?php foreach($result13 as $results3){
                                             if( $results3["techerID"] == $teacher_id ){
-                                               echo' <option value="'.$results3["techerID"].'" selected="true">'.$results3["techerNAME"].'</option>';
+                                               echo' <option value="'.$results3["techerID"].'" selected="true">'.$results3["teacher_title"].$results3["techerNAME"]."&nbsp;&nbsp;".$results3["teacher_lastname"].' </option>';
                                             }else{
-                                                echo' <option value="'.$results3["techerID"].'" >'.$results3["techerNAME"].'</option>';
+                                                echo' <option value="'.$results3["techerID"].'" >'.$results3["teacher_title"].$results3["techerNAME"]."&nbsp;&nbsp;".$results3["teacher_lastname"].' </option>';
                                             }
                                         }
                                         ?>
@@ -207,9 +209,7 @@ extract($row);?>
 
                     <button type="submit" class="btn btn-primary" name="SubmitEdit">บันทึก</button>
 
-
-
-
+                    <a type="button" class="btn btn-info" href="index.php">กลับ</a>
                 </form>
 
 
@@ -231,7 +231,7 @@ $id_project = $_POST['id_project'];
 $record = $_POST['record'];
 
 $datesub=substr($date_start,0,10);
-
+$id_pj = $_SESSION["ProjectID"];
 
 
 $c_end ="$datesub $date_end";
@@ -267,7 +267,49 @@ if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < 
 } else {
 
 
-    
+
+
+    $sqlc = "SELECT
+    appoint.appoint_date_start, 
+    appoint.appoint_date_end, 
+    appoint.teacher_id, 
+    appoint.appoint_status, 
+    appoint.appoint_id,
+    appoint.project_id, 
+    DATE(appoint.appoint_date_start) AS datest,
+    TIME(appoint.appoint_date_start) AS datest1
+    FROM
+    appoint
+    WHERE
+    appoint.teacher_id = '$teacher' AND
+    DATE(appoint.appoint_date_start) = '$datesub' AND
+     
+    (
+       ( appoint.appoint_status = 1 and appoint.project_id != '$id_pj'  )OR
+            appoint.appoint_status = 2 OR
+            appoint.appoint_status = 4 OR
+            appoint.appoint_status = 5 OR
+            appoint.appoint_status = 6 
+       
+    )AND  (
+    (appoint_date_start BETWEEN '$date_start' AND '$c_end') 
+    OR (appoint_date_end BETWEEN '$date_start' AND '$c_end')OR 
+('$date_start' BETWEEN appoint_date_start  AND appoint_date_end)
+OR 
+('$c_end' BETWEEN  appoint_date_start  AND appoint_date_end ))
+";
+$resultc = $con->query($sqlc);
+                        if ($resultc->num_rows > 0) {
+
+echo
+        "<script> 
+        Swal.fire({
+            icon: 'error',
+            title: 'เข้าพบไม่ได้', 
+            text: 'เนื่องจากอาจารย์มีการนัดพบอื่นแล้ว เลือกเวลาใหม่',
+        }).then(() => {window.history.back()}); 
+    </script>";
+}else {
 $sql288 = "UPDATE appoint SET
 
 appoint_date_start ='$date_start',
@@ -302,11 +344,10 @@ teacher_id='$teacher'
                                 }).then(() => {window.history.back()});
                             </script>";
                         }
-                      
+                    }
                     }
                     
                     
-
                     }
                     ?>
 

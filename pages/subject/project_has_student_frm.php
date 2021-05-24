@@ -188,14 +188,14 @@ $(document).ready(function(){
 <tbody></tbody>
 </table>
 <br />
-<input type="button" id="createRows" value="เพิ่ม">
-<input type="button" id="deleteRows" value="ลบ">
-<input type="button" id="clearRows" value="ล้างค่า">
+<input type="button" id="createRows" value="เพิ่ม" class="btn btn-info">
+<input type="button" id="deleteRows" value="ลบ" class="btn btn-danger">
+<input type="button" id="clearRows" value="ล้างค่า" class="btn btn-warning">
 <input type="text" name="class_id1" id="class_id1" value="<?php echo $class_id1 ?>" hidden>
  <center>
  <br>
  <input type="hidden" id="hdnCount" name="hdnCount">
-<input type="submit" value="บันทึกข้อมูล">
+<input type="submit" value="บันทึกข้อมูล" class="btn btn-success">
  </form>
            
             

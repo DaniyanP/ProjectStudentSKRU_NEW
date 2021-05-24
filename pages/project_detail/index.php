@@ -123,15 +123,15 @@ if (!$_SESSION["UserID"]){
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<p>รหัสโครงงาน : ' . $row["project_id"].'</p>
-                <p>ชื่อโครงงาน : ' . $row["project_name"].'</p>
-                <p>ประเภทโครงงาน : ' . $row["project_type_name"].'</p>
-                <p>สถานะ : ' . $row["project_status_name"].'</p>';       
+                            echo '<p><b>รหัสโครงงาน :</b> ' . $row["project_id"].'</p>
+                <p><b>ชื่อโครงงาน :</b> ' . $row["project_name"].'</p>
+                <p><b>ประเภทโครงงาน :</b> ' . $row["project_type_name"].'</p>
+                <p><b>สถานะ :</b> ' . $row["project_status_name"].'</p>';       
             }
             }
             $con->close();
             ?> 
-            <p>ผู้จัดทำโครงงาน : </p> 
+            <p><b>ผู้จัดทำโครงงาน :</b> </p> 
             <?php
            include '../../conn.php';
            $id_ptojrct =$_SESSION["ProjectID"];
@@ -159,7 +159,7 @@ if (!$_SESSION["UserID"]){
             ?> 
 
              
-<p>อาจารย์ที่ปรึกษาโครงงาน</p>
+<p><b>อาจารย์ที่ปรึกษาโครงงาน</b></p>
 
 <?php
            include '../../conn.php';
@@ -221,7 +221,7 @@ ORDER BY
                 <div class="col-12 col-xl-6">
                 <div class="card border-light shadow-sm mb-4">
                 <div class="card-body">
-                <p>ไฟล์เอกสารที่เกี่ยวข้อง : </p>
+                <p><b>ไฟล์เอกสารที่เกี่ยวข้อง :</b> </p>
                 <div class="btn-group mr-2 mb-2">
 <a class="btn btn-warning" type="button" href="file_add.php"><span class="fas fa-plus mr-2"> เพิ่มเอกสาร</a>
 </div>
@@ -280,7 +280,7 @@ if ($row["file_apporve"]==1) {
                         $con->close();
                         ?>
 <p></p>
-                    </br>คำอธิบายเอกสาร
+                    </br><b>คำอธิบายเอกสาร</b>
 <ul>
    
     <li> COM-04 ขออนุญาตดำเนินงานโครงงาน</li>

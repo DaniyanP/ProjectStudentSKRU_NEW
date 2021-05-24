@@ -63,16 +63,14 @@ while($row = $res->fetch_array(MYSQLI_NUM)){ $c++;
 //	
  
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('ReportQuery');
+$objPHPExcel->getActiveSheet()->setTitle('ImportProject');
  
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
  
  
 //ตั้งชื่อไฟล์
-$time	= date("H:i:s");
-$date	= date("Y-m-d");
-list($h,$i,$s) = explode(":",$time);
+ 
 $file_name = "Export_".$key_subject."";
 //
  

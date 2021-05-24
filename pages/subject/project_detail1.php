@@ -54,7 +54,7 @@ LIMIT 1";
 <body>
 
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-md-none">
-        <a class="navbar-brand mr-lg-5" href="../../index.html">
+        <a class="navbar-brand mr-lg-5" href="../../index.php">
             <img class="navbar-brand-dark" src="../../assets/img/brand/light.svg" alt="Volt logo" /> <img
                 class="navbar-brand-light" src="../../assets/img/brand/dark.svg" alt="Volt logo" />
         </a>
@@ -149,14 +149,14 @@ if(mysqli_num_rows($result44)==1){
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
-                            echo '<p>รหัสโครงงาน : '. $row["project_id"].' &nbsp; &nbsp; &nbsp; &nbsp;ประเภทโครงงาน : '. $row["project_type_name"].'&nbsp; &nbsp; &nbsp; &nbsp;สถานะ : '. $row["project_status_name"].'</p>
-                        <p>ชื่อโครงงาน : '. $row["project_name"].'</p>
+                            echo '<p><b>รหัสโครงงาน :</b> '. $row["project_id"].' &nbsp; &nbsp; &nbsp; &nbsp;ประเภทโครงงาน : '. $row["project_type_name"].'&nbsp; &nbsp; &nbsp; &nbsp;สถานะ : '. $row["project_status_name"].'</p>
+                        <p><b>ชื่อโครงงาน :</b> '. $row["project_name"].'</p>
                         ';       
                     }
                     }
                     $con->close();
                     ?> 
-                         <p>ผู้จัดทำ :  <ul><?php
+                         <p><b>ผู้จัดทำ : </b> <ul><?php
            include '../../conn.php';
            
                
@@ -183,7 +183,7 @@ if(mysqli_num_rows($result44)==1){
             }
             $con->close();
             ?> </ul> </p>
-                       <p>อาจารย์ที่ปรึกษาโครงงาน :
+                       <p><b>อาจารย์ที่ปรึกษาโครงงาน :</b>
                         <ul>
                         <?php
            include '../../conn.php';
@@ -587,9 +587,8 @@ appoint.appoint_id DESC";
                                                 <td>'. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.</td>
                                                 <td>' . $teachern.'</td>
                                                 <td><h6><span class="badge bg-'. $row["appoint_status_class"].'">'. $row["appoint_status_name"].'</span></h6></td>
-                                                <td><a class="btn btn-warning btn-sm" type="button"
-                                                data-toggle="modal" data-target="#myModal'. $row["appoint_id"].'"><span class="fas fa-eye mr-2"
-                                                            herf="#"></span>เพิ่มเติม</a></td>
+                                                <td>
+                                                <input type="button" name="view" value="ดูรายละเอียด" id="'. $row["appoint_id"].'" class="btn btn-info btn-sm view_data" /></td>
                                             </tr>
 
                                             <div class="modal fade" id="myModal'. $row["appoint_id"].'" role="dialog">
@@ -706,9 +705,7 @@ appoint.appoint_date_start,
                                                 <td>' . $teachern.'</td>
                                                 <td>' . $row["meet_check_name"].'</td>
                                                 <td>' . $row["score_score"].'</td>
-                                                <td><a class="btn btn-warning btn-sm" type="button"
-                                                data-toggle="modal" data-target="#myModal2'. $row["com05_id"].'""><span class="fas fa-eye mr-2"
-                                                            herf="#"></span>เพิ่มเติม</a></td>
+                                                <td><input type="button" name="view" value="ดูรายละเอียด" id="'. $row["com05_id"].'" class="btn btn-info btn-sm view_datacom05" /></td>
                                             </tr> 
                                             
                                             <div class="modal fade" id="myModal2'. $row["com05_id"].'" role="dialog">
@@ -946,7 +943,77 @@ appoint.appoint_date_start,
             </div>
         </div>
         <!--  nav end -->
+        <div id="dataModalappoint" class="modal fade">  
+      <div class="modal-dialog">  
+           <div class="modal-content">  
+                <div class="modal-header">  
+                 
+                     <h4 class="modal-title">รายละเอียดการนัด</h4>  
+                </div>  
+                <div class="modal-body" id="appoint_detail">  
+                </div>  
+                <div class="modal-footer">  
+                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>  
+                </div>  
+           </div>  
+      </div>  
+ </div>  
 
+
+
+ 
+ <div id="dataModalcom05" class="modal fade">  
+      <div class="modal-dialog">  
+           <div class="modal-content">  
+                <div class="modal-header">  
+                 
+                     <h4 class="modal-title">รายละเอียดการเข้าพบ</h4>  
+                </div>  
+                <div class="modal-body" id="com05_detail">  
+                </div>  
+                <div class="modal-footer">  
+                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>  
+                </div>  
+           </div>  
+      </div>  
+ </div>  
+
+
+
+ <script>  
+ $(document).ready(function(){  
+      $('.view_data').click(function(){  
+           var appoint_id = $(this).attr("id");  
+           $.ajax({  
+                url:"select.php",  
+                method:"post",  
+                data:{appoint_id:appoint_id},  
+                success:function(data){  
+                     $('#appoint_detail').html(data);  
+                     $('#dataModalappoint').modal("show");  
+                }  
+           });  
+      });  
+ });  
+
+
+
+
+ $(document).ready(function(){  
+      $('.view_datacom05').click(function(){  
+           var com05_id = $(this).attr("id");  
+           $.ajax({  
+                url:"select.php",  
+                method:"post",  
+                data:{com05_id:com05_id},  
+                success:function(data){  
+                     $('#com05_detail').html(data);  
+                     $('#dataModalcom05').modal("show");  
+                }  
+           });  
+      });  
+ }); 
+ </script>
      
 
         <?php include '../footer.php';?>
@@ -1017,7 +1084,7 @@ if(mysqli_num_rows($result44)==0){?>
 
 
         <?php include '../footer.php';?>
-        
+
     </main>
 
 

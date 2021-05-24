@@ -83,7 +83,7 @@ session_start();
                           Header("Location: pages/teacher");
   
                          }if ($_SESSION["Teacherlevel"]==3){   
-                          $_SESSION["Addminlevel"] = "admin";
+                           
                           Header("Location: pages/Admin");
   
                          }

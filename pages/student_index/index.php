@@ -261,7 +261,7 @@ function Checkno() {
                             <div class="mb-2">
                                 <label for="present">สิ่งที่นำเสนอ</label>
                                 <textarea maxlength="255" class="form-control" id="present" name="present"
-                                    aria-describedby="present-describ"></textarea>
+                                required  aria-describedby="present-describ"></textarea>
                                 <small id="present-describ"
                                     class="form-text text-muted">กรอกรายละเอียดที่ขอเข้าพบอาจารย์ที่ปรึกษา</small>
                             </div>

@@ -25,6 +25,14 @@ if (!$_SESSION["TeacherID"]){
 
     <!-- Volt CSS -->
     <link type="text/css" href="../../css/volt.css" rel="stylesheet">
+<!-- datatable CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.1.2/css/rowGroup.dataTables.min.css">
+     <!-- นำเข้า  Javascript จาก  Jquery -->
+     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- นำเข้า  Javascript  จาก   dataTables -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
+    </script>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
@@ -36,6 +44,47 @@ if (!$_SESSION["TeacherID"]){
             border-radius: 50%;
         }
     </style>
+
+<script type="text/javascript" charset="utf-8">
+       $(document).ready(function() {
+    var table = $('#example').DataTable( {
+        
+        orderFixed: [[2, 'DESC']],
+
+        rowGroup: {
+            dataSrc: 3
+        },
+
+        oLanguage: {
+
+"sLengthMenu": "แสดง _MENU_ เร็คคอร์ด ต่อหน้า",
+"sZeroRecords": "ไม่พบรายการตรวจสอบไฟล์",
+"sInfo": "แสดง _START_ ถึง _END_ ของ _TOTAL_ เร็คคอร์ด",
+"sInfoEmpty": "แสดง 0 ถึง 0 ของ 0 เร็คคอร์ด",
+"sInfoFiltered": "(จากเร็คคอร์ดทั้งหมด _MAX_ เร็คคอร์ด)",
+"sSearch": "ค้นหา :",
+"oPaginate": {
+    "sFirst": "เริ่มต้น",
+    "sPrevious": "ก่อนหน้า",
+    "sNext": "ถัดไป",
+    "sLast": "สุดท้าย"
+}
+}
+    } );
+ 
+    // Change the fixed ordering when the data source is updated
+    table.on( 'rowgroup-datasrc', function ( e, dt, val ) {
+        table.order.fixed( {pre: [[ val, 'asc' ]]} ).draw();
+    } );
+ 
+    $('a.group-by').on( 'click', function (e) {
+        e.preventDefault();
+ 
+        table.rowGroup().dataSrc( $(this).data('column') );
+    } );
+} );
+    </script>
+
 </head>
 
 <body>
@@ -92,17 +141,24 @@ if (!$_SESSION["TeacherID"]){
         <div class="card border-light shadow-sm mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" table table-dark table-hover">
+                <table id="example" class="display" style="width:100%">
 
-                            <tr>
-                                
-                                <td>รหัสโครงงาน</td>
-                                <td>ชื่อโครงงาน</td>
-                                <td>เพิ่มเติม</td>
 
-                            </tr>
-                        </thead>
+                <thead class="thead-dark">
+            <tr>
+                <th>รหัสโครงงาน</th>
+                <th>ชื่อโครงงาน</th>
+                <!-- style="display:none;" -->
+                <th style="display:none;">สาขา</th>
+                <th style="display:none;">รุ่นนักศึกษา</th>
+               
+                <th>เพิ่มเติม</th>
+              
+                
+                
+            </tr>
+        </thead>
+                        
                         <tbody>
                         <?php
            include '../../conn.php';
@@ -123,13 +179,17 @@ if (!$_SESSION["TeacherID"]){
                         project_has_adviser.pha_project_id = project.project_id
                 WHERE
                     project.project_status = 1 and project_has_adviser.pha_teacher_id = '$id_teacher'
-                ORDER BY
-                    project_has_adviser.pha_key DESC                     
+                                      
                    ";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
 
 						while($row = $result->fetch_assoc()) {
+                            $std_c = substr($row["pha_project_id"], 3, 2);
+                            $std_m = substr($row["pha_project_id"], 2, 1);
+                            $std_res = $std_c.$std_m ;
+
+                           
                             echo '
                             <tr>    
                             
@@ -142,10 +202,42 @@ if (!$_SESSION["TeacherID"]){
                              }else if ($row["pha_type"]==2) {
                                 echo '<span class="badge bg-info ">ร่วม</span>';
                              }
+                           
+                             echo'</td>';
+
+
                              
-                             echo '</td>
-                                <td>'. mb_substr($row["project_name"],0,80,'UTF-8').'</td>
-                                <td><a class="btn btn-warning btn-sm" type="button" href="project_adviser.php?act=show&ID=' . $row["pha_project_id"].'"><span class="fas fa-eye mr-2" herf="#"></span>เพิ่มเติม</a></td>
+                             echo '<td>'. mb_substr($row["project_name"],0,80,'UTF-8').'</td>';
+                             
+                            
+                             include '../../conn.php';  
+             $sqlm = "SELECT
+             major.student_major_id, 
+             major.student_major_name
+         FROM
+             major
+         WHERE
+             major.student_major_id = '$std_m'";
+             $resultm = $con->query($sqlm);
+             if ($resultm->num_rows > 0) {
+
+                 while($rowm = $resultm->fetch_assoc()) {
+                    $m_name = $rowm["student_major_name"];
+                     echo '<td style="display:none;">' . $rowm["student_major_name"].'</td>';
+                     
+                   
+                      
+                 }
+             }
+             
+          
+ 
+
+                             echo'<td style="display:none;" >'.$std_c.''.$m_name.'</td>
+                             <td><a class="btn btn-warning btn-sm" type="button" href="project_adviser.php?act=show&ID=' . $row["pha_project_id"].'"><span class="fas fa-eye mr-2" herf="#"></span>เพิ่มเติม</a></td>
+
+
+
                             </tr>';       
                         }
                         }
@@ -202,6 +294,10 @@ if (!$_SESSION["TeacherID"]){
 
     <!-- Volt JS -->
     <script src="../../assets/js/volt.js"></script>
+    <!-- Datatable JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
 
 
 </body>

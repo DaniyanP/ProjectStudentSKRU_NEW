@@ -67,7 +67,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
 
    
        
-       
+ 
        
        
        
@@ -141,7 +141,8 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                        
                         <a class="btn btn-success btn-sm " data-toggle="modal" data-target="#exampleModalCenter"
                                 role="button"><i class="fas fa-file-excel"></i>   Import Excel</a>
-
+                                <a class="btn btn-info btn-sm " href="../../project_reg/" target="_blank"
+                                role="button">ลิงค์เพิ่มข้อมูลโครงงาน</a>
                <!-- Modal -->
                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -249,7 +250,7 @@ if ($_SESSION["Teacherlevel"]=="2"){?>
                                         ' . $row["subject_sec"].'
                                         </td>
                                         <td >
-                                        ' . $row["subject_key"].'
+                                     ' . $row["subject_key"].' 
                                         </td>
                                         <td >'; ?>
 <?php
@@ -282,7 +283,7 @@ if ($row["status_regis"]==2) {
                                             <a
                                                 
                                              class="btn btn-link  dropdown-toggle dropdown-toggle-split m-0 p-0 text-danger" href="m_project.php?projectDEL=req&ID=<?php echo $row["subject_key"]; ?>"><span
-                                                    class="fas fa-trash-alt mr-2"></span> 
+                                                    class="fas fa-trash-alt mr-2 fa-2x"></span> 
                                                     </a>
                                    <?php     echo'
                                                 </td>

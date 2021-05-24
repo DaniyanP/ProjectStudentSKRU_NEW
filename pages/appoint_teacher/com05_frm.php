@@ -290,7 +290,7 @@ $result2 = mysqli_query($con, $query2);
                 </div>
                 <div class="col-12 col-xl-6">
                             <div class="card card-body bg-white border-light shadow-sm mb-4">
-                                <h2 class="h5 mb-4">ข้อมูลการนัดหมาย</h2>
+                                <h2 class="h5 mb-4">ข้อมูลการนัดพบ</h2>
                                 
 <!-- ข้อมูลเริ่ม -->
 <?php
@@ -335,7 +335,7 @@ $result2 = mysqli_query($con, $query2);
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $strDateTime = $row["appoint_recorder"];
                             $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
-                            echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'   
+                            echo '<p> หมายเลขการนัดพบ : ' . $row["appoint_id"].'   
                             <p> นัดหมายโดย : ' . $namestudent.' 
            <p> โครงงาน : ' . $row["project_name"].'
            <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.

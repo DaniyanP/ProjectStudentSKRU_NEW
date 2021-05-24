@@ -315,7 +315,7 @@ $result=$con->query($sql);
             $strDatetoHourMinute1=$row["appoint_date_end"];
             $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
             echo'<li class="list-group-item list-group-item-action"><b><a href="../appoint_teacher/show.php?act=show&ID='. $row["appoint_id"].'">[[ #'. $row["appoint_id"].' ]] </b> '. $namestudent.'</a>
-<br>'. mb_substr($row["project_name"], 0, 70, 'UTF-8').' 
+<br>'. mb_substr($row["project_name"], 0,50, 'UTF-8').' 
 </br>'.DateThai($strDate).' เวลา '. HourMinute($strDatetoHourMinute).'- '. HourMinute1($strDatetoHourMinute1).' น. <p>
 <a class="btn btn-success btn-sm "type="button" href="index.php?CFR3=req&ID='.$row["appoint_id"].'"><span class="fas fa-check mr-2"></span>ยืนยัน</a>
 <a class="btn btn-danger btn-sm" type="button" href="index.php?deleteR=req&ID='.$row["appoint_id"].'"><span class="fas fa-ban mr-2" ></span>ยกเลิก</a>
@@ -602,7 +602,7 @@ if ($time_st < '08:00' || $time_st > '17:00' || $time_en > '17:00'|| $time_en < 
  DATE(appoint.appoint_date_start) = '$datesub' AND
   
  (
-     appoint.appoint_status = 1 OR
+     (appoint.appoint_status = 1 and appoint.appoint_id != '$appoint_id' ) OR
          appoint.appoint_status = 2 OR
          appoint.appoint_status = 4 OR
          appoint.appoint_status = 5 OR

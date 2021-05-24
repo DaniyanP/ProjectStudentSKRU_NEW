@@ -33,9 +33,9 @@ include '../../conn.php';
                 
             }
 
-            if($row2['K'] != 0)
+            if($row2['K'] != 000000000)
             {
-                $password  = $row2['G'];
+                $password  = $row2['K'];
                 $setpassword = md5($password);
                 $check = mysqli_query($con,'SELECT * FROM `student` WHERE student_id = "'.$row2['K'].'" ');
                 if(mysqli_num_rows($check) == '0')
@@ -60,7 +60,7 @@ include '../../conn.php';
                 
             }
 
-            if($row2['K'] != 0)
+            if($row2['K'] != 000000000)
             {
                 
                 $check = mysqli_query($con,'SELECT * FROM `subject_hash_student` WHERE ss_subject_id = "'.$row['B'].'" AND ss_student_id = "'.$row['K'].'"  ');
@@ -113,7 +113,7 @@ include '../../conn.php';
                 }
                 
             }
-            if($row4['K'] != 0)
+            if($row4['K'] != 000000000)
             {
                  
                 

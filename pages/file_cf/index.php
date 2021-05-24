@@ -155,7 +155,7 @@ $stid = $_SESSION["TeacherID"]
              
             <div class="table-responsive">
                 <table id="example" class="display" style="width:100%">
-                <thead>
+                <thead class="thead-dark">
             <tr>
                 <th>รหัสเอกสาร</th>
                 <th>ชื่อเอกสาร</th>

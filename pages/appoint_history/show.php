@@ -37,6 +37,101 @@ if (!$_SESSION["UserID"]){
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
     <?php include '../dateth.php';?>
+    <style>
+                        
+                        body{
+                            margin-top:20px;
+                            background:#eee;
+                        }	
+                        
+                        .profile .panel-profile {
+                            border: none;
+                            margin-bottom: 0;
+                            box-shadow: none;
+                        }
+                        
+                        .profile .panel-heading {
+                            color: #585f69;
+                            background: #fff;
+                            padding: 7px 15px;
+                            border-bottom: solid 3px #f7f7f7;
+                        }
+                        
+                        .overflow-h {
+                            overflow: hidden;
+                        }
+                        
+                        .panel-heading {
+                            color: #fff;
+                            padding: 5px 15px;
+                        }
+                        
+                        .profile .panel-title {
+                            font-size: 16px;
+                        }
+                        
+                        .profile .profile-blog {
+                            padding: 20px;
+                            background: #fff;
+                        }
+                        
+                        .profile .blog-border {
+                            border: 1px solid #f0f0f0;
+                        }
+                        
+                        .profile .profile-blog img {
+                            float: left;
+                            width: 50px;
+                            height: 50px;
+                            margin-right: 20px;
+                        }
+                        
+                        .rounded-x {
+                            border-radius: 50% !important;
+                        }
+                        
+                        .profile .name-location {
+                            overflow: hidden;
+                        }
+                        
+                        .profile .name-location strong {
+                            color: #555;
+                            display: block;
+                            font-size: 16px;
+                        }
+                        
+                        .profile .name-location span a {
+                            color: #555;
+                        }
+                        
+                        .margin-bottom-20 {
+                            margin-bottom: 20px;
+                        }
+                        
+                        .share-list {
+                            margin-bottom: 0;
+                        }
+                        
+                        
+                        .list-inline {
+                            padding-left: 0;
+                            margin-left: -5px;
+                            list-style: none;
+                        }
+                        
+                        .list-inline li {
+                            display: inline-block;
+                            padding-right: 5px;
+                            padding-left: 5px;
+                            font-size:11px;
+                        }
+                        
+                        .share-list li i {
+                            color: #72c02c;
+                            margin-right: 5px;
+                        }                
+                        </style>
+                        
 </head>
 
 <body>
@@ -78,7 +173,7 @@ if (!$_SESSION["UserID"]){
             </div>
         </nav>
 
-        <div class="py-0">
+     <!--    <div class="py-0">
 
             <div class="d-flex justify-content-between w-100 flex-wrap">
                 <div class="mb-3 mb-lg-0">
@@ -88,10 +183,9 @@ if (!$_SESSION["UserID"]){
                 </div>
                 
             </div>
-        </div>
+        </div> -->
 
-        <div class="card border-light shadow-sm mb-4">
-            <div class="card-body">
+        
             <?php
             $appoint_id = $_REQUEST["ID"];
             $get_project_id =$_SESSION["ProjectID"];
@@ -113,7 +207,8 @@ if (!$_SESSION["UserID"]){
                     student.student_title, 
 	                student.student_lastname,
                     teacher.teacher_title,
-                    teacher.teacher_lastname
+                    teacher.teacher_lastname,
+                    student.student_photo
                 FROM
                     appoint
                     INNER JOIN
@@ -144,23 +239,98 @@ if (!$_SESSION["UserID"]){
                             $strDateTime = $row["appoint_recorder"];
                             $namestudent = $row["student_title"].$row["student_name"]."&nbsp;&nbsp;".$row["student_lastname"];
                             $teachern = $row["teacher_title"].$row["teacher_name"]."&nbsp;&nbsp;".$row["teacher_lastname"];
-                            echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'    สถานะ: ' . $row["appoint_status_name"].'
-           <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
-           <p> อาจารย์ที่ปรึกษา : ' . $teachern.'
-           <p> รายละเอียด : ' . $row["appoint_comment"].'
-           <p> นัดหมายโดย : ' . $namestudent.'
-           <p> ทำรายการเมื่อ :'.DateTimeThai($strDateTime).' ';
-
-           if ($row["meet_link"]) {
-            
-            echo' <p>คลิ๊กไอคอนเพื่อเข้า Google Meet : <a href="'.$row["meet_link"].'" target="_blank"><img src="../../assets/img/meet_icon.png" alt="Image" style="width:40px;"></a>';
-         }
+                            echo '<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                            <div class="container profile">
+                                <div class="col-md-12">
+                                    <div class="panel panel-profile">
+                                    <div class="panel-heading overflow-h">
+                                        <h2 class="panel-title heading-sm pull-left"><i class="fa fa-tasks mr-2"></i>รายละเอียดการนัดพบ</h2>
+                                        <a href="#" class="btn-u btn-brd btn-brd-hover btn-u-dark btn-u-xs pull-right"> </a>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                            
+                            
+                                        <div class="col-sm-6">
+                                                <div class="profile-blog blog-border">
+                                                <p><b>ต้องการเข้าพบ :</b> '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
+                                       <p><b> อาจารย์ที่ปรึกษา :</b> ' . $teachern.'
+                                        
+                                       <p><b> นัดหมายโดย :</b> ' . $namestudent.'
+                                       <p><b> ทำรายการเมื่อ :</b>'.DateTimeThai($strDateTime).'
+                                                     
+                            
+                                        <div class="row">
+                            <div class="col-sm-6">
+                                <center>
+                            <h2 style="color: #0a817a">   ' . $row["appoint_status_name"].'</h2>
+                            <p>สถานะ</center>
+                            </div> 
+                            <div class="col-sm-6">
+                            <center><h2>';
+                            
+                            
+                            if ($row["meet_link"]) {
+                             
+                              echo'   <a href="'.$row["meet_link"].'" target="_blank"><img src="../../assets/img/meet_icon.png" alt="Image" style="width:40px;"></a> ';
+                             } 
+                            echo'</h2></center>
+                            </div> 
+                            </div> 
+                            
+                            
+                                                </div> 
+                                            </div>    
+                            
+                                            <div class="col-sm-6">
+                                                <div class="profile-blog blog-border">
+                                                    <img class="rounded-x" src="' . $row["student_photo"].'" alt="">
+                                                    <div class="name-location">
+                                                        <strong>' . $namestudent.'</strong>
+                                                        <span><i class="fa fa-map-marker mr-2"></i><a href="#">นักศึกษานัดพบ</a> <a href="#"> </a></span>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="clearfix margin-bottom-20"></div>    
+                                                    <p> <b>สิ่งที่นำเสนอ</b></p>
+                                                    <p>' . $row["appoint_comment"].'</p>
+                                                  
+                                                </div>
+                                            </div>        
+                                
+                                              
+                                        </div>
+                            
+                                
+                            
+                                        
+                                    </div>        
+                                </div>    
+                                </div>
+                            </div>  ';
+        
         
         
 
         
      
-}
+} ?>
+ 
+
+
+
+
+<!-- ทดสอบ CSS -->
+
+              
+
+<!-- ทดสอบ CSS -->
+ 
+
+ 
+
+
+
+<?php
 }else{
 
     echo "<script type='text/javascript'>";
@@ -171,8 +341,7 @@ if (!$_SESSION["UserID"]){
 $con->close();
 ?> 
                
-            </div>
-        </div>
+           
         
 
 

@@ -226,7 +226,7 @@ extract($row);
                 </div>
                 <div class="col-12 col-xl-6">
                             <div class="card card-body bg-white border-light shadow-sm mb-4">
-                                <h2 class="h5 mb-4">ข้อมูลการนัดหมาย</h2>
+                                <h2 class="h5 mb-4">ข้อมูลการนัดพบ</h2>
                                 
 <!-- ข้อมูลเริ่ม -->
 <?php
@@ -265,7 +265,7 @@ extract($row);
                             $strDatetoHourMinute = $row["appoint_date_start"];
                             $strDatetoHourMinute1 = $row["appoint_date_end"];
                             $strDateTime = $row["appoint_recorder"];
-                            echo '<p> หมายเลขการนัดหมาย : ' . $row["appoint_id"].'    
+                            echo '<p> หมายเลขการนัดพบ : ' . $row["appoint_id"].'    
                             <p> นัดหมายโดย : ' . $namestudent.'
            <p> โครงงาน : ' . $row["project_name"].'
            <p>ต้องการเข้าพบ : '.DateThai($strDate).'   เวลา '. HourMinute($strDatetoHourMinute).'  - '. HourMinute1($strDatetoHourMinute1).' น.
@@ -292,8 +292,9 @@ $con->close();
 
 
         <?php
+            include '../../conn.php';
             if (isset($_POST["SubmitEditCom05"])) {
-    include '../../conn.php';
+
 
    
     

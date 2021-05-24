@@ -145,7 +145,7 @@ ORDER BY
 	
   /*   $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']); */
 
-	$mpdf = new \Mpdf\Mpdf();
+	$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8'] );
 
 	include("conn.php");
 
@@ -174,8 +174,8 @@ $result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_e
 $row2 = mysqli_fetch_array($result2);
 extract($row2);
 
-			$warptxt = wordwrap($project_name,80,"<br/>",true);
-$echoproject = "$project_id   $warptxt  ( $project_type_name )"; 
+			 
+$echoproject = "$project_id   $project_name   ( $project_type_name )"; 
 
 $head1 = '
 <style>
@@ -208,6 +208,30 @@ $txtstudent = 'ผู้จัดทำโครงงาน : '.$namestudent;
 $end = "</tbody>
 </table>";
 
+$sqlscore = "SELECT
+com05.project_id,
+Sum(score.score_score) as s_sum
+FROM
+com05
+INNER JOIN score ON com05.score = score.score_id
+WHERE
+com05.project_id = '$project_id'
+GROUP BY
+com05.project_id = '$project_id'
+";
+$resultscore = mysqli_query($con, $sqlscore) or die ("Error in query: $sqlscore " . mysqli_error());
+$rowscore = mysqli_fetch_array($resultscore);
+extract($rowscore);
+
+if ($s_sum >= 1) {
+	$sum_s = $s_sum;
+}
+if ($s_sum <= 0) {
+	$sum_s = "0";
+}
+
+$scoretxt = 'คะแนนรวม '.$s_sum.' คะแนน';
+
 $mpdf->WriteHTML($head1);
 
 $mpdf->WriteHTML($echoproject);
@@ -222,7 +246,7 @@ $mpdf->WriteHTML($head4);
 $mpdf->WriteHTML($content);
 
 $mpdf->WriteHTML($end);
-
+$mpdf->WriteHTML($scoretxt);
 
 
 $mpdf->Output();

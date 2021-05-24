@@ -215,7 +215,12 @@ function Checkno1() {
                 <!-- คำนำหน้า -->
                 <div class="col-md-3 form-group mb-3">
                   <label for="student1_title" class="col-form-label">คำนำหน้า</label>
-                  <input type="text" class="form-control" name="student1_title" id="student1_title"   placeholder="กรอกคำนำหน้า">
+                      
+              <select required class="form-control" id="student1_title" name="student1_title" aria-label="Default select example" >
+    <option selected="selected">คำนำหน้า</option>
+    <option value="นาย">นาย</option> 
+    <option value="นางสาว">นางสาว</option>    
+    </select>
                 </div>
 
  <!--ชื่อ -->
@@ -250,7 +255,13 @@ function Checkno1() {
             <!-- คำนำหน้า -->
             <div class="col-md-3 form-group mb-3">
               <label for="student2_title" class="col-form-label">คำนำหน้า</label>
-              <input type="text" class="form-control" name="student2_title" id="student2_title"   placeholder="กรอกคำนำหน้า">
+             
+              
+              <select required class="form-control" id="student2_title" name="student2_title" aria-label="Default select example" >
+    <option selected="selected">คำนำหน้า</option>
+    <option value="นาย">นาย</option> 
+    <option value="นางสาว">นางสาว</option>    
+    </select>
             </div>
 
 <!--ชื่อ -->
@@ -371,7 +382,13 @@ $con->close();
               </div>
 
 
+<style>
 
+.yourownclass{
+      
+     font-size: 15px ! important;  
+  }
+</style>
 
               <div class="row justify-content-center">
                 <div class="col-md-5 form-group text-center">
@@ -379,7 +396,7 @@ $con->close();
                   <span class="submitting"></span> -->
 
 
-                  <button class="btn  btn-success btn-lg" type="submit" name="project_reg">บันทึก</button>
+                  <button class="btn  btn-success btn-lg yourownclass " type="submit" name="project_reg">บันทึก</button>
                 </div>
               </div>
 

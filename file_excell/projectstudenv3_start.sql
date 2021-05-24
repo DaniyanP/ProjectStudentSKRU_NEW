@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2021 at 08:14 PM
+-- Generation Time: May 19, 2021 at 04:32 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project_adviser_db`
+-- Database: `projectstudenv3`
 --
 
 -- --------------------------------------------------------
@@ -80,7 +80,8 @@ CREATE TABLE `com05` (
   `comment_assign` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `score` int(11) NOT NULL,
   `meet_check` int(2) NOT NULL,
-  `teacher_id` int(15) NOT NULL
+  `teacher_id` int(15) NOT NULL,
+  `student_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -94,7 +95,8 @@ CREATE TABLE `filee` (
   `project_id` int(255) NOT NULL,
   `file_type` int(255) NOT NULL,
   `file_link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `file_apporve` int(2) NOT NULL DEFAULT 1
+  `file_apporve` int(2) NOT NULL DEFAULT 1,
+  `teacher_id` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -106,16 +108,17 @@ CREATE TABLE `filee` (
 CREATE TABLE `file_type` (
   `file_type_id` int(11) NOT NULL,
   `file_type_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `file_type_icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `file_type_icon` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `file_detail` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `file_type`
 --
 
-INSERT INTO `file_type` (`file_type_id`, `file_type_name`, `file_type_icon`) VALUES
-(1, 'COM-01', 'far fa-star'),
-(3, 'COM-04', 'far fa-paper-plane');
+INSERT INTO `file_type` (`file_type_id`, `file_type_name`, `file_type_icon`, `file_detail`) VALUES
+(1, 'COM-04', 'far fa-star', 'ขออนุญาตดำเนินงานโครงงาน'),
+(3, 'COM-04-3', 'far fa-paper-plane', 'เอกสารการนำเสนอและขอสอบเค้าโครงโครงงาน ฉบับสมบูรณ์');
 
 -- --------------------------------------------------------
 
@@ -181,53 +184,6 @@ CREATE TABLE `project` (
   `project_type` int(2) NOT NULL,
   `project_status` int(2) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `project`
---
-
-INSERT INTO `project` (`project_id`, `project_name`, `project_type`, `project_status`) VALUES
-(1, 'ssds', 1, 1),
-(4, 'fgfg', 1, 1),
-(40, 'lll', 1, 1),
-(41, 'o;;', 1, 1),
-(42, 'ioio', 2, 1),
-(43, 'klkl', 1, 1),
-(2323, 'sdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsds', 1, 1),
-(4242, 'ooo', 1, 1),
-(5511, 'ระบบจัดการควบคุมน้ำเสียด้วยระบบคอมพิวเตอร์ ลดปัญหาการเข้าพื้นที่อับอากาศ ', 1, 2),
-(5512, 'ระบบขายหวยออนไลน์', 1, 3),
-(5588, 'ระบบไฟฟ้าพลังงานหมุนเวียน', 1, 1),
-(7777, 'ไไกไก', 1, 1),
-(7979, 'ำกำกำก', 2, 1),
-(8400, 'a', 1, 1),
-(8401, 'b', 1, 1),
-(8402, 'c', 2, 1),
-(8403, 'd', 3, 1),
-(8404, 'e', 4, 1),
-(8405, 'f', 2, 1),
-(8406, 'g', 4, 1),
-(8407, 'h', 2, 1),
-(8408, 'j', 2, 1),
-(8409, 'k', 3, 1),
-(8410, 'l', 4, 1),
-(8411, 'm', 4, 1),
-(8412, 'r', 4, 1),
-(8501, 'ทดสอบ1', 1, 1),
-(8502, 'ทดสอบ2', 1, 1),
-(8503, 'ทดสอบ3', 2, 1),
-(8504, 'ทดสอบ4', 3, 1),
-(8505, 'ทดสอบ5', 4, 1),
-(8506, 'ทดสอบ6', 2, 1),
-(8507, 'ทดสอบ7', 4, 1),
-(8508, 'ทดสอบ8', 2, 1),
-(8509, 'ทดสอบ9', 2, 1),
-(8510, 'ทดสอบ10', 3, 1),
-(8511, 'ทดสอบ11', 4, 1),
-(8512, 'ทดสอบ12', 4, 1),
-(8513, 'ทดสอบ13', 4, 1),
-(3343434, 'sdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsdssdsds', 1, 1),
-(8799955, 'ระบบบริหารงานภายใน', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -299,6 +255,31 @@ INSERT INTO `project_type` (`project_type_id`, `project_type_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `regis_project`
+--
+
+CREATE TABLE `regis_project` (
+  `id` int(100) NOT NULL,
+  `subject_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `major_id` int(2) NOT NULL,
+  `project_id` int(15) NOT NULL,
+  `project_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `project_type` int(2) NOT NULL,
+  `student1_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `student1_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `student1_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `student1_lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `student2_id` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `student2_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `student2_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `student2_lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `teacher1_id` int(10) NOT NULL,
+  `teacher2_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `score`
 --
 
@@ -328,8 +309,10 @@ INSERT INTO `score` (`score_id`, `score_score`, `score_detail`) VALUES
 
 CREATE TABLE `student` (
   `student_id` int(15) NOT NULL,
+  `student_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `student_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `student_major` int(2) NOT NULL,
+  `student_lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `student_phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0000000000',
   `student_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `student_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -420,7 +403,9 @@ CREATE TABLE `subject_project` (
   `subject_teacher` int(10) NOT NULL,
   `subject_record` datetime NOT NULL DEFAULT current_timestamp(),
   `subject_time_start` time NOT NULL,
-  `subject_time_end` time NOT NULL
+  `subject_time_end` time NOT NULL,
+  `status_regis` int(2) NOT NULL DEFAULT 1,
+  `status_file` int(5) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -431,7 +416,9 @@ CREATE TABLE `subject_project` (
 
 CREATE TABLE `teacher` (
   `teacher_id` int(10) NOT NULL,
+  `teacher_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `teacher_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `teacher_lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `teacher_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `teacher_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `teacher_photo` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'https://i.ibb.co/HFB65Yz/asa.png',
@@ -442,8 +429,29 @@ CREATE TABLE `teacher` (
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `teacher_name`, `teacher_email`, `teacher_password`, `teacher_photo`, `teacher_type`) VALUES
-(999999999, 'ผู้ดูแลระบบ', 'admin@admin.com', 'c8c605999f3d8352d7bb792cf3fdb25b', 'https://i.ibb.co/HFB65Yz/asa.png', 3);
+INSERT INTO `teacher` (`teacher_id`, `teacher_title`, `teacher_name`, `teacher_lastname`, `teacher_email`, `teacher_password`, `teacher_photo`, `teacher_type`) VALUES
+(6401, 'ผศ. ดร.', 'ทวีรัตน์', 'นวลช่วย', 'taweerat.nu@skru.ac.th', '012d9fe15b2493f21902cd55603382ec', 'https://it.skru.ac.th/images/teachers/1_IMG_0225.JPG', 1),
+(6402, 'ผศ. ดร.', 'อำนาจ', 'ทองขาว', 'aumnat.to@skru.ac.th', '72c25197b6a491816d9a84b42d7205f0', 'https://it.skru.ac.th/images/teachers/2_IMG_9797.JPG', 1),
+(6403, 'ผศ.', 'พิกุล ', 'สมจิตต์', 'pikul.so@skru.ac.th', 'eae15aabaa768ae4a5993a8a4f4fa6e4', 'https://it.skru.ac.th/images/teachers/9_IMG_0200.JPG', 1),
+(6404, 'ผศ. ดร.', 'ศศลักษณ์', 'ทองขาว', 'sasalak.to@skru.ac.th', 'd994e3728ba5e28defb88a3289cd7ee8', 'https://it.skru.ac.th/images/teachers/Sasalak_IMG_0579.JPG', 1),
+(6405, 'ผศ.', 'สารภี', 'จุลแก้ว', 'sarapee.ch@skru.ac.th', 'b58f7d184743106a8a66028b7a28937c', 'https://it.skru.ac.th/images/teachers/10_IMG_0770.JPG', 1),
+(6406, 'ผศ.', 'นลินี อินทมะโน', 'อินทมะโน', 'nalinee.in@skru.ac.th', '99cad265a1768cc2dd013f0e740300ae', 'https://it.skru.ac.th/images/teachers/Nalinee_IMG_0282_OK_Good.JPG', 1),
+(6407, 'ผศ.', 'กฤษณ์วรา', 'รัตนโอภาส', 'kriwara.ra@skru.ac.th', '90365351ccc7437a1309dc64e4db32a3', 'https://it.skru.ac.th/images/teachers/6_Kritwara_IMG_0545.JPG', 1),
+(6408, 'ผศ.', 'ดินาถ', 'หลำสุบ', 'dinat.la@skru.ac.th', '828b1eb30921659e22e53a9edc92c4c4', 'https://it.skru.ac.th/images/teachers/Dinat_IMG_9872.JPG', 1),
+(6409, 'อ.', 'สกรร', 'รอดคร้าย', 'sakan.ro@skru.ac.th', '0b7a9d54deeb611edc4540d286e9a042', 'https://it.skru.ac.th/images/teachers/5_Sakan_IMG_0571.JPG', 1),
+(6410, 'อ.', 'พัฒนะ', 'วรรณวิไล', 'pattana.wa@skru.ac.th', '713fd63d76c8a57b16fc433fb4ae718a', 'https://it.skru.ac.th/images/teachers/3_IMG_0361.JPG', 2),
+(6411, 'อ.', 'ญาณพัฒน์', 'ชูชื่น', 'yanapat.ch@skru.ac.th', '8091588a3968da46e3e43a76bf3b3a98', 'https://it.skru.ac.th/images/teachers/10_IMG_0096.JPG', 1),
+(6412, 'อ.', 'จักสิทธิ์', 'โอฬาริกชาติ', 'jaksit.ol@skru.ac.th', 'cdf66a6a7a04d87d865335701790c3e3', 'https://it.skru.ac.th/images/teachers/7_Jaksit_IMG_0416.JPG', 1),
+(6413, 'อ.', 'ยุพดี', 'อินทสร', 'youppadee.in@skru.ac.th', 'a543c921889f9dcddaff0ce4ca955293', 'https://i.ibb.co/HFB65Yz/asa.png', 2),
+(6414, 'อ.', 'เสรี', 'ชนะ', 'seree.ch@skru.ac.th', '1ee942c6b182d0f041a2312947385b23', 'https://it.skru.ac.th/images/teachers/Seree_IMG_9879.JPG', 1),
+(6415, 'อ.', 'โชติธรรม', 'ธารรักษ์', 'chotitham.th@skru.ac.th', '0993b7960f34c29b1fdb6516be27046f', 'https://it.skru.ac.th/images/teachers/8_Chotitum_IMG_0439.JPG', 1),
+(6416, 'อ. ดร.', 'เกศินี', 'บุญช่วย', 'kesinee.bo@skru.ac.th', '8e77b3768b440a281c5101ca7941d5e0', 'https://it.skru.ac.th/images/teachers/kesinee.jpg', 1),
+(6417, 'อ. ดร.', 'ศศิน', 'จันทร์พวงทอง', 'sasin.ch@skru.ac.th', '8830c97ab60254cd05628c6e61e8c54c', 'https://it.skru.ac.th/images/teachers/11_IMG_0531.JPG', 1),
+(6418, 'อ.', 'คมกฤช', 'เจริญ', 'komkrit.ch@skru.ac.th', '0f0ee3310223fe38a989b2c818709393', 'https://i.ibb.co/HFB65Yz/asa.png', 1),
+(6419, 'อ.', 'ภานุกร', 'ภูริปัญญานันท์', 'panukorn.pu@skru.ac.th', '288cd2567953f06e460a33951f55daaf', 'https://it.skru.ac.th/images/teachers/4_IMG_9703.JPG', 1),
+ 
+  
+(999999999, '', 'ผู้ดูแลระบบ', '0', 'admin@admin.com', 'c8c605999f3d8352d7bb792cf3fdb25b', 'https://i.ibb.co/HFB65Yz/asa.png', 3);
 
 -- --------------------------------------------------------
 
@@ -567,6 +575,13 @@ ALTER TABLE `project_type`
   ADD PRIMARY KEY (`project_type_id`);
 
 --
+-- Indexes for table `regis_project`
+--
+ALTER TABLE `regis_project`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `project_id` (`project_id`);
+
+--
 -- Indexes for table `score`
 --
 ALTER TABLE `score`
@@ -668,6 +683,12 @@ ALTER TABLE `project_has_adviser`
 --
 ALTER TABLE `project_has_student`
   MODIFY `phs_key` int(50) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `regis_project`
+--
+ALTER TABLE `regis_project`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subject_hash_project`
